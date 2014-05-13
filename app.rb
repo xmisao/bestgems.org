@@ -296,7 +296,7 @@ get '/gems/:gems' do
 	@daily_count = daily.where(:date => daily_date).count
 	
 	total_row = total.where(:name => name, :date => total_date).first
-	daily_row = daily.where(:name => name, :date => daily_date).first
+	daily_row = daily.where(:name => name, :date => daily_date).first || {:downloads = "-", :rank = "-"}
 	
 	@gem_name = total_row[:name]
 	@gem_summary = total_row[:summary]
