@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= @title %></title>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Date', 'Number of Gems'],
+		<% @graph.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:num_of_gems]) %>],
+		<% }%>
+		]);
+
+		var options = {
+			title: 'Number of All Gems Trends',
+			colors: ['bc0800'],
+			chartArea: {height: 500}
+		};
+
+		var chart = new google.visualization.LineChart(document.getElementById('trends'));
+		chart.draw(data, options);
+	}
+</script>
+
+</head>
+<body>
+<div class="container">
+	<div class="masthead">
+		<ul class="nav nav-pills pull-right">
+			<li><a href="/">Top</a></li>
+			<li><a href="/total">Total</a></li>
+			<li><a href="/daily">Daily</a></li>
+			<li><a href="/featured">Featured</a></li>
+			<li>
+				<form class="form-search" action="/search" method="GET">
+					<input type="text" class="input-medium search-query" name="q">
+					<button type="submit" class="btn"><i class="icon-search"></i></button>
+				</form>
+			</li>
+		</ul>
+		<h3><a href="/" class="header">BestGems</a></h3>
+	</div>
+
+	<hr>
+
+	<div class="jumbotron">
+		<h1><%= @name %></h1>
+		<p class="lead"><%= @summary %></p>
+	</div>
+
+	<hr>
+	
+	<div class="row-fluid marketing">
+		<div class="span12">
+			<div id="trends" style="width: 940px; height: 600px;"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<script type="text/javascript"><!--
+		google_ad_client = "ca-pub-8257359908391644";
+		/* bestgems_bottom */
+		google_ad_slot = "4115061810";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42168722-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

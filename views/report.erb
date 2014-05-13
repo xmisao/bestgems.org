@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= @title %></title>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Name', 'Downloads'],
+		<% @gems.each{|gem| %>['<%= gem[:name] %>', <%= gem[:downloads] %>],
+		<% }%>
+		]);
+
+		var options = {
+			title: '<%= @chart_title %>',
+			vAxis: {title: 'Gems',  titleTextStyle: {color: 'bc0800'}},
+			hAxis: {baseline: 0},
+			colors: ['bc0800'],
+			chartArea: {height: 500}
+		};
+
+		var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="masthead">
+		<ul class="nav nav-pills pull-right">
+			<li><a href="/">Top</a></li>
+			<li<%= @type == :total ? " class=\"active\"" : "" %>><a href="/total">Total</a></li>
+			<li<%= @type == :daily ? " class=\"active\"" : "" %>><a href="/daily">Daily</a></li>
+			<li<%= @type == :featured ? " class=\"active\"" : "" %>><a href="/featured">Featured</a></li>
+			<li><a href="/about">About</a></li>
+			<li>
+				<form class="form-search" action="/search" method="GET">
+					<input type="text" class="input-medium search-query" name="q">
+					<button type="submit" class="btn"><i class="icon-search"></i></button>
+				</form>
+			</li>
+		</ul>
+		<h3><a href="/" class="header">BestGems</a></h3>
+	</div>
+
+	<hr>
+
+	<div class="jumbotron">
+		<h1><%= @ranking_name %></h1>
+		<p class="lead"><%= @ranking_description %></p>
+	</div>
+
+	<hr>
+
+	<div class="row-fluid marketing">
+		<div class="span12">
+			<div id="chart_div" style="width: 940px; height: 600px;"></div>
+			<p><em class="number"><%= @start %></em>-<em class="number"><%= @end %></em> of all <em class="number"><%= comma(@count) %></em> gems.</p>
+			<table class="table table-striped">
+				<tr><th>Rank</th><th>Downloads</th><th>Begginning Rank</th><th>Ending Rank</th><th>Diff</th><th>Name</th><th>Summary</th></tr>
+				<% @gems.each{|gem| %>
+					<tr><td class="right"><%= comma(gem[:rank]) %></td><td class="right"><%= comma(gem[:downloads]) %></td><td class="right"><%= comma(gem[:term_start_rank]) %></td><td class="right"><%= comma(gem[:term_end_rank]) %></td><td class="right"><%= comma_pm(gem[:rank_diff]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td><td><%= gem[:summary] %></td></tr>
+				<% } %>
+			</table>
+			<div style="font-size:18px;" class="text-center pagination">
+				<% pager = Pager.new(@path, @opts, @range, @page) %>
+				<ul>
+				<%= pager.previous(@page - 1) %>
+				<% pager.each{|elm| %>
+				  <%= elm %>
+				<% } %>
+				<%= pager.next(@page + 1) %>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<script type="text/javascript"><!--
+		google_ad_client = "ca-pub-8257359908391644";
+		/* bestgems_bottom */
+		google_ad_slot = "4115061810";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42168722-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
