@@ -11,7 +11,7 @@
 	google.setOnLoadCallback(drawChart);
 	function drawChart() {
 		var data = google.visualization.arrayToDataTable([
-			['Date', 'Total Downlaods', 'Daily Downloads'],
+			['Date', 'Total Downloads', 'Daily Downloads'],
 		<% @graph.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:total_downloads]) %>, <%= n2n(e[:daily_downloads]) %>],
 		<% }%>
 		]);
