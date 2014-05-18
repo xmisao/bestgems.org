@@ -1,7 +1,7 @@
 require 'sequel'
 require 'date'
 require_relative 'stat.rb'
-DB = Sequel.sqlite('DB', :timeout => 60000)
+DB = Sequel.sqlite('db/master.sqlite3', :timeout => 60000)
 total = DB[:total]
 statistics = DB[:statistics]
 
