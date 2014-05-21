@@ -1,0 +1,15 @@
+<div class="masthead">
+	<ul class="nav nav-pills pull-right">
+		<li<%= @type == :total ? " class=\"active\"" : "" %>><a href="/total">Total</a></li>
+		<li<%= @type == :daily ? " class=\"active\"" : "" %>><a href="/daily">Daily</a></li>
+		<li<%= @type == :featured ? " class=\"active\"" : "" %>><a href="/featured">Featured</a></li>
+		<li<%= @type == :about ? " class=\"active\"" : "" %>><a href="/about">About</a></li>
+		<li>
+			<form class="form-search" action="/search" method="GET">
+				<input type="text" class="input-medium search-query" name="q">
+				<button type="submit" class="btn"><i class="icon-search"></i></button>
+			</form>
+		</li>
+	</ul>
+	<h3><a href="/" class="header">BestGems</a></h3>
+</div>
