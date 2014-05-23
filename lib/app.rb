@@ -348,5 +348,6 @@ end
 
 get '/about' do
   @title = "About This Site -- BestGems"
+  @type = :about
   erb :about
 end
