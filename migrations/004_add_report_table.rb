@@ -29,7 +29,7 @@ Sequel.migration do
 			Integer :rank
 			foreign_key :report_id, :reports
 
-      index [:repot_id, :downloads], :name=>:report_data_combi_index
+      index [:report_id, :downloads], :name=>:report_data_combi_index
       index [:report_id]
       index [:downloads]
     end
