@@ -213,7 +213,7 @@ get '/reports/:url' do
   results = report_data.where(:report_id => report_id).reverse_order(:downloads)
   gems = results.limit(per_page, per_page * page)
 
-  @title = "#{report[:name]} Repot -- Best Gems"
+  @title = "#{report[:name]} Report -- Best Gems"
   @ranking_name = report[:name]
   @ranking_description = report[:summary]
 
