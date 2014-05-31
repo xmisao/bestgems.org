@@ -8,8 +8,6 @@ db_config = YAML.load_file(File.expand_path("../../config/database.yml", __FILE_
 db_config = db_config[env] || db_config[env.to_sym] || db_config
 db_config.keys.each{|k| db_config[k.to_sym] = db_config.delete(k)}
 
-pp db_config
-
 DB = Sequel.connect(db_config)
 
 class Master < Sequel::Model(:master); end
