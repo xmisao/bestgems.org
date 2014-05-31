@@ -22,6 +22,7 @@ GEM
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     ntlm-http (0.1.1)
+    pg (0.17.1)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -43,6 +44,7 @@ PLATFORMS
 DEPENDENCIES
   erubis
   mechanize
+  pg
   sequel
   sinatra
   sqlite3

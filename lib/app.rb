@@ -4,7 +4,7 @@ require 'cgi'
 require_relative 'pager'
 require_relative 'stat'
 
-DB = Sequel.sqlite('db/master.sqlite3', :timeout => 60000)
+DB = Sequel.connect('postgres://bestgems:bestgems@localhost/bestgems')
 total = DB[:total]
 daily = DB[:daily]
 featured = DB[:featured]
