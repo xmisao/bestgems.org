@@ -3,7 +3,7 @@ Sequel.migration do
     create_table(:statistics, :ignore_index_errors=>true) do
 			Integer :type
       Date :date
-      Integer :value
+      Bignum :value
       
       primary_key [:type, :date]
       
