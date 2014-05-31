@@ -11,9 +11,11 @@ db_config.keys.each{|k| db_config[k.to_sym] = db_config.delete(k)}
 DB = Sequel.connect(db_config)
 
 class Master < Sequel::Model(:master); end
-class Total < Sequel::Model(:total); end
-class Daily < Sequel::Model(:daily); end
-class Featured < Sequel::Model(:featured); end
+remove_const :Gem # undefine rubygems's 'Gem' module
+class Gem < Sequel::Model; end
+class Value < Sequel::Model; end
+class Ranking < Sequel::Model; end
+class ScrapedData < Sequel::Model(:scraped_data); end
 class Reports < Sequel::Model; end
 class ReportData < Sequel::Model(:report_data); end
 class Statistics < Sequel::Model; end
