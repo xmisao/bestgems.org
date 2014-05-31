@@ -1,0 +1,11 @@
+development:
+  adapter: "sqlite"
+  database: "db/master.sqlite3"
+  timeout: 60000
+
+production:
+  adapter: "postgres"
+  host: "localhost"
+  user: "bestgems"
+  password: "bestgems"
+  database: "bestgems"

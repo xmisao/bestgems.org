@@ -3,8 +3,8 @@ require 'sequel'
 require 'cgi'
 require_relative 'pager'
 require_relative 'stat'
+require_relative 'database'
 
-DB = Sequel.connect('postgres://bestgems:bestgems@localhost/bestgems')
 total = DB[:total]
 daily = DB[:daily]
 featured = DB[:featured]
