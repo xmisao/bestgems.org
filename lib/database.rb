@@ -1,6 +1,5 @@
 require 'sequel'
 require 'yaml'
-require 'pp'
 
 env = ENV['RACK_ENV']
 
@@ -9,13 +8,12 @@ db_config = db_config[env] || db_config[env.to_sym] || db_config
 db_config.keys.each{|k| db_config[k.to_sym] = db_config.delete(k)}
 
 DB = Sequel.connect(db_config)
-
-class Master < Sequel::Model(:master); end
-remove_const :Gem # undefine rubygems's 'Gem' module
-class Gem < Sequel::Model; end
-class Value < Sequel::Model; end
-class Ranking < Sequel::Model; end
-class ScrapedData < Sequel::Model(:scraped_data); end
-class Reports < Sequel::Model; end
-class ReportData < Sequel::Model(:report_data); end
-class Statistics < Sequel::Model; end
+require_relative 'models/model'
+require_relative 'models/master'
+require_relative 'models/scraped_data'
+require_relative 'models/gems'
+require_relative 'models/value'
+require_relative 'models/ranking'
+require_relative 'models/statistics'
+require_relative 'models/reports'
+require_relative 'models/report_data'

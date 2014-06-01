@@ -14,7 +14,7 @@ Sequel.migration do
         primary_key :id
         Integer :type
         Integer :gem_id
-        Data :date
+        Date :date
         Integer :value
 
         index [:type]
@@ -26,7 +26,7 @@ Sequel.migration do
         primary_key :id
         Integer :type
         Integer :gem_id
-        Data :date
+        Date :date
         Integer :ranking
 
         index [:type]
