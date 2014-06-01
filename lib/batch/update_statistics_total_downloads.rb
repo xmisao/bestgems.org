@@ -16,5 +16,5 @@ end
 
 if $0 == __FILE__
   date = ARGV[0] || Date.today - 1
-  StatisticsNumOfGemsUpdater.execute(date)
+  StatisticsTotalDownloadsUpdater.execute(date)
 end
