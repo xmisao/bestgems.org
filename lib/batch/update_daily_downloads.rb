@@ -2,7 +2,7 @@ require 'date'
 require_relative '../database'
 
 class DailyDownloadsUpdater
-  def self.execute(data)
+  def self.execute(date)
     Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                 :date => date)
          .each{|value|
