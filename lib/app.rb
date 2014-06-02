@@ -63,33 +63,28 @@ end
 get '/total' do
   redirect '/total' unless is_int?(params[:page])
 
-  date = master.first[:date]
-
-  per_page = 20
-  page = params[:page] ? params[:page].to_i - 1: 0
-
-  results = total.where(:date => date).reverse_order(:downloads)
-  gems = results.limit(per_page, per_page * page)
-
   @title = 'Total Download Ranking -- Best Gems'
   @ranking_name = 'Total Donwload Ranking'
   @ranking_description = 'Most downloads over all time'
 
   @chart_title = 'Downloads'
 
-  @gems = gems
-  @rank = page * per_page
+  date = master.first[:date]
+  per_page = 20
+  page = params[:page] ? params[:page].to_i - 1 : 0
+
+  @gems = Ranking.total(date, per_page, per_page * page) 
 
   @path = '/total'
   @opts = params
-  @range = (1..(total.where(:date => date).reverse_order(:downloads).count / per_page))
+  @range = (1..(Ranking.total_count(date) / per_page))
   @page = page + 1
 
   @type = :total
 
   @start = per_page * page + 1
   @end = per_page * page + @gems.count
-  @count = results.count
+  @count = Ranking.total_count(date)
 
   erb :ranking
 end

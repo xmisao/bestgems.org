@@ -13,11 +13,11 @@ class Ranking < Sequel::Model
     Ranking.insert_or_update(new_ranking, :type, :gem_id, :date)
   end
 
-  def self.total(date, limit)
+  def self.total(date, *limit)
     DB.from(Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                           :date => date)
                    .order(:ranking)
-                   .limit(limit)
+                   .limit(*limit)
                    .as(:R))
       .join(
         Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
@@ -25,6 +25,11 @@ class Ranking < Sequel::Model
         :R__gem_id => :V__gem_id)
       .join(:gems, :gems__id => :R__gem_id)
       .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+  end
+
+  def self.total_count(date)
+    Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
+                  :date => date).count
   end
 
   def self.daily(date, limit)
