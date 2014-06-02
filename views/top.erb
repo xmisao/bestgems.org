@@ -17,7 +17,7 @@
 			<table class="table table-striped">
 				<tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
 				<% @total_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:rank]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
 				<% } %>
 			</table>
 			<p class="text-right"><a class="btn" href="/total">more...</a></p>
@@ -27,7 +27,7 @@
 			<table class="table table-striped">
 				<tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
 				<% @daily_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:rank]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
 				<% } %>
 			</table>
 			<p class="text-right"><a class="btn" href="/daily">more...</a></p>
@@ -39,7 +39,7 @@
 			<table class="table table-striped">
 				<tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th>Name</th></tr>
 				<% @featured_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:rank]) %></td><td class="center"><%= comma_pm(gem[:rank_diff]) %></td><td class="center"><%= comma(gem[:daily_rank]) %></td><td class="center"><%= comma(gem[:total_rank]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma_pm(gem[:score]) %></td><td class="center"><%= comma(gem[:daily_ranking]) %></td><td class="center"><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
 				<% } %>
 			</table>
 			<p class="text-right"><a class="btn" href="/featured">more...</a></p>
