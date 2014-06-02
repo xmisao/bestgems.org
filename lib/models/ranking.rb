@@ -13,12 +13,17 @@ class Ranking < Sequel::Model
     Ranking.insert_or_update(new_ranking, :type, :gem_id, :date)
   end
 
-  def self.total(date)
-    self.select{[name, summary, ranking, value.as(downloads)]}
-        .join(:gems, :gems__id => :rankings__gem_id)
-        .join(:values, :values__gem_id => :rankings__gem_id)
-        .where(:rankings__date => date, :rankings__type => Ranking::Type::TOTAL_RANKING)
-        .where(:values__date => date, :values__type => Value::Type::TOTAL_DOWNLOADS)
-        .order(:ranking)
+  def self.total(date, limit)
+    DB.from(Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
+                          :date => date)
+                   .order(:ranking)
+                   .limit(limit)
+                   .as(:R))
+      .join(
+        Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
+                    :date => date).as(:V),
+        :R__gem_id => :V__gem_id)
+      .join(:gems, :gems__id => :R__gem_id)
+      .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
 end
