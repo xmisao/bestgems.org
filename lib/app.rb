@@ -77,7 +77,7 @@ get '/total' do
 
   @path = '/total'
   @opts = params
-  @range = (1..(Ranking.total_count(date) / per_page) + 1)
+  @range = (1..(Ranking.total_count(date) / per_page.to_f).ceil)
   @page = page + 1
 
   @type = :total
@@ -106,7 +106,7 @@ get '/daily' do
 
   @path = '/daily'
   @opts = params
-  @range = (1..(Ranking.daily_count(date) / per_page) + 1)
+  @range = (1..(Ranking.daily_count(date) / per_page.to_f).ceil)
   @page = page + 1
 
   @type = :daily
@@ -121,33 +121,28 @@ end
 get '/featured' do
   redirect '/featured' unless is_int?(params[:page])
 
-  date = master.first[:date]
-
-  per_page = 20
-  page = params[:page] ? params[:page].to_i - 1: 0
-
-  results = featured.where(:date => date).order(:rank)
-  gems = results.limit(per_page, per_page * page)
-
   @title = 'Featured Gems Ranking -- Best Gems'
   @ranking_name = 'Featured Gems Ranking'
   @ranking_description = 'Featured gems which are based on difference between daily rank and total rank.'
 
   @chart_title = 'Difference between daily rank and total rank'
 
-  @gems = gems
-  @rank = page * per_page
+  date = master.first[:date]
+  per_page = 20
+  page = params[:page] ? params[:page].to_i - 1: 0
+
+  @gems = Ranking.featured(date, per_page, per_page * page)
 
   @path = '/featured'
   @opts = params
-  @range = (1..(featured.where(:date => date).order(:rank).count / per_page))
+  @range = (1..(Ranking.featured_count(date) / per_page.to_f).ceil)
   @page = page + 1
 
   @type = :featured
 
   @start = per_page * page + 1
   @end = per_page * page + @gems.count
-  @count = results.count
+  @count = Ranking.featured_count(date)
 
   erb :featured
 end

@@ -51,11 +51,11 @@ class Ranking < Sequel::Model
                   :date => date).count
   end
 
-  def self.featured(date, limit)
+  def self.featured(date, *limit)
     DB.from(Ranking.where(:type => Ranking::Type::FEATURED_RANKING,
                           :date => date)
                    .order(:ranking)
-                   .limit(limit)
+                   .limit(*limit)
                    .as(:RF))
       .join(:gems, :gems__id => :RF__gem_id)
       .join(
@@ -73,9 +73,10 @@ class Ranking < Sequel::Model
                .as(:RD),
         :RD__gem_id => :RT__gem_id)
       .select(:gems__name, :gems__summary, :RF__ranking, Sequel.as(:V__value, :score), Sequel.as(:RT__ranking, :total_ranking), Sequel.as(:RD__ranking, :daily_ranking))
-=begin
-=end
-=begin
-=end
+  end
+
+  def self.featured_count(date)
+    Ranking.where(:type => Ranking::Type::FEATURED_RANKING,
+                  :date => date).count
   end
 end

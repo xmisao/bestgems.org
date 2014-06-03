@@ -5,7 +5,7 @@
 	function drawChart() {
 		var data = google.visualization.arrayToDataTable([
 			['Name', 'Difference'],
-		<% @gems.each{|gem| %>['<%= gem[:name] %>', <%= gem[:rank_diff] %>],
+		<% @gems.each{|gem| %>['<%= gem[:name] %>', <%= gem[:score] %>],
 		<% }%>
 		]);
 
@@ -41,7 +41,7 @@
 			<table class="table table-striped">
 				<tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th>Name</th><th>Summary</th></tr>
 				<% @gems.each{|gem| %>
-				<tr><td class="right"><%= comma(gem[:rank]) %></td><td class="right"><%= comma_pm(gem[:rank_diff]) %></td><td class="center"><%= comma(gem[:daily_rank]) %></td><td class="center"><%= comma(gem[:total_rank]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td><td><%= gem[:summary] %></td></tr>
+				<tr><td class="right"><%= comma(gem[:ranking]) %></td><td class="right"><%= comma_pm(gem[:score]) %></td><td class="center"><%= comma(gem[:daily_ranking]) %></td><td class="center"><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td><td><%= gem[:summary] %></td></tr>
 				<% } %>
 			</table>
 			<div style="font-size:18px;" class="text-center pagination">
