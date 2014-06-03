@@ -296,8 +296,10 @@ get '/gems/:gems' do
 end
 
 get '/search' do
-  redirect '/search' unless is_int?(params[:page])
-  redirect '/search' unless params[:q]
+  redirect '/' unless is_int?(params[:page])
+  redirect '/' unless params[:q]
+  redirect '/' if params[:q].match(/\s+/)
+  redirect '/' if params[:q] == ""
 
   date = master.first[:date]
   per_page = 20
@@ -305,24 +307,15 @@ get '/search' do
 
   @title = "Search -- BestGems"
 
-  qp = params[:q] || ""
-  or_part = nil
-  qp.split(/\s/)[0..4].each{|q|
-    part = Sequel.like(:name, "%#{q}%") | Sequel.like(:summary, "%#{q}%")
-    if or_part
-      or_part &= part
-    else
-      or_part = part
-    end
-  }
-  results = total.where(:date => date).where(or_part).reverse_order(:downloads)
+  query = params[:q]
+  results = Gems.search(date, query)
   @gems = results.limit(per_page, per_page * page)
 
-  @q = CGI.escapeHTML(qp)
+  @q = CGI.escapeHTML(query)
 
   @path = '/search'
   @opts = params
-  @range = (1..(results.count / per_page))
+  @range = (1..(results.count / per_page.to_f).ceil)
   @page = page + 1
 
   @start = per_page * page + 1
