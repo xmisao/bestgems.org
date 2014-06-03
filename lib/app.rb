@@ -77,7 +77,7 @@ get '/total' do
 
   @path = '/total'
   @opts = params
-  @range = (1..(Ranking.total_count(date) / per_page))
+  @range = (1..(Ranking.total_count(date) / per_page) + 1)
   @page = page + 1
 
   @type = :total
@@ -92,33 +92,28 @@ end
 get '/daily' do
   redirect '/daily' unless is_int?(params[:page])
 
-  date = master.first[:date]
-
-  per_page = 20
-  page = params[:page] ? params[:page].to_i - 1: 0
-
-  results = daily.where(:date => date).reverse_order(:downloads)
-  gems = results.limit(per_page, per_page * page)
-
   @title = 'Daily Download Ranking -- Best Gems'
   @ranking_name = 'Daily Donwload Ranking'
   @ranking_description = 'Most downloads last day.'
 
   @chart_title = 'Downloads '
 
-  @gems = gems
-  @rank = page * per_page
+  date = master.first[:date]
+  per_page = 20
+  page = params[:page] ? params[:page].to_i - 1: 0
+
+  @gems = Ranking.daily(date, per_page, per_page * page)
 
   @path = '/daily'
   @opts = params
-  @range = (1..(daily.where(:date => date).reverse_order(:downloads).count / per_page))
+  @range = (1..(Ranking.daily_count(date) / per_page) + 1)
   @page = page + 1
 
   @type = :daily
 
   @start = per_page * page + 1
   @end = per_page * page + @gems.count
-  @count = results.count
+  @count = Ranking.daily_count(date)
 
   erb :ranking
 end
