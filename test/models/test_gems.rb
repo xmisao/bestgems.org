@@ -3,6 +3,12 @@ require 'database'
 require_relative '../run_migration'
 
 class TestRanking < MiniTest::Unit::TestCase
+  def setup
+    Gems.where.delete
+    Value.where.delete
+    Ranking.where.delete
+  end
+
   def test_search
     Gems.insert(:id => 1,
                 :name => 'foo',
