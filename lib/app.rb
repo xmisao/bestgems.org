@@ -258,6 +258,7 @@ def join_total_daily_rank_graph(total_graph, daily_graph)
   graph
 end
 
+=begin
 get '/gems/:gems' do
   redirect '/' unless params[:gems]
 
@@ -291,6 +292,35 @@ get '/gems/:gems' do
 
   @daily_downloads = daily_row[:downloads]
   @daily_rank = daily_row[:rank]
+
+  erb :gems
+end
+=end
+
+get '/gems/:gems' do
+  redirect '/' unless params[:gems]
+
+  gem = Gems.where(:name => params[:gems]).first
+  p gem
+  redirect '/' unless gem
+
+  date = Master.first[:date]
+  info = gem.info(date)
+
+  @title = "#{info[:name]} -- BestGems"
+
+  @download_graph = gem.downloads_trends
+  @rank_graph = gem.ranking_trends
+
+  @total_count = Ranking.total_count(date)
+  @daily_count = Ranking.daily_count(date)
+
+  @gem_name = info[:name]
+  @gem_summary = info[:summary]
+  @total_downloads = info[:total_downloads]
+  @total_rank = info[:total_ranking]
+  @daily_downloads = info[:daily_downloads]
+  @daily_rank = info[:daily_ranking]
 
   erb :gems
 end

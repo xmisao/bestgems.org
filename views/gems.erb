@@ -26,7 +26,7 @@
 	function drawChart2() {
 		var data = google.visualization.arrayToDataTable([
 			['Date', 'Total Rank', 'Daily Rank'],
-		<% @rank_graph.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:total_rank]) %>, <%= n2n(e[:daily_rank]) %>],
+		<% @rank_graph.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:total_ranking]) %>, <%= n2n(e[:daily_ranking]) %>],
 		<% }%>
 		]);
 
