@@ -309,8 +309,8 @@ get '/gems/:gems' do
 
   @title = "#{info[:name]} -- BestGems"
 
-  @download_graph = gem.downloads_trends
-  @rank_graph = gem.ranking_trends
+  @downloads_trends = gem.downloads_trends
+  @ranking_trends = gem.ranking_trends
 
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
