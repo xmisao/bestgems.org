@@ -13,7 +13,7 @@ Sequel.migration do
       create_table(:values) do
         primary_key :id
         Integer :type
-        Integer :gem_id
+        foreign_key :gem_id, :gems
         Date :date
         Integer :value
 
@@ -25,13 +25,14 @@ Sequel.migration do
       create_table(:rankings) do
         primary_key :id
         Integer :type
-        Integer :gem_id
+        foreign_key :gem_id, :gems
         Date :date
         Integer :ranking
 
         index [:type]
         index [:gem_id]
         index [:date]
+        index [:ranking]
       end
 
       create_table(:scraped_data) do

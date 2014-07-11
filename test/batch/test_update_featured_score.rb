@@ -5,9 +5,9 @@ require_relative '../run_migration'
 
 class TestUpdateFeaturedScore < MiniTest::Unit::TestCase
   def setup
-    Gems.where.delete
     Value.where.delete
     Ranking.where.delete
+    Gems.where.delete
   end
 
   def test_update_featured_score

@@ -5,9 +5,9 @@ require_relative '../run_migration'
 
 class TestUpdateStatisticsDailyDonwloads < MiniTest::Unit::TestCase
   def setup
-    Gems.where.delete
     Value.where.delete
     Statistics.where.delete
+    Gems.where.delete
   end
 
   def test_execute

@@ -1,15 +1,3 @@
-
-# {
-# :name=>"net-ldap",
-# :summary=>"Net::LDAP for Ruby (also called net-ldap) implements client access for the\nLightweight Directory ...",
-# :downloads=>436240,
-# :term_start_rank=>221,
-# :term_end_rank=>229,
-# :rank_diff=>-8,
-# :report_id=>"2013H2",
-# :rank=>254
-# }
-
 Sequel.migration do
   up do
     create_table(:reports, :ignore_index_errors=>true) do

@@ -6,8 +6,8 @@ require_relative '../run_migration'
 class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
   def setup
     ScrapedData.where.delete
-    Gems.where.delete
     Value.where.delete
+    Gems.where.delete
   end
 
   def test_update_total_downloads_from_scraped_data
