@@ -7,7 +7,7 @@ Sequel.migration do
         String :version, :size => 255
         String :summary, :text => true
 
-        index [:name]
+        unique [:name]
       end
 
       create_table(:values) do
@@ -20,6 +20,7 @@ Sequel.migration do
         index [:type]
         index [:gem_id]
         index [:date]
+        unique [:type, :gem_id, :date]
       end
 
       create_table(:rankings) do
@@ -33,6 +34,7 @@ Sequel.migration do
         index [:gem_id]
         index [:date]
         index [:ranking]
+        unique [:type, :gem_id, :date]
       end
 
       create_table(:scraped_data) do
