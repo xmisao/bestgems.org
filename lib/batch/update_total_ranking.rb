@@ -3,6 +3,17 @@ require_relative '../database'
 
 class TotalRankingUpdater
   def self.execute(date)
+    clear_total_ranking(date)
+    total_ranking = generate_total_ranking(date)
+    update_total_ranking(total_ranking)
+  end
+
+  def self.clear_total_ranking(date)
+    Ranking.where(:type => Ranking::Type::TOTAL_RANKING, :date => date).delete
+  end
+
+  def self.generate_total_ranking(date)
+    total_ranking = []
     rank = 1
     last_rank = 1
     last_downloads = 2 ** 63
@@ -16,12 +27,21 @@ class TotalRankingUpdater
         last_rank = rank
         last_downloads = value[:value]
       end
-      Ranking.update(Ranking::Type::TOTAL_RANKING,
-                     value[:gem_id],
-                     value[:date],
-                     last_rank) 
+
+      record = {:type => Ranking::Type::TOTAL_RANKING,
+                :gem_id => value[:gem_id],
+                :date => value[:date],
+                :ranking => last_rank}
+      total_ranking << record
+
       rank += 1
     }
+
+    total_ranking
+  end
+
+  def self.update_total_ranking(total_ranking)
+    Ranking.multi_insert(total_ranking)
   end
 end
 

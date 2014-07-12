@@ -3,25 +3,36 @@ require_relative '../database'
 
 class DailyDownloadsUpdater
   def self.execute(date)
-    Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
-                :date => date)
-         .each{|value|
-      update_daily_downloads(value)
-    }
+    clear_daily_downloads(date)
+    daily_downloads = generate_daily_downloads(date)
+    update_daily_downloads(daily_downloads)
   end
 
-  def self.update_daily_downloads(value1)
-    value2 = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
-                         :date => value1[:date] - 1,
-                         :gem_id => value1[:gem_id]).first
-    return unless value2
+  def self.clear_daily_downloads(date)
+    Value.where(:type => Value::Type::DAILY_DOWNLOADS, :date => date).delete
+  end
 
-    new_value = {:type => Value::Type::DAILY_DOWNLOADS,
-                 :gem_id => value1[:gem_id],
-                 :date => value1[:date],
-                 :value => value1[:value] - value2[:value]}
+  def self.generate_daily_downloads(date)
+    daily_downloads = []
+    Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
+                :date => date)
+         .each{|value1|
+      value2 = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
+                           :date => value1[:date] - 1,
+                           :gem_id => value1[:gem_id]).first
+      next unless value2
 
-    Value.insert_or_update(new_value, :type, :date, :gem_id)
+      record = {:type => Value::Type::DAILY_DOWNLOADS,
+                :gem_id => value1[:gem_id],
+                :date => value1[:date],
+                :value => value1[:value] - value2[:value]}
+      daily_downloads << record
+    }
+    daily_downloads
+  end
+
+  def self.update_daily_downloads(daily_downloads)
+    Value.multi_insert(daily_downloads)
   end
 end
 

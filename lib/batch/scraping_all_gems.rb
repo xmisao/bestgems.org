@@ -4,44 +4,69 @@ require_relative '../database'
 
 class Scraper
   def self.execute(date, letters)
+    clear_gems_data(date)
     letters.each{|letter|
       num = scraping_num_of_gems(letter)
       (1..(num / 30 + 1)).each{|i|
         gems = scraping_gems_data(letter, i)
-        gems.each{|gem|
-          save_gem_data(gem, date)
-        }
+        save_gems_data(gems, data)
       }
       sleep 1
     }
   end
 
+  def self.clear_gems_data(date)
+    ScrapedData.where(:date => date).delete
+  end
+
+
   def self.scraping_num_of_gems(letter)
-    agent = Mechanize.new
-    letter_page = agent.get("https://rubygems.org/gems?letter=#{letter}")
-    letter_page.search("p[@class='entries']").first.content.match(/of (\d+)/).to_a[1].to_i
+    try(3, 60) do
+      agent = Mechanize.new
+      letter_page = agent.get("https://rubygems.org/gems?letter=#{letter}")
+      letter_page.search("p[@class='entries']").first.content.match(/of (\d+)/).to_a[1].to_i
+    end
   end
 
   def self.scraping_gems_data(letter, i)
-    agent = Mechanize.new
-    page = agent.get("https://rubygems.org/gems?letter=#{letter}&page=#{i}")
+    try(3, 60) do
+      agent = Mechanize.new
+      page = agent.get("https://rubygems.org/gems?letter=#{letter}&page=#{i}")
 
-    gems = []
-    page.search("div[@class='gems border']//ol//li").each{|gem|
-      name_version = gem.search("a//strong").first.content.match(/(.+?)\s\((.+?)\)/).to_a
-      name = name_version[1]
-      version = name_version[2]
-      summary = gem.search("a").children[2].content.strip
-      downloads = gem.search("div//strong").first.content.gsub(/[^\d]/, '').to_i
+      gems = []
+      page.search("div[@class='gems border']//ol//li").each{|gem|
+        name_version = gem.search("a//strong").first.content.match(/(.+?)\s\((.+?)\)/).to_a
+        name = name_version[1]
+        version = name_version[2]
+        summary = gem.search("a").children[2].content.strip
+        downloads = gem.search("div//strong").first.content.gsub(/[^\d]/, '').to_i
 
-      gems << {:name => name, :version => version, :summary => summary, :downloads => downloads}
-    }
-    gems
+        gems << {:name => name, :version => version, :summary => summary, :downloads => downloads}
+      }
+      gems
+    end
   end
 
-  def self.save_gem_data(gem, date)
-    gem[:date] = date
-    ScrapedData.insert_or_update(gem, :name, :date)
+  def self.try(times, sleep_time)
+    count = 0
+    begin
+      yield
+    rescue
+      if count < times
+        count += 1
+        sleep sleep_time
+        retry
+      else
+        raise "Crawl Error"
+      end
+    end
+  end
+
+  def self.save_gems_data(gems, date)
+    gems.each{|gem|
+      gem[:date] = date
+    }
+    ScrapedData.multi_insert(gems)
   end
 end
 

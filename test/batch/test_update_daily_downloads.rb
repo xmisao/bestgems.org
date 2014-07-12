@@ -10,7 +10,7 @@ class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
     Value.where.delete
   end
 
-  def test_update_daily_downloads
+  def test_generate_daily_downloads
     Gems.insert(:id => 1,
                 :name => 'foo')
     Value.insert(:id => 1,
@@ -24,8 +24,7 @@ class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
                  :date => Date.new(2014, 6, 2),
                  :value => 30)
 
-    total = Value[2]
-    daily = DailyDownloadsUpdater.update_daily_downloads(total)
+    daily = DailyDownloadsUpdater.generate_daily_downloads(Date.new(2014, 6, 2))[0]
 
     assert_equal Value::Type::DAILY_DOWNLOADS, daily[:type]
     assert_equal 1, daily[:gem_id]

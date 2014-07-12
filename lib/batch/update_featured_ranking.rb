@@ -3,6 +3,17 @@ require_relative '../database'
 
 class FeaturedRankingUpdater
   def self.execute(date)
+    clear_featured_ranking(date)
+    featured_ranking = generate_featured_ranking(date)
+    update_featured_ranking(featured_ranking)
+  end
+
+  def self.clear_featured_ranking(date)
+    Ranking.where(:type => Ranking::Type::FEATURED_RANKING, :date => date).delete
+  end
+
+  def self.generate_featured_ranking(date)
+    featured_ranking = []
     rank = 1
     last_rank = 1
     last_downloads = 2 ** 63
@@ -16,12 +27,20 @@ class FeaturedRankingUpdater
         last_rank = rank
         last_downloads = value[:value]
       end
-      Ranking.update(Ranking::Type::FEATURED_RANKING,
-                     value[:gem_id],
-                     value[:date],
-                     last_rank) 
+
+      record = {:type => Ranking::Type::FEATURED_RANKING,
+                :gem_id => value[:gem_id],
+                :date => value[:date],
+                :ranking => last_rank}
+      featured_ranking << record
+
       rank += 1
     }
+    featured_ranking
+  end
+
+  def self.update_featured_ranking(featured_ranking)
+    Ranking.multi_insert(featured_ranking)
   end
 end
 

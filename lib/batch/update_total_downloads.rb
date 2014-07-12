@@ -3,20 +3,32 @@ require_relative '../database'
 
 class TotalDownloadsUpdater
   def self.execute(date)
-    ScrapedData.where(:date => date).order(:name).each{|data|
-      update_total_downloads_from_scraped_data(data)
-    }
+    clear_total_downloads(date)
+    total_downloads = generate_total_downloads_from_scraped_data(date)
+    update_total_downloads(total_downloads)
   end
 
-  def self.update_total_downloads_from_scraped_data(data)
-    gem = Gems.where(:name => data[:name]).first
-    raise 'Database inconsistency.' unless gem
+  def self.clear_total_downloads(date)
+    Value.where(:type => Value::Type::TOTAL_DOWNLOADS, :date => date).delete
+  end
 
-    new_value = {:type => Value::Type::TOTAL_DOWNLOADS,
-                 :gem_id => gem[:id],
-                 :date => data[:date],
-                 :value => data[:downloads]}
-    Value.insert_or_update(new_value, :type, :gem_id, :date)
+  def self.generate_total_downloads_from_scraped_data(date)
+    total_downloads = []
+    ScrapedData.where(:date => date).order(:name).each{|data|
+      gem = Gems.where(:name => data[:name]).first
+      raise 'Database inconsistency.' unless gem
+
+      record = {:type => Value::Type::TOTAL_DOWNLOADS,
+                :gem_id => gem[:id],
+                :date => data[:date],
+                :value => data[:downloads]}
+      total_downloads << record
+    }
+    total_downloads
+  end
+
+  def self.update_total_downloads(total_downloads)
+    Value.multi_insert(total_downloads)
   end
 end
 

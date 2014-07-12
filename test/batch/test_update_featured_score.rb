@@ -10,7 +10,7 @@ class TestUpdateFeaturedScore < MiniTest::Unit::TestCase
     Gems.where.delete
   end
 
-  def test_update_featured_score
+  def test_generate_featured_score
     Gems.insert(:id => 1,
                 :name => 'foo')
     Ranking.insert(:id => 1,
@@ -24,8 +24,7 @@ class TestUpdateFeaturedScore < MiniTest::Unit::TestCase
                    :date => Date.new(2014, 6, 1),
                    :ranking => 10)
 
-    daily_ranking = Ranking[2]
-    score = FeaturedScoreUpdater.update_featured_score(daily_ranking)
+    score = FeaturedScoreUpdater.generate_featured_score(Date.new(2014, 6, 1))[0]
 
     assert_equal Value::Type::FEATURED_SCORE, score[:type]
     assert_equal 1, score[:gem_id]

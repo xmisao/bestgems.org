@@ -18,8 +18,7 @@ class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
     Gems.insert(:id => 1,
                 :name => 'foo')
 
-    data = ScrapedData[1]
-    value = TotalDownloadsUpdater.update_total_downloads_from_scraped_data(data)
+    value = TotalDownloadsUpdater.generate_total_downloads_from_scraped_data(Date.new(2014, 6, 1))[0]
 
     assert_equal Value::Type::TOTAL_DOWNLOADS, value[:type]
     assert_equal 1, value[:gem_id]

@@ -17,7 +17,7 @@ class TestScraper < MiniTest::Unit::TestCase
     assert gem[:downloads]
   end
 
-  def test_save_gem_data()
+  def test_save_gems_data()
     ScrapedData.where.delete
 
     gem = {:name => 'foo',
@@ -26,7 +26,7 @@ class TestScraper < MiniTest::Unit::TestCase
            :downloads => 42}
     date = Date.new(2014, 6, 1)
 
-    Scraper.save_gem_data(gem, date)
+    Scraper.save_gems_data([gem], date)
 
     data = ScrapedData.first
     assert_equal 'foo', data[:name]
