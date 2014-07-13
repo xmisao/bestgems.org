@@ -9,7 +9,7 @@ class Scraper
       num = scraping_num_of_gems(letter)
       (1..(num / 30 + 1)).each{|i|
         gems = scraping_gems_data(letter, i)
-        save_gems_data(gems, data)
+        save_gems_data(gems, date)
       }
       sleep 1
     }
