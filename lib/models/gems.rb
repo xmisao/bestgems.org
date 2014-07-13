@@ -61,13 +61,13 @@ class Gems < Sequel::Model
         .join(Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                           :date => date).as(:TD),
               :gems__id => :TD__gem_id)
-        .join(Value.where(:type => Value::Type::DAILY_DOWNLOADS,
+        .left_join(Value.where(:type => Value::Type::DAILY_DOWNLOADS,
                           :date => date).as(:DD),
               :gems__id => :DD__gem_id)
         .join(Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                             :date => date).as(:TR),
               :gems__id => :TR__gem_id)
-        .join(Ranking.where(:type => Ranking::Type::DAILY_RANKING,
+        .left_join(Ranking.where(:type => Ranking::Type::DAILY_RANKING,
                             :date => date).as(:DR),
               :gems__id => :DR__gem_id)
         .select(:gems__name,

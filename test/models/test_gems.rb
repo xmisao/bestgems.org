@@ -260,4 +260,31 @@ class TestRanking < MiniTest::Unit::TestCase
     assert_equal 30, info[:total_ranking]
     assert_equal 40, info[:daily_ranking]
   end
+
+  def test_info_total_only
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+    Value.insert(:id => 1,
+                 :type => Value::Type::TOTAL_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2014, 6, 1),
+                 :value => 10)
+    Ranking.insert(:id => 1,
+                   :type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2014, 6, 1),
+                   :ranking => 30)
+
+    info = Gems[1].info(Date.new(2014, 6, 1))
+
+    assert_equal "foo", info[:name]
+    assert_equal "1.0", info[:version]
+    assert_equal "FOO gem", info[:summary]
+    assert_equal 10, info[:total_downloads]
+    assert_equal nil, info[:daily_downloads]
+    assert_equal 30, info[:total_ranking]
+    assert_equal nil, info[:daily_ranking]
+  end
 end

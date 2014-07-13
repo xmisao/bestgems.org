@@ -257,8 +257,7 @@ end
 get '/search' do
   redirect '/' unless is_int?(params[:page])
   redirect '/' unless params[:q]
-  redirect '/' if params[:q].match(/\s+/)
-  redirect '/' if params[:q] == ""
+  redirect '/' if params[:q].match(/\A\s*\z/)
 
   date = master.first[:date]
   per_page = 20
