@@ -13,8 +13,12 @@ class TotalDownloadsUpdater
   end
 
   def self.generate_total_downloads_from_scraped_data(date)
+    duplicate_checker = {}
     total_downloads = []
     ScrapedData.where(:date => date).order(:name).each{|data|
+      next if duplicate_checker[data[:name]]
+      duplicate_checker[data[:name]] = true
+
       gem = Gems.where(:name => data[:name]).first
       raise 'Database inconsistency.' unless gem
 

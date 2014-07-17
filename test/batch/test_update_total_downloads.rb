@@ -35,6 +35,11 @@ class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
                        :date => Date.new(2014, 6, 1),
                        :name => 'bar',
                        :downloads => 84)
+    # duplicate record. this is should be ignored.
+    ScrapedData.insert(:id => 3,
+                       :date => Date.new(2014, 6, 1),
+                       :name => 'bar',
+                       :downloads => 84)
     Gems.insert(:id => 1,
                 :name => 'foo')
     Gems.insert(:id => 2,
