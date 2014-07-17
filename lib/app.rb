@@ -288,3 +288,31 @@ get '/about' do
   @type = :about
   erb :about
 end
+
+get '/api/v1/gems/:name/total_downloads.json' do
+  gem = Gems.where(:name => params[:name]).first
+  JSON.dump(gem.total_downloads_trends
+               .reverse
+               .map{|record| {:date => record[:date].to_s, :total_downloads => record[:downloads]}})
+end
+
+get '/api/v1/gems/:name/daily_downloads.json' do
+  gem = Gems.where(:name => params[:name]).first
+  JSON.dump(gem.daily_downloads_trends
+               .reverse
+               .map{|record| {:date => record[:date].to_s, :daily_downloads => record[:downloads]}})
+end
+
+get '/api/v1/gems/:name/total_ranking.json' do
+  gem = Gems.where(:name => params[:name]).first
+  JSON.dump(gem.total_ranking_trends
+               .reverse
+               .map{|record| {:date => record[:date].to_s, :total_ranking => record[:ranking]}})
+end
+
+get '/api/v1/gems/:name/daily_ranking.json' do
+  gem = Gems.where(:name => params[:name]).first
+  JSON.dump(gem.daily_ranking_trends
+               .reverse
+               .map{|record| {:date => record[:date].to_s, :daily_ranking => record[:ranking]}})
+end
