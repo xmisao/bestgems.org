@@ -47,6 +47,10 @@ def is_int?(str)
   str ? str.match(/^\d+$/) : true
 end
 
+configure do
+  mime_type :json, 'application/json'
+end
+
 get '/' do
   date = master.first[:date]
 
@@ -290,28 +294,44 @@ get '/about' do
 end
 
 get '/api/v1/gems/:name/total_downloads.json' do
+  content_type :json
+
   gem = Gems.where(:name => params[:name]).first
+  break 404 unless gem
+
   JSON.dump(gem.total_downloads_trends
                .reverse
                .map{|record| {:date => record[:date].to_s, :total_downloads => record[:downloads]}})
 end
 
 get '/api/v1/gems/:name/daily_downloads.json' do
+  content_type :json
+
   gem = Gems.where(:name => params[:name]).first
+  break 404 unless gem
+
   JSON.dump(gem.daily_downloads_trends
                .reverse
                .map{|record| {:date => record[:date].to_s, :daily_downloads => record[:downloads]}})
 end
 
 get '/api/v1/gems/:name/total_ranking.json' do
+  content_type :json
+
   gem = Gems.where(:name => params[:name]).first
+  break 404 unless gem
+
   JSON.dump(gem.total_ranking_trends
                .reverse
                .map{|record| {:date => record[:date].to_s, :total_ranking => record[:ranking]}})
 end
 
 get '/api/v1/gems/:name/daily_ranking.json' do
+  content_type :json
+
   gem = Gems.where(:name => params[:name]).first
+  break 404 unless gem
+
   JSON.dump(gem.daily_ranking_trends
                .reverse
                .map{|record| {:date => record[:date].to_s, :daily_ranking => record[:ranking]}})
