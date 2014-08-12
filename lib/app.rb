@@ -64,7 +64,7 @@ get '/total' do
   redirect '/total' unless is_int?(params[:page])
 
   @title = 'Total Download Ranking -- Best Gems'
-  @ranking_name = 'Total Donwload Ranking'
+  @ranking_name = 'Total Download Ranking'
   @ranking_description = 'Most downloads over all time'
 
   @chart_title = 'Downloads'
@@ -93,7 +93,7 @@ get '/daily' do
   redirect '/daily' unless is_int?(params[:page])
 
   @title = 'Daily Download Ranking -- Best Gems'
-  @ranking_name = 'Daily Donwload Ranking'
+  @ranking_name = 'Daily Download Ranking'
   @ranking_description = 'Most downloads last day.'
 
   @chart_title = 'Downloads '
