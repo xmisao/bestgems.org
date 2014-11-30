@@ -19,12 +19,11 @@ class Scraper
     ScrapedData.where(:date => date).delete
   end
 
-
   def self.scraping_num_of_gems(letter)
     try(3, 60) do
       agent = Mechanize.new
       letter_page = agent.get("https://rubygems.org/gems?letter=#{letter}")
-      letter_page.search("p[@class='entries']").first.content.match(/of (\d+)/).to_a[1].to_i
+      letter_page.search("p[@class='gems__meter']").first.content.match(/of (\d+)/).to_a[1].to_i
     end
   end
 
@@ -34,12 +33,12 @@ class Scraper
       page = agent.get("https://rubygems.org/gems?letter=#{letter}&page=#{i}")
 
       gems = []
-      page.search("div[@class='gems border']//ol//li").each{|gem|
-        name_version = gem.search("a//strong").first.content.match(/(.+?)\s\((.+?)\)/).to_a
+      page.search("a[@class='gems__gem']").each{|gem|
+        name_version = gem.search("h2[@class='gems__gem__name']").first.content.match(/\s*(.+)\s*(.+)/).to_a
         name = name_version[1]
         version = name_version[2]
-        summary = gem.search("a").children[2].content.strip
-        downloads = gem.search("div//strong").first.content.gsub(/[^\d]/, '').to_i
+        summary = gem.search("p[@class='gems__gem__desc t-text']").first.content.strip
+        downloads = gem.search("p[@class='gems__gem__downloads__count']").first.content.gsub(/[^\d]/, '').to_i
 
         gems << {:name => name, :version => version, :summary => summary, :downloads => downloads}
       }
