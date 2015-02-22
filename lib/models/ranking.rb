@@ -24,7 +24,7 @@ class Ranking < Sequel::Model
                     :date => date).as(:V),
         :R__gem_id => :V__gem_id)
       .join(:gems, :gems__id => :R__gem_id)
-      .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+      .select(:R__date, :gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
 
   def self.total_count(date)
@@ -43,7 +43,7 @@ class Ranking < Sequel::Model
                     :date => date).as(:V),
         :R__gem_id => :V__gem_id)
       .join(:gems, :gems__id => :R__gem_id)
-      .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+      .select(:R__date, :gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
 
   def self.daily_count(date)
@@ -72,7 +72,7 @@ class Ranking < Sequel::Model
                       :date => date)
                .as(:RD),
         :RD__gem_id => :RT__gem_id)
-      .select(:gems__name, :gems__summary, :RF__ranking, Sequel.as(:V__value, :score), Sequel.as(:RT__ranking, :total_ranking), Sequel.as(:RD__ranking, :daily_ranking))
+      .select(:RF__date, :gems__name, :gems__summary, :RF__ranking, Sequel.as(:V__value, :score), Sequel.as(:RT__ranking, :total_ranking), Sequel.as(:RD__ranking, :daily_ranking))
   end
 
   def self.featured_count(date)

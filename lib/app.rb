@@ -4,6 +4,8 @@ require 'cgi'
 require_relative 'pager'
 require_relative 'stat'
 require_relative 'database'
+require_relative 'api'
+require_relative 'util'
 
 total = DB[:total]
 daily = DB[:daily]
@@ -335,4 +337,55 @@ get '/api/v1/gems/:name/daily_ranking.json' do
   JSON.dump(gem.daily_ranking_trends
                .reverse
                .map{|record| {:date => record[:date].to_s, :daily_ranking => record[:ranking]}})
+end
+
+get '/api/v1/ranking/total_downloads.json' do
+  content_type :json
+
+  date_str = params[:date]
+  start = params[:start] || 0
+  count = params[:count] || 1000
+
+  if date_str
+    date = parse_date(date_str)
+    break 500 unless date
+  else
+    date = Master.first[:date]
+  end
+
+  JSON.dump(total_ranking_api(date, start, count))
+end
+
+get '/api/v1/ranking/daily_downloads.json' do
+  content_type :json
+
+  date_str = params[:date]
+  start = params[:start] || 0
+  count = params[:count] || 1000
+
+  if date_str
+    date = parse_date(date_str)
+    break 500 unless date
+  else
+    date = Master.first[:date]
+  end
+
+  JSON.dump(daily_ranking_api(date, start, count))
+end
+
+get '/api/v1/ranking/featured_gems.json' do
+  content_type :json
+
+  date_str = params[:date]
+  start = params[:start] || 0
+  count = params[:count] || 1000
+
+  if date_str
+    date = parse_date(date_str)
+    break 500 unless date
+  else
+    date = Master.first[:date]
+  end
+
+  JSON.dump(featured_gems_ranking_api(date, start, count))
 end
