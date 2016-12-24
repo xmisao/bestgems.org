@@ -32,7 +32,9 @@ class DailyDownloadsUpdater
   end
 
   def self.update_daily_downloads(daily_downloads)
-    Value.multi_insert(daily_downloads)
+    daily_downloads.each_slice(SLICE_SIZE) do |sliced_data|
+      Value.multi_insert(sliced_data)
+    end
   end
 end
 

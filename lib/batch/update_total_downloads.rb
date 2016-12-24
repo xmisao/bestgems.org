@@ -32,7 +32,9 @@ class TotalDownloadsUpdater
   end
 
   def self.update_total_downloads(total_downloads)
-    Value.multi_insert(total_downloads)
+    total_downloads.each_slice(SLICE_SIZE) do |sliced_data|
+      Value.multi_insert(sliced_data)
+    end
   end
 end
 

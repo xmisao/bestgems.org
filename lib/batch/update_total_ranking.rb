@@ -41,7 +41,9 @@ class TotalRankingUpdater
   end
 
   def self.update_total_ranking(total_ranking)
-    Ranking.multi_insert(total_ranking)
+    total_ranking.each_slice(SLICE_SIZE) do |sliced_data|
+      Ranking.multi_insert(sliced_data)
+    end
   end
 end
 

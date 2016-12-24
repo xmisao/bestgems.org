@@ -38,7 +38,9 @@ class DailyRankingUpdater
   end
 
   def self.update_daily_ranking(daily_ranking)
-    Ranking.multi_insert(daily_ranking)
+    daily_ranking.each_slice(SLICE_SIZE) do |sliced_data|
+      Ranking.multi_insert(sliced_data)
+    end
   end
 end
 
