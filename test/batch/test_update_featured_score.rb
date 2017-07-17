@@ -1,13 +1,12 @@
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'database'
 require 'batch/update_featured_score'
 require_relative '../run_migration'
+require_relative '../test_helper'
 
 class TestUpdateFeaturedScore < MiniTest::Unit::TestCase
   def setup
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    TestHelper.delete_all
   end
 
   def test_generate_featured_score
