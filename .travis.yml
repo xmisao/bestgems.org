@@ -3,4 +3,4 @@ language: ruby
 rvm:
   - 2.4.1
 before_install: gem install bundler -v 1.15.1
-script: rake test
+script: bundle exec rake test
