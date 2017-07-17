@@ -25,7 +25,7 @@ class TestUpdateMaster < MiniTest::Unit::TestCase
     assert_equal Date.new(2014, 6, 1), master[:date]
   end
 
-  def test_execute_exception 
+  def test_execute_exception
     Master.insert(:date => Date.new(2014, 5, 31))
     Master.insert(:date => Date.new(2014, 5, 30))
 

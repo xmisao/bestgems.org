@@ -8,15 +8,15 @@ Sequel.migration do
       Integer :daily_rank
       Integer :total_rank
       Integer :rank_diff
-      
+
       primary_key [:name, :date]
-      
+
       index [:date, :rank], :name=>:featured_combi_index
       index [:date]
       index [:rank]
     end
   end
-  
+
   down do
     drop_table(:featured)
   end

@@ -9,11 +9,13 @@ class Gems < Sequel::Model
       .join(
         Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                       :date => date).as(:R),
-        :G__id => :R__gem_id)
+        :G__id => :R__gem_id
+      )
       .join(
         Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                     :date => date).as(:V),
-        :G__id => :V__gem_id)
+        :G__id => :V__gem_id
+      )
       .order(:R__ranking)
       .select(:G__name, :G__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
@@ -32,7 +34,7 @@ class Gems < Sequel::Model
 
   def downloads_trends()
     DB.from(total_downloads_trends.as(:T))
-      .left_outer_join(daily_downloads_trends.as(:D), :T__date => :D__date) 
+      .left_outer_join(daily_downloads_trends.as(:D), :T__date => :D__date)
       .order(:T__date)
       .select(:T__date, Sequel.as(:T__downloads, :total_downloads), Sequel.as(:D__downloads, :daily_downloads))
   end
@@ -51,7 +53,7 @@ class Gems < Sequel::Model
 
   def ranking_trends()
     DB.from(total_ranking_trends.as(:T))
-      .left_outer_join(daily_ranking_trends.as(:D), :T__date => :D__date) 
+      .left_outer_join(daily_ranking_trends.as(:D), :T__date => :D__date)
       .order(:T__date)
       .select(:T__date, Sequel.as(:T__ranking, :total_ranking), Sequel.as(:D__ranking, :daily_ranking))
   end
@@ -62,14 +64,14 @@ class Gems < Sequel::Model
                           :date => date).as(:TD),
               :gems__id => :TD__gem_id)
         .left_join(Value.where(:type => Value::Type::DAILY_DOWNLOADS,
-                          :date => date).as(:DD),
-              :gems__id => :DD__gem_id)
+                               :date => date).as(:DD),
+                   :gems__id => :DD__gem_id)
         .join(Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                             :date => date).as(:TR),
               :gems__id => :TR__gem_id)
         .left_join(Ranking.where(:type => Ranking::Type::DAILY_RANKING,
-                            :date => date).as(:DR),
-              :gems__id => :DR__gem_id)
+                                 :date => date).as(:DR),
+                   :gems__id => :DR__gem_id)
         .select(:gems__name,
                 :gems__summary,
                 :gems__version,

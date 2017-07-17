@@ -22,7 +22,8 @@ class Ranking < Sequel::Model
       .join(
         Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                     :date => date).as(:V),
-        :R__gem_id => :V__gem_id)
+        :R__gem_id => :V__gem_id
+      )
       .join(:gems, :gems__id => :R__gem_id)
       .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
@@ -41,7 +42,8 @@ class Ranking < Sequel::Model
       .join(
         Value.where(:type => Value::Type::DAILY_DOWNLOADS,
                     :date => date).as(:V),
-        :R__gem_id => :V__gem_id)
+        :R__gem_id => :V__gem_id
+      )
       .join(:gems, :gems__id => :R__gem_id)
       .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
   end
@@ -61,17 +63,20 @@ class Ranking < Sequel::Model
       .join(
         Value.where(:type => Value::Type::FEATURED_SCORE,
                     :date => date).as(:V),
-        :RF__gem_id => :V__gem_id)
+        :RF__gem_id => :V__gem_id
+      )
       .join(
         Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                       :date => date)
                .as(:RT),
-        :RF__gem_id => :RT__gem_id)
+        :RF__gem_id => :RT__gem_id
+      )
       .join(
         Ranking.where(:type => Ranking::Type::DAILY_RANKING,
                       :date => date)
                .as(:RD),
-        :RD__gem_id => :RT__gem_id)
+        :RD__gem_id => :RT__gem_id
+      )
       .select(:gems__name, :gems__summary, :RF__ranking, Sequel.as(:V__value, :score), Sequel.as(:RT__ranking, :total_ranking), Sequel.as(:RD__ranking, :daily_ranking))
   end
 
