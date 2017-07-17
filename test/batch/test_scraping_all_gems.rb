@@ -1,9 +1,14 @@
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'database'
 require 'batch/scraping_all_gems'
 require_relative '../run_migration'
+require_relative '../test_helper'
 
 class TestScraper < MiniTest::Unit::TestCase
+  def setup
+    TestHelper.delete_all
+  end
+
   def test_scraping_num_of_gems()
     num = Scraper.scraping_num_of_gems('A')
     assert num

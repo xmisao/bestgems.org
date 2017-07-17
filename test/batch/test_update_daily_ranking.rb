@@ -1,13 +1,12 @@
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'database'
 require 'batch/update_daily_ranking'
 require_relative '../run_migration'
+require_relative '../test_helper'
 
 class TestUpdateDailyRanking < MiniTest::Unit::TestCase
   def setup
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    TestHelper.delete_all
   end
 
   def test_execute

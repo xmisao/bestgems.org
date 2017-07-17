@@ -1,4 +1,4 @@
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'database'
 require_relative '../run_migration'
 

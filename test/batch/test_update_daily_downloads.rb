@@ -1,13 +1,12 @@
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'database'
 require 'batch/update_daily_downloads'
 require_relative '../run_migration'
+require_relative '../test_helper'
 
 class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
   def setup
-    ScrapedData.where.delete
-    Gems.where.delete
-    Value.where.delete
+    TestHelper.delete_all
   end
 
   def test_generate_daily_downloads
