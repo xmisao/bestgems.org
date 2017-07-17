@@ -7,6 +7,7 @@ DB.create_table! :test do
   integer :key
   integer :value
 end
+
 class Test < Sequel::Model(:test); end
 
 class TestModel < MiniTest::Unit::TestCase

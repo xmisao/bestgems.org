@@ -77,7 +77,7 @@ get '/total' do
   per_page = 20
   page = params[:page] ? params[:page].to_i - 1 : 0
 
-  @gems = Ranking.total(date, per_page, per_page * page) 
+  @gems = Ranking.total(date, per_page, per_page * page)
 
   @path = '/total'
   @opts = params

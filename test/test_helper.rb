@@ -1,5 +1,5 @@
 module TestHelper
-  def self.delete_all 
+  def self.delete_all
     ReportData.where.delete
     Reports.where.delete
     Statistics.where.delete
