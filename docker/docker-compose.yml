@@ -1,6 +1,6 @@
 version: '2'
 services:
-  web:
-    image: bestgems-web
+  app:
+    image: bestgems-app
     ports:
       - 9292:9292
