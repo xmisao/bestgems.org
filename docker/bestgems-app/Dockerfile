@@ -4,6 +4,6 @@ ADD . /srv/bestgems.org
 
 WORKDIR /srv/bestgems.org
 
-RUN bundle install
+RUN bundle install --path .bundle
 
-CMD rackup -o 0.0.0.0
+CMD bundle exec rackup -o 0.0.0.0

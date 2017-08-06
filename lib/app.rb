@@ -49,8 +49,6 @@ configure do
 end
 
 get '/' do
-  date = master.first[:date]
-
   @title = "BestGems -- Ruby Gems Download Ranking"
   date = Master.first[:date]
   @total_gems = Ranking.total(date, 10) # total.where(:date => date).reverse_order(:downloads).limit(10)

@@ -30,7 +30,8 @@ namespace 'db' do
     require_relative 'lib/migration/migrator'
 
     migrator = Migrator.new(settings.db)
-    migrator.execute_migration()
+    migrator.execute_migration
+    migrator.insert_initial_data
   end
 end
 
