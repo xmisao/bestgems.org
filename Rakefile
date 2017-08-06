@@ -27,7 +27,8 @@ namespace :docker do
 end
 
 Rake::TestTask.new do |test|
-  ENV['RACK_ENV'] = 'test'
-  test.test_files = Dir[ 'test/**/test_*.rb' ]
+  ENV['APP_ENV'] = 'test'
+
+  test.test_files =  Dir['test/**/test_*.rb']
   test.verbose = true
 end

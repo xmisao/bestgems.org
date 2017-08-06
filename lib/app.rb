@@ -1,9 +1,6 @@
-require 'sinatra'
-require 'sequel'
-require 'cgi'
+require_relative 'database'
 require_relative 'pager'
 require_relative 'stat'
-require_relative 'database'
 
 total = DB[:total]
 daily = DB[:daily]
