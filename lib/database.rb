@@ -1,15 +1,15 @@
+require 'sinatra'
+require 'sinatra/config_file'
+config_file File.expand_path('../../config/database.yml.erb', __FILE__)
+
 require 'sequel'
+
+require 'cgi'
 require 'yaml'
-
-env = ENV['RACK_ENV']
-
-db_config = YAML.load_file(File.expand_path("../../config/database.yml", __FILE__))
-db_config = db_config[env] || db_config[env.to_sym] || db_config
-db_config.keys.each{|k| db_config[k.to_sym] = db_config.delete(k)}
 
 SLICE_SIZE = 1000
 
-DB = Sequel.connect(db_config)
+DB = Sequel.connect(settings.db)
 require_relative 'models/model'
 require_relative 'models/master'
 require_relative 'models/scraped_data'

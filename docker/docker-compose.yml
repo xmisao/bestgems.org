@@ -1,6 +1,18 @@
 version: '2'
 services:
-  app:
+  bestgems-app:
     image: bestgems-app
     ports:
       - 9292:9292
+    environment:
+      - RACK_ENV=production
+      - BESTGEMS_DB_HOST=bestgems-db
+      - BESTGEMS_DB_USER=bestgems
+      - BESTGEMS_DB_PASSWORD=bestgems
+      - BESTGEMS_DB_NAME=bestgems
+    command: /bin/bash -c 'wait-for-it.sh bestgems-db:5432 && APP_ENV=production bundle exec rake db:migration && APP_ENV=production bundle exec rackup'
+  bestgems-db:
+    image: postgres:9.2-alpine
+    environment:
+      - POSTGRES_USER=bestgems
+      - POSTGRES_PASSWORD=bestgems

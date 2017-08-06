@@ -1,9 +1,6 @@
-require 'sinatra'
-require 'sequel'
-require 'cgi'
+require_relative 'database'
 require_relative 'pager'
 require_relative 'stat'
-require_relative 'database'
 
 total = DB[:total]
 daily = DB[:daily]
@@ -52,8 +49,6 @@ configure do
 end
 
 get '/' do
-  date = master.first[:date]
-
   @title = "BestGems -- Ruby Gems Download Ranking"
   date = Master.first[:date]
   @total_gems = Ranking.total(date, 10) # total.where(:date => date).reverse_order(:downloads).limit(10)

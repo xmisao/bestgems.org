@@ -1,0 +1,18 @@
+test:
+  db:
+    adapter: "sqlite"
+    timeout: 60000
+
+development:
+  db:
+    adapter: "sqlite"
+    database: "db/master.sqlite3"
+    timeout: 60000
+
+production:
+  db:
+    adapter: "postgres"
+    host: "<%= ENV['BESTGEMS_DB_HOST'] %>"
+    user: "<%= ENV['BESTGEMS_DB_USER'] %>"
+    password: "<%= ENV['BESTGEMS_DB_PASSWORD'] %>"
+    database: "<%= ENV['BESTGEMS_DB_NAME'] %>"
