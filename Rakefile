@@ -1,7 +1,5 @@
 # coding: UTF-8
 
-require 'rake/testtask'
-
 task :default => [:test]
 
 namespace :docker do
@@ -26,8 +24,19 @@ namespace :docker do
   end
 end
 
+namespace 'db' do
+  desc 'Execute migration'
+  task :migration do |t|
+    require_relative 'lib/migration/migrator'
+
+    migrator = Migrator.new(settings.db)
+    migrator.execute_migration()
+  end
+end
+
+require 'rake/testtask'
 Rake::TestTask.new do |test|
-  ENV['APP_ENV'] = 'test'
+  ENV['APP_ENV'] = 'test' unless ENV['APP_ENV']
 
   test.test_files =  Dir['test/**/test_*.rb']
   test.verbose = true
