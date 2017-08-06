@@ -1,0 +1,3 @@
+#!/bin/bash
+BASE_IMAGE=ruby:2.4
+docker run -it --rm -v `pwd`:/mnt -w /mnt -u `id -u`:`id -g` --entrypoint '/usr/local/bin/bundle' $BASE_IMAGE $@
