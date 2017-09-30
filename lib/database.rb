@@ -3,9 +3,10 @@ require 'sinatra/config_file'
 config_file File.expand_path('../../config/database.yml.erb', __FILE__)
 
 require 'sequel'
-
 require 'cgi'
 require 'yaml'
+require 'msgpack'
+require 'leveldb'
 
 SLICE_SIZE = 1000
 
@@ -19,3 +20,5 @@ require_relative 'models/ranking'
 require_relative 'models/statistics'
 require_relative 'models/reports'
 require_relative 'models/report_data'
+require_relative 'models/trend'
+require_relative 'models/trend_data'
