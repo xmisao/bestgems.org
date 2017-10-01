@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/config_file'
 config_file File.expand_path('../../config/database.yml.erb', __FILE__)
+Settings = settings
 
 require 'sequel'
 require 'cgi'
