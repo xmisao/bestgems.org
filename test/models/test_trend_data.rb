@@ -7,9 +7,9 @@ class TestTrendData < MiniTest::Unit::TestCase
 
     assert_equal Date.new(2017, 9, 25), tdp.date
     assert_equal 1, tdp.total_downloads
-    assert_equal 2, tdp.total_rank
+    assert_equal 2, tdp.total_ranking
     assert_equal 3, tdp.daily_downloads
-    assert_equal 4, tdp.daily_rank
+    assert_equal 4, tdp.daily_ranking
   end
 
   def test_pack_to_msgpack
