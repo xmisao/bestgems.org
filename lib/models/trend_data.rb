@@ -18,6 +18,10 @@ class TrendData
     @date, @total_downloads, @total_rank, @daily_downloads, @daily_rank = date, total_downloads, total_rank, daily_downloads, daily_rank
   end
 
+  def key(gem_id)
+    sprintf("%d.%04d%02d", gem_id, @date.year, @date.month)
+  end
+
   def ==(other)
     @date == other.date \
       && @total_downloads == other.total_downloads \

@@ -29,4 +29,10 @@ class TestTrendData < MiniTest::Unit::TestCase
 
     assert_equal tdp, unpacked_tdp
   end
+
+  def test_key
+    tdp = TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)
+
+    assert_equal tdp.key(42), '42.201709'
+  end
 end
