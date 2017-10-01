@@ -65,25 +65,25 @@ class TestTrend < MiniTest::Unit::TestCase
     assert_equal [td2], Trend.get_a(td2.key(gem_id))
   end
 
-  def test_put_values_most_complex_case
+  def test_put_values_complex_case
     gem_id = 42
 
-    td1_1 = TrendData.new(Date.new(2017, 9, 1), 1, 2, 3, 4) # Exist and updated by new value
-    td1_2 = TrendData.new(Date.new(2017, 9, 1), 2, 3, 4, 5) # New value for exists value
+    td1_1 = TrendData.new(Date.new(2017, 9, 1), 1, 2, 3, 4) # Exist and updated by new value (1st key)
+    td1_2 = TrendData.new(Date.new(2017, 9, 1), 2, 3, 4, 5) # New value for exists value (1st key)
     td2 = TrendData.new(Date.new(2017, 9, 2), 3, 4, 5, 6) # Exist and updated by same value
     td3 = TrendData.new(Date.new(2017, 9, 3), 4, 5, 6, 7) # Exist and not updated
-    td4 = TrendData.new(Date.new(2017, 9, 4), 5, 6, 7, 8) # New value
-    td5_1 = TrendData.new(Date.new(2017, 10, 1), 6, 7, 8, 9) # Exist and updated by new value
-    td5_2 = TrendData.new(Date.new(2017, 10, 1), 7, 8, 9, 10) # New value for exists value
-    td6 = TrendData.new(Date.new(2017, 11, 1), 8, 9, 10, 11) # New value
+    td4 = TrendData.new(Date.new(2017, 9, 4), 5, 6, 7, 8) # New value (1st key)
+    td5_1 = TrendData.new(Date.new(2017, 10, 1), 6, 7, 8, 9) # Exist and updated by new value (2nd key)
+    td5_2 = TrendData.new(Date.new(2017, 10, 1), 7, 8, 9, 10) # New value for exists value (2nd key)
+    td6 = TrendData.new(Date.new(2017, 11, 1), 8, 9, 10, 11) # New value (3rd key)
 
     # Create
-    Trend.put(gem_id, td1_1, td2, td3, td4, td5_1)
+    Trend.put(gem_id, td1_1, td2, td3, td5_1)
 
-    assert_equal [td1_1, td2, td3, td4], Trend.get_a(td1_1.key(gem_id))
+    assert_equal [td1_1, td2, td3], Trend.get_a(td1_1.key(gem_id))
     assert_equal [td5_1], Trend.get_a(td5_1.key(gem_id))
 
-    assert_equal [td1_1, td2, td3, td4, td5_1], Trend.get(gem_id)
+    assert_equal [td1_1, td2, td3, td5_1], Trend.get(gem_id)
 
     # Update
     Trend.put(gem_id, td1_2, td2, td4, td5_2, td6)
