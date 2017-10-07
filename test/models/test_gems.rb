@@ -4,9 +4,7 @@ require_relative '../run_migration'
 
 class TestRanking < MiniTest::Unit::TestCase
   def setup
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    TestHelper.delete_all
   end
 
   def test_search
@@ -286,5 +284,102 @@ class TestRanking < MiniTest::Unit::TestCase
     assert_equal nil, info[:daily_downloads]
     assert_equal 30, info[:total_ranking]
     assert_equal nil, info[:daily_ranking]
+  end
+
+  def test_trend_by_rdb
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+    Value.insert(:id => 1,
+                 :type => Value::Type::TOTAL_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2017, 10, 1),
+                 :value => 10)
+    Value.insert(:id => 2,
+                 :type => Value::Type::DAILY_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2017, 10, 1),
+                 :value => 20)
+    Ranking.insert(:id => 1,
+                   :type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 1,
+                 :date => Date.new(2017, 10, 1),
+                   :ranking => 30)
+    Ranking.insert(:id => 2,
+                   :type => Ranking::Type::DAILY_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2017, 10, 1),
+                   :ranking => 40)
+
+    td = Gems[1].get_trend_data_from_rdb(Date.new(2017, 10, 1))
+
+    assert_equal TrendData.new(Date.new(2017, 10, 1), 10, 30, 20, 40), td
+  end
+
+  def test_get_trend_data_from_rdb
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2017, 10, 1),
+                   :ranking => 10)
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2017, 10, 1),
+                   :ranking => 20)
+    Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2017, 10, 1),
+                 :value => 100)
+    Value.insert(:type => Value::Type::DAILY_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2017, 10, 1),
+                 :value => 200)
+
+    gem = Gems[1]
+
+    td = gem.get_trend_data_from_rdb(Date.new(2017, 10, 1))
+
+    assert_equal TrendData.new(Date.new(2017, 10, 1), 100, 10, 200, 20), td
+  end
+
+  def test_get_trend_data_from_rdb_when_no_data
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+
+    gem = Gems[1]
+
+    td = gem.get_trend_data_from_rdb(Date.new(2017, 10, 1))
+
+    assert_equal nil, td
+  end
+
+  def test_put_trend_data
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+
+    td = TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)
+    Gems[1].put_trend_data(td)
+
+    assert_equal [td], Trend.get_a('1.201710')
+  end
+
+  def test_get_trend_data
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'FOO gem')
+
+    td = TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)
+    Trend.put(1, td)
+
+    assert_equal [td], Gems[1].get_trend_data
   end
 end
