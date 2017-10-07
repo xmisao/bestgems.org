@@ -3,9 +3,7 @@ require 'database'
 
 class TestTrend < MiniTest::Unit::TestCase
   def setup
-    Trend.all{|k, v|
-      Trend.delete_a(k)
-    }
+    TestHelper.delete_all
   end
 
   def test_put_a_get_a
