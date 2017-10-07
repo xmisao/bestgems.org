@@ -7,5 +7,9 @@ module TestHelper
     Value.where.delete
     Ranking.where.delete
     Gems.where.delete
+
+    Trend.all{|k, v|
+      Trend.delete_a(k)
+    }
   end
 end
