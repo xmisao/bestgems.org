@@ -229,7 +229,6 @@ get '/gems/:gems' do
   redirect '/' unless params[:gems]
 
   gem = Gems.where(:name => params[:gems]).first
-  p gem
   redirect '/' unless gem
 
   date = Master.first[:date]
@@ -237,8 +236,9 @@ get '/gems/:gems' do
 
   @title = "#{info[:name]} -- BestGems"
 
-  @downloads_trends = gem.downloads_trends
-  @ranking_trends = gem.ranking_trends
+  trend = TrendDataSet.new(gem.get_trend_data)
+  @downloads_trends = trend.downloads_trends
+  @ranking_trends = trend.ranking_trends
 
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
