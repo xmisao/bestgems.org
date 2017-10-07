@@ -134,4 +134,14 @@ class TestTrend < MiniTest::Unit::TestCase
 
     assert_equal [td1_2, td2, td3, td4], merged_td_list
   end
+
+  def test_empty_return_true
+    assert_equal true, Trend.empty?
+  end
+
+  def test_empty_return_false
+    Trend.put_a('test_key', TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4))
+
+    assert_equal false, Trend.empty?
+  end
 end

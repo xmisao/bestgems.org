@@ -66,6 +66,14 @@ class Trend
     hash.values
   end
 
+  def self.empty?
+    @@level_db.each{|_|
+      return false
+    }
+
+    true
+  end
+
   private
 
   def self.unpack(value)
