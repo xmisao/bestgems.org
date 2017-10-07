@@ -35,4 +35,14 @@ class TestTrendData < MiniTest::Unit::TestCase
 
     assert_equal tdp.key(42), '42.201709'
   end
+
+  def test_equal
+    assert_equal true, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 2), 1, 2, 3, 4)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 9, 2, 3, 4)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 1, 9, 3, 4)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 1, 2, 9, 4)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 9)
+    assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == nil
+  end
 end

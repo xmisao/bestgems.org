@@ -23,6 +23,8 @@ class TrendData
   end
 
   def ==(other)
+    return false unless other.is_a? TrendData
+
     @date == other.date \
       && @total_downloads == other.total_downloads \
       && @total_ranking == other.total_ranking \
