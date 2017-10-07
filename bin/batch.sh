@@ -13,4 +13,5 @@ ruby lib/batch/update_featured_ranking.rb
 ruby lib/batch/update_statistics_num_of_gems.rb
 ruby lib/batch/update_statistics_total_downloads.rb
 ruby lib/batch/update_statistics_daily_downloads.rb
+ruby lib/batch/update_trends.rb
 ruby lib/batch/update_master.rb
