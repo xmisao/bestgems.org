@@ -12,7 +12,7 @@ class Test < Sequel::Model(:test); end
 
 class TestModel < MiniTest::Unit::TestCase
   def setup
-    Test.where.delete
+    Test.dataset.delete
   end
 
   def test_insert_or_update_insert_row

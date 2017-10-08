@@ -23,8 +23,6 @@ class TestScraper < MiniTest::Unit::TestCase
   end
 
   def test_save_gems_data()
-    ScrapedData.where.delete
-
     gem = {:name => 'foo',
            :version => '1.0',
            :summary => 'Awesome gem.',

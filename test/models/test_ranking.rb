@@ -4,9 +4,7 @@ require_relative '../run_migration'
 
 class TestRanking < MiniTest::Unit::TestCase
   def setup
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    TestHelper.delete_all
   end
 
   def test_total

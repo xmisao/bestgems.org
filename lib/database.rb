@@ -11,7 +11,11 @@ require 'leveldb'
 
 SLICE_SIZE = 1000
 
+Sequel.split_symbols = true
+Sequel::Model.require_valid_table = false
+
 DB = Sequel.connect(settings.db)
+
 require_relative 'models/model'
 require_relative 'models/master'
 require_relative 'models/scraped_data'

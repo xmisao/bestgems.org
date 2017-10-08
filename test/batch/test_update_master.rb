@@ -5,7 +5,7 @@ require_relative '../run_migration'
 
 class TestUpdateMaster < MiniTest::Unit::TestCase
   def setup
-    Master.where.delete
+    TestHelper.delete_all
   end
 
   def test_execute_insert
