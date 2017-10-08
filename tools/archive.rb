@@ -101,6 +101,8 @@ SQL
 end
 
 min_date = Date.parse([Value.min(:date), Ranking.min(:date)].min)
+min_date = min_date - (min_date.day - 1)
+
 last_archive_date = Date.today - 32
 
 raise 'No data to archive' unless min_date < last_archive_date
