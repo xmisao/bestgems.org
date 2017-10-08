@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'database'
 require_relative '../run_migration'
 
-class TestRanking < MiniTest::Unit::TestCase
+class TestRanking < Minitest::Test
   def setup
     TestHelper.delete_all
   end

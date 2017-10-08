@@ -16,6 +16,11 @@ Sequel::Model.require_valid_table = false
 
 DB = Sequel.connect(settings.db)
 
+if settings.db['adapter'] == 'sqlite'
+  # Suppress 'instance variable @transaction_mode not initialized' warning
+  DB.transaction_mode = nil
+end
+
 require_relative 'models/model'
 require_relative 'models/master'
 require_relative 'models/scraped_data'

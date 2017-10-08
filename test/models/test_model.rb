@@ -10,7 +10,7 @@ end
 
 class Test < Sequel::Model(:test); end
 
-class TestModel < MiniTest::Unit::TestCase
+class TestModel < Minitest::Test
   def setup
     Test.dataset.delete
   end

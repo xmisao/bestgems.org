@@ -3,7 +3,7 @@ require 'database'
 require 'batch/update_trends'
 require_relative '../run_migration'
 
-class TestUpdateTrend < MiniTest::Unit::TestCase
+class TestUpdateTrend < Minitest::Test
   def setup
     TestHelper.delete_all
   end

@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'database'
 
-class TestTrend < MiniTest::Unit::TestCase
+class TestTrend < Minitest::Test
   def setup
     TestHelper.delete_all
   end
@@ -40,7 +40,7 @@ class TestTrend < MiniTest::Unit::TestCase
     Trend.delete_a(test_key)
     td_list = Trend.get_a(test_key)
 
-    assert_equal nil, td_list
+    assert_nil td_list
   end
 
   def test_put_one_value

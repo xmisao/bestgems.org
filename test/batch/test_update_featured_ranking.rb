@@ -4,7 +4,7 @@ require 'batch/update_featured_ranking'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestUpdateFeaturedRanking < MiniTest::Unit::TestCase
+class TestUpdateFeaturedRanking < Minitest::Test
   def setup
     TestHelper.delete_all
   end

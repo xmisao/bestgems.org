@@ -4,7 +4,7 @@ require 'batch/update_featured_score'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestUpdateFeaturedScore < MiniTest::Unit::TestCase
+class TestUpdateFeaturedScore < Minitest::Test
   def setup
     TestHelper.delete_all
   end

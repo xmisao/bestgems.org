@@ -7,8 +7,7 @@ class MasterUpdater
     when 0
       Master.insert(:date => date)
     when 1
-      master = Master.where
-      master.update(:date => date)
+      Master.dataset.update(:date => date)
     else
       raise 'Database inconsistency.'
     end

@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'database'
 require_relative '../run_migration'
 
-class TestRanking < MiniTest::Unit::TestCase
+class TestGems < Minitest::Test
   def setup
     TestHelper.delete_all
   end
@@ -281,9 +281,9 @@ class TestRanking < MiniTest::Unit::TestCase
     assert_equal "1.0", info[:version]
     assert_equal "FOO gem", info[:summary]
     assert_equal 10, info[:total_downloads]
-    assert_equal nil, info[:daily_downloads]
+    assert_nil info[:daily_downloads]
     assert_equal 30, info[:total_ranking]
-    assert_equal nil, info[:daily_ranking]
+    assert_nil info[:daily_ranking]
   end
 
   def test_trend_by_rdb
@@ -356,7 +356,7 @@ class TestRanking < MiniTest::Unit::TestCase
 
     td = gem.get_trend_data_from_rdb(Date.new(2017, 10, 1))
 
-    assert_equal nil, td
+    assert_nil td
   end
 
   def test_put_trend_data

@@ -4,7 +4,7 @@ require 'batch/scraping_all_gems'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestScraper < MiniTest::Unit::TestCase
+class TestScraper < Minitest::Test
   def setup
     TestHelper.delete_all
   end

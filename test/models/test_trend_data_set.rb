@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'database'
 
-class TestTrendDataSet < MiniTest::Unit::TestCase
+class TestTrendDataSet < Minitest::Test
   def test_downloads_trends
     tds = TrendDataSet.new([TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)])
 
