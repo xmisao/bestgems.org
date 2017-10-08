@@ -10,6 +10,7 @@ services:
       - BESTGEMS_DB_USER=bestgems
       - BESTGEMS_DB_PASSWORD=bestgems
       - BESTGEMS_DB_NAME=bestgems
+      - BESTGEMS_LEVELDB_DIR=db/trends
     command: /bin/bash -c 'wait-for-it.sh bestgems-db:5432 && APP_ENV=production bundle exec rake db:migration && APP_ENV=production bundle exec rackup'
   bestgems-db:
     image: postgres:9.2-alpine
