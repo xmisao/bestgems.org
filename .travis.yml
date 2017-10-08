@@ -2,5 +2,9 @@ sudo: false
 language: ruby
 rvm:
   - 2.4.1
-before_install: gem install bundler -v 1.15.1
+before_install: gem install bundler -v 1.15.4
+addons:
+  apt:
+    packages:
+      - libleveldb-dev
 script: bundle exec rake test
