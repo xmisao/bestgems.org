@@ -34,7 +34,7 @@ class Archiver
 
           $logger.info("End create #{atn}")
         else
-          $logger.info("Skip Create #{atn}")
+          $logger.info("Skip create #{atn}")
         end
 
         $logger.info("Start copy #{atn}")
@@ -42,10 +42,10 @@ class Archiver
         DB.run copy_sql
         $logger.info("End copy #{atn}")
 
-        $logger.info("Start delete #{atn}")
+        $logger.info("Start delete #{table} records that are copied #{atn}")
         delete_sql = generate_delete_sql(table)
         DB.run delete_sql
-        $logger.info("End delete #{atn}")
+        $logger.info("End delete #{table} records that are copied #{atn}")
       rescue => e
         $logger.error(e)
         raise ArchiveError
@@ -66,7 +66,7 @@ CREATE TABLE #{archive_table_name(table)} (
         type integer,
         gem_id integer,
         date date,
-        value integer
+        #{table[0..-2]} integer
 );
 SQL
   end
