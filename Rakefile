@@ -38,6 +38,7 @@ end
 require 'rake/testtask'
 Rake::TestTask.new do |test|
   ENV['APP_ENV'] = 'test' unless ENV['APP_ENV']
+  ENV['BESTGEMS_TREND_SERVER'] = 'true' unless ENV['BESTGEMS_TREND_SERVER']
 
   test.test_files =  Dir['test/**/test_*.rb']
   test.verbose = true

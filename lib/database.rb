@@ -8,6 +8,7 @@ require 'cgi'
 require 'yaml'
 require 'msgpack'
 require 'leveldb'
+require 'drb/drb'
 
 SLICE_SIZE = 1000
 

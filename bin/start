@@ -1,0 +1,2 @@
+#!/bin/sh
+BESTGEMS_TREND_SERVER=true bundle exec rackup $@
