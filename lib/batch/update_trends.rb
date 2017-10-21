@@ -59,6 +59,6 @@ class TrendUpdater
 end
 
 if $0 == __FILE__
-  date = Date.parse(ARGV[0]) || Date.today - 1
+  date = ARGV[0] || Date.today - 1
   TrendUpdater.execute(date)
 end
