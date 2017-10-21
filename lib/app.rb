@@ -36,7 +36,7 @@ def comma_pm(i)
   end
 end
 
-def link(name)
+def link_by_gem_name(name)
   "<a href='/gems/#{name}'>#{name}</a>"
 end
 
