@@ -9,6 +9,7 @@ require 'yaml'
 require 'msgpack'
 require 'leveldb'
 require 'drb/drb'
+require 'logger'
 
 SLICE_SIZE = 1000
 
