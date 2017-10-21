@@ -11,3 +11,9 @@ gem "thin"
 gem "rake"
 gem "minitest"
 gem "rufo"
+gem "leveldb-ruby"
+gem "msgpack"
+
+group :development do
+  gem "pry"
+end

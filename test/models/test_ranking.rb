@@ -2,11 +2,9 @@ require 'minitest/autorun'
 require 'database'
 require_relative '../run_migration'
 
-class TestRanking < MiniTest::Unit::TestCase
+class TestRanking < Minitest::Test
   def setup
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    TestHelper.delete_all
   end
 
   def test_total

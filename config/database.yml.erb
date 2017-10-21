@@ -2,12 +2,16 @@ test:
   db:
     adapter: "sqlite"
     timeout: 60000
+  leveldb:
+    dir: "db/test_trends"
 
 development:
   db:
     adapter: "sqlite"
     database: "db/master.sqlite3"
     timeout: 60000
+  leveldb:
+    dir: "db/trends"
 
 production:
   db:
@@ -16,3 +20,5 @@ production:
     user: "<%= ENV['BESTGEMS_DB_USER'] %>"
     password: "<%= ENV['BESTGEMS_DB_PASSWORD'] %>"
     database: "<%= ENV['BESTGEMS_DB_NAME'] %>"
+  leveldb:
+    dir:  "<%= ENV['BESTGEMS_LEVELDB_DIR'] %>"

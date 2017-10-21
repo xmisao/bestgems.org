@@ -4,7 +4,7 @@ require 'batch/update_total_downloads'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestUpdateTotalDownloads < MiniTest::Unit::TestCase
+class TestUpdateTotalDownloads < Minitest::Test
   def setup
     TestHelper.delete_all
   end

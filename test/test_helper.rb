@@ -1,11 +1,16 @@
 module TestHelper
   def self.delete_all
-    ReportData.where.delete
-    Reports.where.delete
-    Statistics.where.delete
-    ScrapedData.where.delete
-    Value.where.delete
-    Ranking.where.delete
-    Gems.where.delete
+    ReportData.dataset.delete
+    Reports.dataset.delete
+    Statistics.dataset.delete
+    ScrapedData.dataset.delete
+    Value.dataset.delete
+    Ranking.dataset.delete
+    Gems.dataset.delete
+    Master.dataset.delete
+
+    Trend.all{|k, v|
+      Trend.delete_a(k)
+    }
   end
 end

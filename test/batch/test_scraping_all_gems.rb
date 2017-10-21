@@ -4,7 +4,7 @@ require 'batch/scraping_all_gems'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestScraper < MiniTest::Unit::TestCase
+class TestScraper < Minitest::Test
   def setup
     TestHelper.delete_all
   end
@@ -23,8 +23,6 @@ class TestScraper < MiniTest::Unit::TestCase
   end
 
   def test_save_gems_data()
-    ScrapedData.where.delete
-
     gem = {:name => 'foo',
            :version => '1.0',
            :summary => 'Awesome gem.',

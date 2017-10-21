@@ -3,9 +3,9 @@ require 'database'
 require 'batch/update_master'
 require_relative '../run_migration'
 
-class TestUpdateMaster < MiniTest::Unit::TestCase
+class TestUpdateMaster < Minitest::Test
   def setup
-    Master.where.delete
+    TestHelper.delete_all
   end
 
   def test_execute_insert

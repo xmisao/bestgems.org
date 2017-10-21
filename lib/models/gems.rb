@@ -81,4 +81,21 @@ class Gems < Sequel::Model
                 Sequel.as(:DR__ranking, :daily_ranking))
         .first
   end
+
+  def get_trend_data_from_rdb(date)
+    total_downloads = Value.where(gem_id: id, type: Value::Type::TOTAL_DOWNLOADS, date: date).get(:value)
+    daily_downloads = Value.where(gem_id: id, type: Value::Type::DAILY_DOWNLOADS, date: date).get(:value)
+    total_ranking = Ranking.where(gem_id: id, type: Ranking::Type::TOTAL_RANKING, date: date).get(:ranking)
+    daily_ranking = Ranking.where(gem_id: id, type: Ranking::Type::DAILY_RANKING, date: date).get(:ranking)
+
+    TrendData.new(date, total_downloads, total_ranking, daily_downloads, daily_ranking) if total_downloads || total_ranking || daily_downloads || daily_ranking
+  end
+
+  def put_trend_data(*td_list)
+    Trend.put(id, *td_list)
+  end
+
+  def get_trend_data()
+    Trend.get(id)
+  end
 end

@@ -4,7 +4,7 @@ require 'batch/update_gems'
 require_relative '../run_migration'
 require_relative '../test_helper'
 
-class TestUpdateGems < MiniTest::Unit::TestCase
+class TestUpdateGems < Minitest::Test
   def setup
     TestHelper.delete_all
   end

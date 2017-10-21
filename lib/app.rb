@@ -36,7 +36,7 @@ def comma_pm(i)
   end
 end
 
-def link(name)
+def link_by_gem_name(name)
   "<a href='/gems/#{name}'>#{name}</a>"
 end
 
@@ -229,7 +229,6 @@ get '/gems/:gems' do
   redirect '/' unless params[:gems]
 
   gem = Gems.where(:name => params[:gems]).first
-  p gem
   redirect '/' unless gem
 
   date = Master.first[:date]
@@ -237,8 +236,9 @@ get '/gems/:gems' do
 
   @title = "#{info[:name]} -- BestGems"
 
-  @downloads_trends = gem.downloads_trends
-  @ranking_trends = gem.ranking_trends
+  trend = TrendDataSet.new(gem.get_trend_data)
+  @downloads_trends = trend.downloads_trends
+  @ranking_trends = trend.ranking_trends
 
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
@@ -294,9 +294,9 @@ get '/api/v1/gems/:name/total_downloads.json' do
   gem = Gems.where(:name => params[:name]).first
   break 404 unless gem
 
-  JSON.dump(gem.total_downloads_trends
-               .reverse
-               .map{|record| {:date => record[:date].to_s, :total_downloads => record[:downloads]}})
+  trend = TrendDataSet.new(gem.get_trend_data)
+
+  JSON.dump(trend.total_downloads.reverse)
 end
 
 get '/api/v1/gems/:name/daily_downloads.json' do
@@ -305,9 +305,9 @@ get '/api/v1/gems/:name/daily_downloads.json' do
   gem = Gems.where(:name => params[:name]).first
   break 404 unless gem
 
-  JSON.dump(gem.daily_downloads_trends
-               .reverse
-               .map{|record| {:date => record[:date].to_s, :daily_downloads => record[:downloads]}})
+  trend = TrendDataSet.new(gem.get_trend_data)
+
+  JSON.dump(trend.daily_downloads.reverse)
 end
 
 get '/api/v1/gems/:name/total_ranking.json' do
@@ -316,9 +316,9 @@ get '/api/v1/gems/:name/total_ranking.json' do
   gem = Gems.where(:name => params[:name]).first
   break 404 unless gem
 
-  JSON.dump(gem.total_ranking_trends
-               .reverse
-               .map{|record| {:date => record[:date].to_s, :total_ranking => record[:ranking]}})
+  trend = TrendDataSet.new(gem.get_trend_data)
+
+  JSON.dump(trend.total_ranking.reverse)
 end
 
 get '/api/v1/gems/:name/daily_ranking.json' do
@@ -327,7 +327,7 @@ get '/api/v1/gems/:name/daily_ranking.json' do
   gem = Gems.where(:name => params[:name]).first
   break 404 unless gem
 
-  JSON.dump(gem.daily_ranking_trends
-               .reverse
-               .map{|record| {:date => record[:date].to_s, :daily_ranking => record[:ranking]}})
+  trend = TrendDataSet.new(gem.get_trend_data)
+
+  JSON.dump(trend.daily_ranking.reverse)
 end

@@ -10,9 +10,9 @@ end
 
 class Test < Sequel::Model(:test); end
 
-class TestModel < MiniTest::Unit::TestCase
+class TestModel < Minitest::Test
   def setup
-    Test.where.delete
+    Test.dataset.delete
   end
 
   def test_insert_or_update_insert_row
