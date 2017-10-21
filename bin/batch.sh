@@ -1,7 +1,5 @@
-#!
+#!/bin/bash
 
-export RACK_ENV=development
-cd /home/admin/bestgems
 ruby lib/batch/scraping_all_gems.rb
 ruby lib/batch/update_gems.rb
 ruby lib/batch/update_total_downloads.rb
