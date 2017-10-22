@@ -11,6 +11,7 @@ class Migrator
   def initialize(database_setting)
     @database_setting = database_setting
     @logger = Logger.new(STDOUT)
+    @logger.info("Database setting #{@database_setting.inspect}")
   end
 
   def execute_migration
