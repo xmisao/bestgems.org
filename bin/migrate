@@ -1,2 +1,0 @@
-#!
-sequel -m migrations sqlite://db/master.sqlite3
