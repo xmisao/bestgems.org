@@ -1,23 +1,11 @@
 class Gems < Sequel::Model
   def self.search(date, query)
-    like = nil
-    query.split(/\s+/)[0..4].each{|q|
-      l = (Sequel.ilike(:name, "%#{q}%") | Sequel.ilike(:summary, "%#{q}%"))
-      like ? like = like & l : like = l
+    like_clause = query.split(/\s+/)[0..4].inject(nil){|like_clause, q|
+      cond = (Sequel.ilike(:name, "%#{q}%") | Sequel.ilike(:summary, "%#{q}%"))
+      like_clause ? like_clause & cond : cond
     }
-    DB.from(Gems.where(like).as(:G))
-      .join(
-        Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
-                      :date => date).as(:R),
-        :G__id => :R__gem_id
-      )
-      .join(
-        Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
-                    :date => date).as(:V),
-        :G__id => :V__gem_id
-      )
-      .order(:R__ranking)
-      .select(:G__name, :G__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+
+    Gems.where(latest_update_date: date).where(like_clause).order(:latest_total_ranking)
   end
 
   def total_downloads_trends()
@@ -56,6 +44,29 @@ class Gems < Sequel::Model
       .left_outer_join(daily_ranking_trends.as(:D), :T__date => :D__date)
       .order(:T__date)
       .select(:T__date, Sequel.as(:T__ranking, :total_ranking), Sequel.as(:D__ranking, :daily_ranking))
+  end
+
+  def latest_trend(date)
+    if date == self[:latest_update_date]
+      {
+        total_downloads: self[:latest_total_downloads],
+        daily_downloads: self[:latest_daily_downloads],
+        total_ranking: self[:latest_total_ranking],
+        daily_ranking: self[:latest_daily_ranking]
+      }
+    elsif date < self[:latest_update_date]
+      # This state will occure when running update_gems_latest_columns.rb
+      # Should failback to old means
+
+      info(date)
+    else
+      {
+        total_downloads: nil,
+        daily_downloads: nil,
+        total_ranking: nil,
+        daily_ranking: nil
+      }
+    end
   end
 
   def info(date)

@@ -232,9 +232,9 @@ get '/gems/:gems' do
   redirect '/' unless gem
 
   date = Master.first[:date]
-  info = gem.info(date)
+  latest = gem.latest_trend(date)
 
-  @title = "#{info[:name]} -- BestGems"
+  @title = "#{gem[:name]} -- BestGems"
 
   trend = TrendDataSet.new(gem.get_trend_data)
   @downloads_trends = trend.downloads_trends
@@ -243,12 +243,12 @@ get '/gems/:gems' do
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
 
-  @gem_name = info[:name]
-  @gem_summary = info[:summary]
-  @total_downloads = info[:total_downloads]
-  @total_rank = info[:total_ranking]
-  @daily_downloads = info[:daily_downloads]
-  @daily_rank = info[:daily_ranking]
+  @gem_name = gem[:name]
+  @gem_summary = gem[:summary]
+  @total_downloads = latest[:total_downloads]
+  @total_rank = latest[:total_ranking]
+  @daily_downloads = latest[:daily_downloads]
+  @daily_rank = latest[:daily_ranking]
 
   erb :gems
 end
