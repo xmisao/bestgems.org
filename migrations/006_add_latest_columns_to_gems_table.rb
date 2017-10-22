@@ -12,6 +12,14 @@ Sequel.migration do
   end
 
   down do
-    raise "This migration can not be canceled."
+    transaction do
+      alter_table(:gems) do
+        drop_column :latest_total_downloads
+        drop_column :latest_total_ranking
+        drop_column :latest_daily_downloads
+        drop_column :latest_daily_ranking
+        drop_column :latest_update_date
+      end
+    end
   end
 end
