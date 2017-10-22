@@ -6,7 +6,7 @@
 		<table class="table table-striped">
 			<tr><th>Total Rank</th><th>Total Downloads</th><th>Name</th><th>Summary</th></tr>
 			<% @gems.each{|gem| %>
-			<tr><td class="right"><%= comma(gem[:ranking]) %></td><td class="right"><%= comma(gem[:downloads]) %></td><td><%= link_by_gem_name(gem[:name]) %></td><td><%= gem[:summary] %></td></tr>
+			<tr><td class="right"><%= comma(gem[:latest_total_ranking]) %></td><td class="right"><%= comma(gem[:latest_total_downloads]) %></td><td><%= link_by_gem_name(gem[:name]) %></td><td><%= gem[:summary] %></td></tr>
 			<% } %>
 		</table>
 			<div style="font-size:18px;" class="text-center pagination">
