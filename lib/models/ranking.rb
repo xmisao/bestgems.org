@@ -60,7 +60,7 @@ class Ranking < Sequel::Model
         total_ranking: gem[:latest_total_ranking],
         daily_ranking: gem[:latest_daily_ranking]
       }
-    }
+    }.sort_by{|gem| gem[:ranking]}
   end
 
   def self.featured_count(date)
