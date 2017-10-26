@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'database'
+require 'batch/update_gems_latest_columns'
 require_relative '../run_migration'
 
 class TestRanking < Minitest::Test
@@ -12,16 +13,23 @@ class TestRanking < Minitest::Test
                 :name => 'foo',
                 :version => '1.0',
                 :summary => 'Awesome gem.')
-    Value.insert(:id => 1,
-                 :type => Value::Type::TOTAL_DOWNLOADS,
+    Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
                  :value => 42)
-    Ranking.insert(:id => 1,
-                   :type => Ranking::Type::TOTAL_RANKING,
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2014, 6, 1),
                    :ranking => 20)
+    Value.insert(:type => Value::Type::DAILY_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2014, 6, 1),
+                 :value => 23)
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2014, 6, 1),
+                   :ranking => 10)
+    GemsLatestColumnsUpdater.execute(Date.new(2014, 6, 1))
 
     total = Ranking.total(Date.new(2014, 6, 1), 1)
     top = total.first
@@ -37,23 +45,30 @@ class TestRanking < Minitest::Test
                 :name => 'foo',
                 :version => '1.0',
                 :summary => 'Awesome gem.')
-    Value.insert(:id => 1,
-                 :type => Value::Type::DAILY_DOWNLOADS,
+    Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
                  :value => 42)
-    Ranking.insert(:id => 1,
-                   :type => Ranking::Type::DAILY_RANKING,
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2014, 6, 1),
+                   :ranking => 20)
+    Value.insert(:type => Value::Type::DAILY_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2014, 6, 1),
+                 :value => 23)
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2014, 6, 1),
                    :ranking => 10)
+    GemsLatestColumnsUpdater.execute(Date.new(2014, 6, 1))
 
     daily = Ranking.daily(Date.new(2014, 6, 1), 1)
     top = daily.first
 
     assert_equal 'foo', top[:name]
     assert_equal 'Awesome gem.', top[:summary]
-    assert_equal 42, top[:downloads]
+    assert_equal 23, top[:downloads]
     assert_equal 10, top[:ranking]
   end
 
@@ -62,26 +77,31 @@ class TestRanking < Minitest::Test
                 :name => 'foo',
                 :version => '1.0',
                 :summary => 'Awesome gem.')
-    Value.insert(:id => 1,
-                 :type => Value::Type::FEATURED_SCORE,
+    Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
-                 :value => 10)
-    Ranking.insert(:id => 1,
-                   :type => Ranking::Type::TOTAL_RANKING,
+                 :value => 42)
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2014, 6, 1),
                    :ranking => 20)
-    Ranking.insert(:id => 2,
-                   :type => Ranking::Type::DAILY_RANKING,
+    Value.insert(:type => Value::Type::DAILY_DOWNLOADS,
+                 :gem_id => 1,
+                 :date => Date.new(2014, 6, 1),
+                 :value => 23)
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2014, 6, 1),
                    :ranking => 10)
-    Ranking.insert(:id => 3,
-                   :type => Ranking::Type::FEATURED_RANKING,
+    Value.insert(:type => Value::Type::FEATURED_SCORE,
+                 :gem_id => 1,
+                 :date => Date.new(2014, 6, 1),
+                 :value => 10)
+    Ranking.insert(:type => Ranking::Type::FEATURED_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2014, 6, 1),
                    :ranking => 30)
+    GemsLatestColumnsUpdater.execute(Date.new(2014, 6, 1))
 
     featured = Ranking.featured(Date.new(2014, 6, 1), 1)
     top = featured.first

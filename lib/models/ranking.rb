@@ -14,18 +14,12 @@ class Ranking < Sequel::Model
   end
 
   def self.total(date, *limit)
-    DB.from(Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
-                          :date => date)
-                   .order(:ranking)
-                   .limit(*limit)
-                   .as(:R))
-      .join(
-        Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
-                    :date => date).as(:V),
-        :R__gem_id => :V__gem_id
-      )
-      .join(:gems, :gems__id => :R__gem_id)
-      .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+    Gems.where(latest_update_date: date).order(:latest_total_ranking).limit(*limit).select(
+      :name,
+      :summary,
+      Sequel.as(:latest_total_ranking, :ranking),
+      Sequel.as(:latest_total_downloads, :downloads)
+    )
   end
 
   def self.total_count(date)
@@ -34,18 +28,12 @@ class Ranking < Sequel::Model
   end
 
   def self.daily(date, *limit)
-    DB.from(Ranking.where(:type => Ranking::Type::DAILY_RANKING,
-                          :date => date)
-                   .order(:ranking)
-                   .limit(*limit)
-                   .as(:R))
-      .join(
-        Value.where(:type => Value::Type::DAILY_DOWNLOADS,
-                    :date => date).as(:V),
-        :R__gem_id => :V__gem_id
-      )
-      .join(:gems, :gems__id => :R__gem_id)
-      .select(:gems__name, :gems__summary, :R__ranking, Sequel.as(:V__value, :downloads))
+    Gems.where(latest_update_date: date).order(:latest_daily_ranking).limit(*limit).select(
+      :name,
+      :summary,
+      Sequel.as(:latest_daily_ranking, :ranking),
+      Sequel.as(:latest_daily_downloads, :downloads)
+    )
   end
 
   def self.daily_count(date)
@@ -54,30 +42,25 @@ class Ranking < Sequel::Model
   end
 
   def self.featured(date, *limit)
-    DB.from(Ranking.where(:type => Ranking::Type::FEATURED_RANKING,
-                          :date => date)
-                   .order(:ranking)
-                   .limit(*limit)
-                   .as(:RF))
-      .join(:gems, :gems__id => :RF__gem_id)
-      .join(
-        Value.where(:type => Value::Type::FEATURED_SCORE,
-                    :date => date).as(:V),
-        :RF__gem_id => :V__gem_id
-      )
-      .join(
-        Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
-                      :date => date)
-               .as(:RT),
-        :RF__gem_id => :RT__gem_id
-      )
-      .join(
-        Ranking.where(:type => Ranking::Type::DAILY_RANKING,
-                      :date => date)
-               .as(:RD),
-        :RD__gem_id => :RT__gem_id
-      )
-      .select(:gems__name, :gems__summary, :RF__ranking, Sequel.as(:V__value, :score), Sequel.as(:RT__ranking, :total_ranking), Sequel.as(:RD__ranking, :daily_ranking))
+    featured_ranking = Ranking.where(
+      :type => Ranking::Type::FEATURED_RANKING,
+      :date => date)
+      .order(:ranking)
+      .limit(*limit)
+      .select(:gem_id, :ranking)
+
+    gem_info = featured_ranking.map{|ranking| {gem_id: ranking[:gem_id], featured_ranking: ranking[:ranking]}}
+
+    Gems.where(id: gem_info.map{|info| info[:gem_id]}).map{|gem|
+      {
+        name: gem[:name],
+        summary: gem[:summary],
+        score: gem[:latest_total_ranking] - gem[:latest_daily_ranking],
+        ranking: gem_info.select{|gi| gi[:gem_id] == gem[:id]}.first[:featured_ranking],
+        total_ranking: gem[:latest_total_ranking],
+        daily_ranking: gem[:latest_daily_ranking]
+      }
+    }
   end
 
   def self.featured_count(date)
