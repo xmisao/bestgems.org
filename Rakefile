@@ -3,7 +3,7 @@
 task :default => [:test]
 
 desc 'Formatting by rufo'
-task :rufo do
+task :format do
   sh 'rufo bin lib test tools migrations'
 end
 
