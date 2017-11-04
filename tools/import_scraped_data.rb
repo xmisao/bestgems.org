@@ -24,14 +24,14 @@ class ScrapedDataImporter
         lines.each{|l|
           data = JSON.parse(l)
           records << data
-        }   
+        }
 
         ScrapedData.multi_insert records
-      }   
-    }   
+      }
+    }
 
     $logger.info("End import #{file}")
-  end 
+  end
 end
 
 # Usage: import_scraped_data.rb FILE...

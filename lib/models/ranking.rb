@@ -44,7 +44,8 @@ class Ranking < Sequel::Model
   def self.featured(date, *limit)
     featured_ranking = Ranking.where(
       :type => Ranking::Type::FEATURED_RANKING,
-      :date => date)
+      :date => date
+    )
       .order(:ranking)
       .limit(*limit)
       .select(:gem_id, :ranking)
