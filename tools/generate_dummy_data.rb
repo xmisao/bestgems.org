@@ -20,7 +20,7 @@ num_of_day = ARGV[1].to_i if ARGV[1]
 CHARS = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map { |i| i.to_a }.flatten
 
 def rand_str(n = 64)
-  (0...(rand(n) + 1)).map { CHARS[rand(CHARS.length)] }.join 
+  (0...(rand(n) + 1)).map { CHARS[rand(CHARS.length)] }.join
 end
 
 def rand_sentence(n = 10)

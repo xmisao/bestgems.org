@@ -53,7 +53,7 @@ class GemsLatestColumnsUpdater
             latest_total_ranking: total_ranking_map[gem_id],
             latest_daily_downloads: daily_downloads_map[gem_id],
             latest_daily_ranking: daily_ranking_map[gem_id],
-            latest_update_date: date 
+            latest_update_date: date
           )
         }
       end

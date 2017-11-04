@@ -35,7 +35,7 @@ if ENV['BESTGEMS_TREND_SERVER'] == 'true'
       @@level_db.each(from: from, to: to){|_, value|
         td_list += unpack(value) if value
       }
-      
+
       td_list.sort_by{|td| td.date }
     end
 

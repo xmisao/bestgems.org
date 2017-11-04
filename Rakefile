@@ -2,6 +2,11 @@
 
 task :default => [:test]
 
+desc 'Formatting by rufo'
+task :format do
+  sh 'rufo bin lib test tools migrations'
+end
+
 namespace :docker do
   desc 'Build all docker images'
   task build: ['docker:app:build']

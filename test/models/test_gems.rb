@@ -285,7 +285,7 @@ class TestGems < Minitest::Test
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
-                 :date => Date.new(2017, 10, 1),
+                   :date => Date.new(2017, 10, 1),
                    :ranking => 30)
     Ranking.insert(:id => 2,
                    :type => Ranking::Type::DAILY_RANKING,

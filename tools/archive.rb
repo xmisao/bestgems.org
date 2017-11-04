@@ -102,7 +102,6 @@ SQL
   end
 end
 
-
 min_date = [Value.min(:date), Ranking.min(:date)].min
 min_date = Date.parse(min_date) unless min_date.is_a? Date
 min_date = min_date - (min_date.day - 1)
