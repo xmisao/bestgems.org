@@ -1,10 +1,12 @@
+# CAUTION!!
+# This tool is working only PostgreSQL.
+
 require_relative '../lib/database'
 
 case ENV['RACK_ENV']
-when 'development'
 when 'production'
 else
-  puts "You should set value 'development'(to use SQLite3) or 'production'(to use PostgreSQL) to RACK_ENV environment variable."
+  puts "You should set value 'production'(to use PostgreSQL) to RACK_ENV environment variable."
   exit 1
 end
 
@@ -82,7 +84,7 @@ SQL
     tmpl = <<SQL
 INSERT INTO #{archive_table_name(table)} 
 SELECT * 
-FROM `#{table}` WHERE date >= '#{first_day_of_month}' AND date < '#{first_day_of_next_month}';
+FROM #{table} WHERE date >= '#{first_day_of_month}' AND date < '#{first_day_of_next_month}';
 SQL
   end
 
@@ -95,7 +97,7 @@ SQL
     first_day_of_next_month = sprintf('%04d-%02d-01', next_year, next_month)
 
     tmpl = <<SQL
-DELETE FROM `#{table}` WHERE date >= '#{first_day_of_month}' AND date < '#{first_day_of_next_month}';
+DELETE FROM #{table} WHERE date >= '#{first_day_of_month}' AND date < '#{first_day_of_next_month}';
 SQL
   end
 end
