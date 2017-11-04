@@ -1,10 +1,12 @@
+# CAUTION!!
+# This tool is working only PostgreSQL.
+
 require_relative '../lib/database'
 
 case ENV['RACK_ENV']
-when 'development'
 when 'production'
 else
-  puts "You should set value 'development'(to use SQLite3) or 'production'(to use PostgreSQL) to RACK_ENV environment variable."
+  puts "You should set value 'production'(to use PostgreSQL) to RACK_ENV environment variable."
   exit 1
 end
 
