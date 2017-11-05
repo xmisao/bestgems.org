@@ -23,6 +23,14 @@ class Ranking < Sequel::Model
   end
 
   def self.total_count(date)
+    if daily_summary = DailySummary.fetch(date)
+      daily_summary[:ranking_total_count]
+    else
+      total_count0(date)
+    end
+  end
+
+  def self.total_count0(date)
     Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                   :date => date).count
   end
@@ -37,6 +45,14 @@ class Ranking < Sequel::Model
   end
 
   def self.daily_count(date)
+    if daily_summary = DailySummary.fetch(date)
+      daily_summary[:ranking_daily_count]
+    else
+      daily_count0(date)
+    end
+  end
+
+  def self.daily_count0(date)
     Ranking.where(:type => Ranking::Type::DAILY_RANKING,
                   :date => date).count
   end
