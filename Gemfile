@@ -16,4 +16,5 @@ gem "msgpack"
 
 group :development do
   gem "pry"
+  gem "faker"
 end
