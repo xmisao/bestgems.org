@@ -8,12 +8,14 @@ class DailySummaryUpdater
         DailySummary.where(date: date).update(
           date: date,
           ranking_total_count: Ranking.total_count0(date),
-          ranking_daily_count: Ranking.daily_count0(date))
+          ranking_daily_count: Ranking.daily_count0(date)
+        )
       else
         DailySummary.insert(
           date: date,
           ranking_total_count: Ranking.total_count0(date),
-          ranking_daily_count: Ranking.daily_count0(date))
+          ranking_daily_count: Ranking.daily_count0(date)
+        )
       end
     end
   end
