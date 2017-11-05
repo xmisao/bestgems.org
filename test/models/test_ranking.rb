@@ -40,6 +40,33 @@ class TestRanking < Minitest::Test
     assert_equal 20, top[:ranking]
   end
 
+  def test_total_count_return_summary_data
+    DailySummary.insert(:date => Date.new(2017, 11, 1), ranking_total_count: 2)
+
+    assert_equal 2, Ranking.total_count(Date.new(2017, 11, 1))
+  end
+
+  def test_total_count_return_ranking_count
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'Awesome gem.')
+    Gems.insert(:id => 2,
+                :name => 'bar',
+                :version => '1.0',
+                :summary => 'Awesome gem.')
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2017, 11, 1),
+                   :ranking => 10)
+    Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
+                   :gem_id => 2,
+                   :date => Date.new(2017, 11, 1),
+                   :ranking => 20)
+
+    assert_equal 2, Ranking.total_count(Date.new(2017, 11, 1))
+  end
+
   def test_daily
     Gems.insert(:id => 1,
                 :name => 'foo',
@@ -70,6 +97,33 @@ class TestRanking < Minitest::Test
     assert_equal 'Awesome gem.', top[:summary]
     assert_equal 23, top[:downloads]
     assert_equal 10, top[:ranking]
+  end
+
+  def test_daily_count_return_summary_data
+    DailySummary.insert(:date => Date.new(2017, 11, 1), ranking_daily_count: 2)
+
+    assert_equal 2, Ranking.daily_count(Date.new(2017, 11, 1))
+  end
+
+  def test_daily_count_return_ranking_count
+    Gems.insert(:id => 1,
+                :name => 'foo',
+                :version => '1.0',
+                :summary => 'Awesome gem.')
+    Gems.insert(:id => 2,
+                :name => 'bar',
+                :version => '1.0',
+                :summary => 'Awesome gem.')
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
+                   :gem_id => 1,
+                   :date => Date.new(2017, 11, 1),
+                   :ranking => 10)
+    Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
+                   :gem_id => 2,
+                   :date => Date.new(2017, 11, 1),
+                   :ranking => 20)
+
+    assert_equal 2, Ranking.daily_count(Date.new(2017, 11, 1))
   end
 
   def test_featured

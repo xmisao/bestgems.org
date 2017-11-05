@@ -7,6 +7,7 @@ module TestHelper
     Value.dataset.delete
     Ranking.dataset.delete
     Gems.dataset.delete
+    DailySummary.dataset.delete
     Master.dataset.delete
 
     Trend.all{|k, v|
