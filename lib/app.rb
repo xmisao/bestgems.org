@@ -15,11 +15,11 @@ def ranking_labels(ranking_trends)
 end
 
 def ranking_total_data(ranking_trends)
-  ranking_trends.map{|t| n2n(t[:total_ranking]) }
+  ranking_trends.map{|t| n2n(t[:total_ranking]) }.to_json
 end
 
 def ranking_daily_data(ranking_trends)
-  ranking_trends.map{|t| n2n(t[:daily_ranking]) }
+  ranking_trends.map{|t| n2n(t[:daily_ranking]) }.to_json
 end
 
 def downloads_labels(downloads_trends)
@@ -27,11 +27,19 @@ def downloads_labels(downloads_trends)
 end
 
 def downloads_total_data(downloads_trends)
-  downloads_trends.map{|t| n2n(t[:total_downloads]) }
+  downloads_trends.map{|t| n2n(t[:total_downloads]) }.to_json
 end
 
 def downloads_daily_data(downloads_trends)
-  downloads_trends.map{|t| n2n(t[:daily_downloads]) }
+  downloads_trends.map{|t| n2n(t[:daily_downloads]) }.to_json
+end
+
+def trends_label(graph)
+  graph.map{|t| t[:date]}.to_json
+end
+
+def num_of_gems_data(graph)
+  graph.map{|t| t[:num_of_gems]}.to_json
 end
 
 def comma(i)
@@ -198,13 +206,13 @@ def join_total_daily_download_of_all_gems(total_graph, daily_graph)
   graph
 end
 
-get '/stat/download' do
-  @title = "Download Trends of All Gems -- BestGems"
+get '/stat/downloads' do
+  @title = "Downloads Trends of All Gems -- BestGems"
   total_graph = statistics.where(:type => STAT_TOTAL_DOWNLOADS).order(:date)
   daily_graph = statistics.where(:type => STAT_DAILY_DOWNLOADS).order(:date)
   @graph = join_total_daily_download_of_all_gems(total_graph, daily_graph)
-  @name = 'Download Trends of All Gems'
-  @summary = "Sum of download count of all gems."
+  @name = 'Downloads Trends of All Gems'
+  @summary = "Sum of downloads of all gems."
 
   erb :stat_download
 end
