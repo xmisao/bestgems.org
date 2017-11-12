@@ -19,7 +19,7 @@ class Pager
   end
 
   def previous(p)
-    text = '<- Previous'
+    text = '&lt;&lt; Previous'
     if @range.begin <= p
       conv_text(p, text)
     else
@@ -28,7 +28,7 @@ class Pager
   end
 
   def next(p)
-    text = 'Next ->'
+    text = '&gt;&gt; Next'
     if p <= @range.end
       conv_text(p, text)
     else

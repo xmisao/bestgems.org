@@ -568,11 +568,20 @@ a {
   color: #fff;
 }
 
+div.description {
+  font-size: 20pt;
+}
+
 div.numeric {
   text-align: right;
 }
 
-h4 span.numeric {
+div.ranking-header {
+  font-size: 20pt;
+  margin-bottom: 2rem;
+}
+
+div.ranking-header em.numeric {
   font-style: italic;
   font-size: 30pt;
 }
@@ -756,4 +765,28 @@ h4 {
 #ads {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.pager {
+  text-align: center;
+}
+
+.pager ul{
+  display: table; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pager ul li{
+  display: table-cell; 
+}
+
+#title-pane {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+th.wide-column {
+  width: 50%;
 }
