@@ -562,6 +562,7 @@ a {
   color: #fff;
   background-color: #433;
   text-align: center;
+  width: 100%;
 }
 
 #footer a{
@@ -606,7 +607,6 @@ div.ranking-header em.numeric {
   font-size: 80pt;
   color: #ed402e;
   font-family: 'Teko', sans-serif;
-  padding-top: 5%;
 }
 
 body {
@@ -619,6 +619,7 @@ h5 {
 }
 
 #main {
+  padding-top: 4rem;
   background-color: #fff8f8;
 }
 
@@ -797,4 +798,20 @@ th.wide-column40 {
 #ads {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+html {
+  min-height: 100%;
+  position: relative;
+  background-color: #fff8f8;
+}
+
+body {
+  margin-bottom: 10rem;
+}
+
+#footer {
+  bottom: 0;
+  height: 10rem;
+  position: absolute;
 }
