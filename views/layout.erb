@@ -27,6 +27,10 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= erb :_header %>
+    <div id="main">
+      <%= yield %>
+    </div>
+    <%= erb :_footer %>
   </body>
 </html>

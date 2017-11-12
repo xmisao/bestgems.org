@@ -556,8 +556,11 @@ a {
 }
 
 #footer {
+  font-size: 14pt;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
   color: #fff;
-  background-color: #383030;
+  background-color: #433;
   text-align: center;
 }
 
@@ -585,12 +588,12 @@ h4 span.numeric {
   margin-left: 1em;
 }
 
-.eye-catch {
+#logo-area {
   text-align: center;
   margin-bottom: 3em;
 }
 
-.eye-catch-logo {
+#logo-area h1 {
   font-size: 80pt;
   color: #ed402e;
   font-family: 'Teko', sans-serif;
@@ -748,4 +751,9 @@ h4 {
 
 .fontawesome{
   font-family: FontAwesome;
+}
+
+#ads {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
