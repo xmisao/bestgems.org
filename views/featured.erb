@@ -1,60 +1,34 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Name', 'Difference'],
-		<% @gems.each{|gem| %>['<%= gem[:name] %>', <%= gem[:score] %>],
-		<% }%>
-		]);
-
-		var options = {
-			title: '<%= @chart_title %>',
-			vAxis: {title: 'Gems',  titleTextStyle: {color: 'bc0800'}},
-			hAxis: {baseline: 0},
-			colors: ['bc0800'],
-			chartArea: {height: 500}
-		};
-
-		var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-		chart.draw(data, options);
-	}
-</script>
+<div class ="container">
+  <div id="title-pane">
+    <h1><%= @ranking_name %></h1>
+    <div class="description"><%= @ranking_description %></div>
+  </div>
+</div>
 
 <div class="container">
-	<%= erb :_header %>
-
-	<hr>
-
-	<div class="jumbotron">
-		<h1><%= @ranking_name %></h1>
-		<p class="lead"><%= @ranking_description %></p>
-	</div>
-
-	<hr>
-
-	<div class="row-fluid marketing">
-		<div class="span12">
-			<div id="chart_div" style="width: 940px; height: 600px;"></div>
-			<p><em class="number"><%= @start %></em>-<em class="number"><%= @end %></em> of all <em class="number"><%= comma(@count) %></em> gems.</p>
-			<table class="table table-striped">
-				<tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th>Name</th><th>Summary</th></tr>
-				<% @gems.each{|gem| %>
-				<tr><td class="right"><%= comma(gem[:ranking]) %></td><td class="right"><%= comma_pm(gem[:score]) %></td><td class="center"><%= comma(gem[:daily_ranking]) %></td><td class="center"><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td><td><%= gem[:summary] %></td></tr>
-				<% } %>
-			</table>
-			<div style="font-size:18px;" class="text-center pagination">
-				<% pager = Pager.new(@path, @opts, @range, @page) %>
-				<ul>
-				<%= pager.previous(@page - 1) %>
-				<% pager.each{|elm| %>
-				  <%= elm %>
-				<% } %>
-				<%= pager.next(@page + 1) %>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<%= erb :_banner %>
+  <div class="ranking-header">
+    <em class="numeric"><%= @start %></em>-<em class="numeric"><%= @end %></em> of all <em class="numeric"><%= comma(@count) %></em> gems.
+  </div>
+  <table class="u-full-width">
+    <thead>
+      <tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th class="wide-column20">Name</th><th class="wide-column40">Summary</th></tr>
+    </thead>
+    <tbody>
+      <% @gems.each{|gem| %>
+				<tr><td><%= comma(gem[:ranking]) %></td><td><%= comma_pm(gem[:score]) %></td><td><%= comma(gem[:daily_ranking]) %></td><td><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td><td><%= gem[:summary] %></td></tr>
+      <% } %>
+    </tbody>
+  </table>
+  <div class="pager">
+    <% pager = Pager.new(@path, @opts, @range, @page) %>
+    <ul>
+      <%= pager.previous(@page - 1) %>
+      <% pager.each{|elm| %>
+        <%= elm %>
+      <% } %>
+      <%= pager.next(@page + 1) %>
+    </ul>
+  </div>
 </div>
+
+<%= erb :_banner %>

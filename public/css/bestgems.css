@@ -762,9 +762,22 @@ h4 {
   font-family: FontAwesome;
 }
 
-#ads {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+#title-pane {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+th.wide-column {
+  width: 50%;
+}
+
+th.wide-column20 {
+  width: 20%;
+}
+
+th.wide-column40 {
+  width: 40%;
 }
 
 .pager {
@@ -781,12 +794,7 @@ h4 {
   display: table-cell; 
 }
 
-#title-pane {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  text-align: center;
-}
-
-th.wide-column {
-  width: 50%;
+#ads {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
