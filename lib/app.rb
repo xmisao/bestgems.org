@@ -217,46 +217,6 @@ get '/stat/downloads' do
   erb :stat_download
 end
 
-get '/reports/:url' do
-  url = params[:url]
-  redirect '/reports/' + url unless is_int?(params[:page])
-
-  report = reports.where(:url => url).first
-  report_id = report[:id]
-
-  per_page = 20
-  page = params[:page] ? params[:page].to_i - 1: 0
-
-  results = report_data.where(:report_id => report_id).reverse_order(:downloads)
-  gems = results.limit(per_page, per_page * page)
-
-  @title = "#{report[:name]} Report -- BestGems.org"
-  @ranking_name = report[:name]
-  @ranking_description = report[:summary]
-
-  @chart_title = 'Downloads'
-
-  @gems = gems
-  @rank = page * per_page
-
-  @path = '/reports/' + url
-  opts = params.clone
-  opts.delete("splat")
-  opts.delete("captures")
-  opts.delete("url")
-  @opts = opts
-  @range = (1..(report_data.where(:report_id => report_id).reverse_order(:downloads).count / per_page))
-  @page = page + 1
-
-  @type = :reports
-
-  @start = per_page * page + 1
-  @end = per_page * page + @gems.count
-  @count = results.count
-
-  erb :report
-end
-
 get '/gems/:gems' do
   redirect '/' unless params[:gems]
 
