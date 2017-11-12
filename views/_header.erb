@@ -1,17 +1,33 @@
-<div class="masthead">
-	<ul class="nav nav-pills pull-right">
-		<li<%= @type == :total ? " class=\"active\"" : "" %>><a href="/total">Total</a></li>
-		<li<%= @type == :daily ? " class=\"active\"" : "" %>><a href="/daily">Daily</a></li>
-		<li<%= @type == :featured ? " class=\"active\"" : "" %>><a href="/featured">Featured</a></li>
-		<li><a href="https://github.com/xmisao/bestgems.org/wiki/BestGems-API-v1-Specification">API</a></li>
-		<li><a href="https://info.bestgems.org/">Information</a></li>
-		<li<%= @type == :about ? " class=\"active\"" : "" %>><a href="/about">About</a></li>
-		<li>
-			<form class="form-search" action="/search" method="GET">
-				<input type="text" class="input-medium search-query" name="q">
-				<button type="submit" class="btn"><i class="icon-search"></i></button>
-			</form>
-		</li>
-	</ul>
-	<h3><a href="/" class="header">BestGems</a></h3>
+<div id="header">
+  <div class="container">
+    <div class="row">
+      <span class="logo">BestGems.org</span>
+      <span class="header-message">Ruby gems download ranking. Find the best gem package for you!</span>
+    </div>
+  </div>
+  <div class="black">
+    <div class="container">
+      <div class="row">
+        <div id="navi">
+          <div id="navi-menu">
+            <ul>
+              <li<%= @type == :top ? " class=\"active\"" : "" %>><a href="/">Top</a></li>
+              <li<%= @type == :total ? " class=\"active\"" : "" %>><a href="/total">Total</a></li>
+              <li<%= @type == :daily ? " class=\"active\"" : "" %>><a href="/daily">Daily</a></li>
+              <li<%= @type == :featured ? " class=\"active\"" : "" %>><a href="/featured">Featured</a></li>
+              <li><a href="https://github.com/xmisao/bestgems.org/wiki/BestGems-API-v1-Specification">API</a></li>
+              <li><a href="https://info.bestgems.org/">Information</a></li>
+              <li<%= @type == :about ? " class=\"active\"" : "" %>><a href="/about">About</a></li>
+            </ul>
+          </div>
+          <div id="navi-search">
+            <form action="/search" method="GET">
+              <input name="q" type="text" placeholder="Search..."></input>
+              <input type="submit" class="button fontawesome" value="&#xf002;"></input>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

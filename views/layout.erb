@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title><%= @title %></title>
-<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="../css/theme.css" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42168722-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-<%= yield %>
+      gtag('config', 'UA-42168722-1');
+    </script>
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-42168722-1']);
-  _gaq.push(['_trackPageview']);
+    <meta charset="utf-8">
+    <title><%= @title  %></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/bestgems.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-</script>
-</body>
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Teko" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
 </html>
