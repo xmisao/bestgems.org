@@ -7,18 +7,10 @@ require 'app'
 
 run Sinatra::Application
 
-map '/bootstrap' do
-  run Rack::Directory.new("public/bootstrap")
-end
-
-map '/css' do
-  run Rack::Directory.new("public/css")
+map '/assets' do
+  run Rack::Directory.new("public")
 end
 
 map "/favicon.ico" do
   run Rack::File.new("public/favicon.ico")
-end
-
-map "/xmisao_icon_96x96.png" do
-  run Rack::File.new("public/xmisao_icon_96x96.png")
 end
