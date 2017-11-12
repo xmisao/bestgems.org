@@ -815,3 +815,12 @@ body {
   height: 10rem;
   position: absolute;
 }
+
+#gem-summary {
+  text-align: center;
+}
+
+.trends {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}

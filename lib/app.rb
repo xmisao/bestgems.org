@@ -10,6 +10,30 @@ statistics = DB[:statistics]
 reports = DB[:reports]
 report_data = DB[:report_data]
 
+def ranking_labels(ranking_trends)
+  ranking_trends.map{|t| t[:date]}.to_json
+end
+
+def ranking_total_data(ranking_trends)
+  ranking_trends.map{|t| n2n(t[:total_ranking]) }
+end
+
+def ranking_daily_data(ranking_trends)
+  ranking_trends.map{|t| n2n(t[:daily_ranking]) }
+end
+
+def downloads_labels(downloads_trends)
+  downloads_trends.map{|t| t[:date]}.to_json
+end
+
+def downloads_total_data(downloads_trends)
+  downloads_trends.map{|t| n2n(t[:total_downloads]) }
+end
+
+def downloads_daily_data(downloads_trends)
+  downloads_trends.map{|t| n2n(t[:daily_downloads]) }
+end
+
 def comma(i)
   if i
     i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse

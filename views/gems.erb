@@ -1,88 +1,186 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawChart);
-	function drawChart() {
-		drawChart1();
-		drawChart2();
-	}
-	function drawChart1() {
-		var data = google.visualization.arrayToDataTable([
-			['Date', 'Total Downloads', 'Daily Downloads'],
-		<% @downloads_trends.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:total_downloads]) %>, <%= n2n(e[:daily_downloads]) %>],
-		<% }%>
-		]);
-
-		var options = {
-			title: 'Download Trends',
-			colors: ['bc0800', 'ffd5d5'],
-			series: [{targetAxisIndex:1}, {targetAxisIndex:0}],
-			chartArea: {height: 500}
-		};
-
-		var chart = new google.visualization.LineChart(document.getElementById('download_trends'));
-		chart.draw(data, options);
-	}
-	function drawChart2() {
-		var data = google.visualization.arrayToDataTable([
-			['Date', 'Total Rank', 'Daily Rank'],
-		<% @ranking_trends.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:total_ranking]) %>, <%= n2n(e[:daily_ranking]) %>],
-		<% }%>
-		]);
-
-		var options = {
-			title: 'Ranking Trends',
-			colors: ['bc0800', 'ffd5d5'],
-			vAxis: {direction:-1},
-			legend: {position:'top'},
-			chartArea: {height: 500}
-		};
-
-		var chart = new google.visualization.LineChart(document.getElementById('ranking_trends'));
-		chart.draw(data, options);
-	}
-</script>
+<div class ="container">
+  <div id="title-pane">
+    <h1><%= @gem_name %></h1>
+    <div id="gem-summary">
+      <div><%= @gem_summary %></div>
+      <div><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></div>
+    </div>
+    <div class="row info">
+      <div class="one-half column">
+        <h3>Total</h3>
+        <div>Ranking: <span class="this-gem"><%= comma(@total_rank) %></span> of <%= comma(@total_count) %></div>
+        <div>Downloads: <%= comma(@total_downloads) %></div>
+      </div>
+      <div class="one-half column">
+        <h3>Daily</h3>
+        <div>Ranking: <span class="this-gem"><%= comma(@daily_rank) %></span> of <%= comma(@daily_count) %></div>
+        <div>Downloads: <%= comma(@daily_downloads) %></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
-	<%= erb :_header %>
+  <div class="trends">
+    <h4>Ranking Trends</h4>
+    <div>
+      <canvas id="downloads-trends-chart"></canvas>
+    </div>
+  </div>
 
-	<hr>
-
-	<div class="jumbotron">
-		<h1><%= @gem_name %></h1>
-		<p class="lead"><%= @gem_summary %></p>
-		<p class="text-center"><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></p>
-	</div>
-
-	<hr>
-
-	<div class="row">
-		<div class="span6">
-			<h2>Total</h2>
-			<p>Rank: <em><%= comma(@total_rank) %></em> of <span class="downloads"><%= comma(@total_count) %></span></p>
-			<p>Downloads: <span class="downloads"><%= comma(@total_downloads) %></span></p>
-		</div>
-
-		<div class="span6">
-			<h2>Daily</h2>
-			<p>Rank: <em><%= comma(@daily_rank) %></em> of <span class="downloads"><%= comma(@daily_count) %></span></p>
-			<p>Downloads: <span class="downloads"><%= comma(@daily_downloads) %></span></p>
-		</div>
-	</div>
-
-	<hr>
-	
-	<div class="row-fluid marketing">
-		<div class="span12">
-			<div id="download_trends" style="width: 940px; height: 600px;"></div>
-		</div>
-	</div>
-
-	<div class="row-fluid marketing">
-		<div class="span12">
-			<div id="ranking_trends" style="width: 940px; height: 600px;"></div>
-		</div>
-	</div>
-
-	<%= erb :_banner %>
+  <div class="trends">
+    <h4>Ranking Trends</h4>
+    <div>
+      <canvas id="ranking-trends-chart"></canvas>
+    </div>
+  </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script>
+'use strict';
+
+var downloads_labels = <%= downloads_labels(@downloads_trends) %>;
+var total_downloads = <%= downloads_total_data(@downloads_trends) %>;
+var daily_downloads = <%= downloads_daily_data(@downloads_trends) %>;
+
+var ranking_labels = <%= ranking_labels(@ranking_trends) %>;
+var total_ranking = <%= ranking_total_data(@ranking_trends) %>;
+var daily_ranking = <%= ranking_daily_data(@ranking_trends) %>;
+
+var chart_color_total = '#ED402E';
+var chart_color_daily = '#FC896D';
+
+var downloads_data = {
+  labels: downloads_labels,
+  datasets: [
+  {
+    label: "Total Downloads",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: total_downloads,
+    yAxisID: "y-axis-1",
+  },
+  {
+    label: "Daily Downloads",
+    borderColor: chart_color_daily,
+    backgroundColor: chart_color_daily,
+    pointRadius: 0,
+    borderWidth: 1,
+    fill: false,
+    data: daily_downloads,
+    yAxisID: "y-axis-2"
+  }]
+};
+
+var ranking_data = {
+  labels: ranking_labels,
+  datasets: [
+  {
+    label: "Total Ranking",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: total_ranking,
+    yAxisID: "y-axis-1",
+  },
+  {
+    label: "Daily Ranking",
+    borderColor: chart_color_daily,
+    backgroundColor: chart_color_daily,
+    pointRadius: 0,
+    borderWidth: 1,
+    fill: false,
+    data: daily_ranking,
+    yAxisID: "y-axis-2"
+  }]
+};
+
+function draw_downloads_chart() {
+  var ctx = document.getElementById("downloads-trends-chart").getContext("2d");
+  window.downloads_line = Chart.Line(ctx, {
+    data: downloads_data,
+    options: {
+      responsive: true,
+      hoverMode: 'index',
+      stacked: false,
+      title:{
+        display: true,
+        text:'Downloads Trends'
+      },
+      scales: {
+        yAxes: [{
+          type: "linear",
+          display: true,
+          position: "left",
+          id: "y-axis-1",
+          ticks: {
+            reverse: false
+          },
+
+        }, {
+          type: "linear",
+          display: true,
+          position: "right",
+          id: "y-axis-2",
+          ticks: {
+            reverse: false
+          },
+          gridLines: {
+            drawOnChartArea: false,
+          },
+        }],
+      }
+    }
+  });
+};
+
+function draw_ranking_chart() {
+  var ctx = document.getElementById("ranking-trends-chart").getContext("2d");
+  window.ranking_line = Chart.Line(ctx, {
+    data: ranking_data,
+    options: {
+      responsive: true,
+      hoverMode: 'index',
+      stacked: false,
+      title:{
+        display: true,
+        text:'Ranking Trends'
+      },
+      scales: {
+        yAxes: [{
+          type: "linear",
+          display: true,
+          position: "left",
+          id: "y-axis-1",
+          ticks: {
+            reverse: true
+          },
+
+        }, {
+          type: "linear",
+          display: true,
+          position: "right",
+          id: "y-axis-2",
+          ticks: {
+            reverse: true
+          },
+          gridLines: {
+            drawOnChartArea: false,
+          },
+        }],
+      }
+    }
+  });
+};
+
+window.onload = function() {
+  draw_downloads_chart();
+  draw_ranking_chart();
+}
+</script>
