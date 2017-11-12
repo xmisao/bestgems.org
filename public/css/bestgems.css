@@ -145,11 +145,11 @@ select {
 }
 
 button,
-html input[type="button"], /* 1 */
+html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button; /* 2 */
-  cursor: pointer; /* 3 */
+  -webkit-appearance: button;
+  cursor: pointer;
 }
 
 button[disabled],
@@ -169,8 +169,8 @@ input {
 
 input[type="checkbox"],
 input[type="radio"] {
-  box-sizing: border-box; /* 1 */
-  padding: 0; /* 2 */
+  box-sizing: border-box;
+  padding: 0;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -179,9 +179,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 input[type="search"] {
-  -webkit-appearance: textfield; /* 1 */
+  -webkit-appearance: textfield;
   -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box; /* 2 */
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 
@@ -269,7 +269,6 @@ th {
 
   .one-half.column                { width: 48%; }
 
-  /* Offsets */
   .offset-by-one.column,
   .offset-by-one.columns          { margin-left: 8.66666666667%; }
   .offset-by-two.column,
@@ -599,7 +598,6 @@ h4 span.numeric {
 }
 
 body {
-  background-color: #C11D1C;
   font-family: 'Saira Semi Condensed', sans-serif;
   font-size: 13pt;
 }
@@ -623,15 +621,6 @@ h5 {
 
 .teko {
   font-family: 'Teko', sans-serif;
-}
-
-.black {
-  background-color: #C11D1C;
-  color: #fff;
-}
-
-.black a{
-  color: #fff;
 }
 
 .info {
@@ -686,11 +675,27 @@ h4 {
 
 #navi {
   padding-top: 0.3em;
+  background-color: #C11D1C;
+  color: #fff;
 }
 
 #navi-menu {
   float: left;
   text-align: left;
+}
+
+#navi-menu ul {
+  display: table;
+  margin: 0px;
+}
+
+#navi-menu ul li{
+  display: table-cell;
+  padding: 0.5rem;
+}
+
+#navi-menu ul li a{
+  color: #fff;
 }
 
 #navi-search {
@@ -711,6 +716,26 @@ h4 {
   border-color: #F58E77;
   margin-left: 0.5em;
   padding-left: 0.5em;
+}
+
+:placeholder-shown {
+  color: #ddd;
+}
+
+::-webkit-input-placeholder {
+  color: #ddd;
+}
+
+:-moz-placeholder {
+  color: #ddd; opacity: 1;
+}
+
+::-moz-placeholder {
+  color: #ddd; opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #ddd;
 }
 
 #navi-search form input[type="submit"]{
