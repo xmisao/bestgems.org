@@ -10,6 +10,38 @@ statistics = DB[:statistics]
 reports = DB[:reports]
 report_data = DB[:report_data]
 
+def ranking_labels(ranking_trends)
+  ranking_trends.map{|t| t[:date]}.to_json
+end
+
+def ranking_total_data(ranking_trends)
+  ranking_trends.map{|t| n2n(t[:total_ranking]) }.to_json
+end
+
+def ranking_daily_data(ranking_trends)
+  ranking_trends.map{|t| n2n(t[:daily_ranking]) }.to_json
+end
+
+def downloads_labels(downloads_trends)
+  downloads_trends.map{|t| t[:date]}.to_json
+end
+
+def downloads_total_data(downloads_trends)
+  downloads_trends.map{|t| n2n(t[:total_downloads]) }.to_json
+end
+
+def downloads_daily_data(downloads_trends)
+  downloads_trends.map{|t| n2n(t[:daily_downloads]) }.to_json
+end
+
+def trends_label(graph)
+  graph.map{|t| t[:date]}.to_json
+end
+
+def num_of_gems_data(graph)
+  graph.map{|t| t[:num_of_gems]}.to_json
+end
+
 def comma(i)
   if i
     i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
@@ -62,8 +94,8 @@ end
 get '/total' do
   redirect '/total' unless is_int?(params[:page])
 
-  @title = 'Total Download Ranking -- Best Gems'
-  @ranking_name = 'Total Download Ranking'
+  @title = 'Total Downloads Ranking -- BestGems.org'
+  @ranking_name = 'Total Downloads Ranking'
   @ranking_description = 'Most downloads over all time'
 
   @chart_title = 'Downloads'
@@ -91,8 +123,8 @@ end
 get '/daily' do
   redirect '/daily' unless is_int?(params[:page])
 
-  @title = 'Daily Download Ranking -- Best Gems'
-  @ranking_name = 'Daily Download Ranking'
+  @title = 'Daily Downloads Ranking -- BestGems.org'
+  @ranking_name = 'Daily Downloads Ranking'
   @ranking_description = 'Most downloads last day.'
 
   @chart_title = 'Downloads '
@@ -120,7 +152,7 @@ end
 get '/featured' do
   redirect '/featured' unless is_int?(params[:page])
 
-  @title = 'Featured Gems Ranking -- Best Gems'
+  @title = 'Featured Gems Ranking -- BestGems.org'
   @ranking_name = 'Featured Gems Ranking'
   @ranking_description = 'Featured gems which are based on difference between daily rank and total rank.'
 
@@ -174,55 +206,15 @@ def join_total_daily_download_of_all_gems(total_graph, daily_graph)
   graph
 end
 
-get '/stat/download' do
-  @title = "Download Trends of All Gems -- BestGems"
+get '/stat/downloads' do
+  @title = "Downloads Trends of All Gems -- BestGems"
   total_graph = statistics.where(:type => STAT_TOTAL_DOWNLOADS).order(:date)
   daily_graph = statistics.where(:type => STAT_DAILY_DOWNLOADS).order(:date)
   @graph = join_total_daily_download_of_all_gems(total_graph, daily_graph)
-  @name = 'Download Trends of All Gems'
-  @summary = "Sum of download count of all gems."
+  @name = 'Downloads Trends of All Gems'
+  @summary = "Sum of downloads of all gems."
 
   erb :stat_download
-end
-
-get '/reports/:url' do
-  url = params[:url]
-  redirect '/reports/' + url unless is_int?(params[:page])
-
-  report = reports.where(:url => url).first
-  report_id = report[:id]
-
-  per_page = 20
-  page = params[:page] ? params[:page].to_i - 1: 0
-
-  results = report_data.where(:report_id => report_id).reverse_order(:downloads)
-  gems = results.limit(per_page, per_page * page)
-
-  @title = "#{report[:name]} Report -- Best Gems"
-  @ranking_name = report[:name]
-  @ranking_description = report[:summary]
-
-  @chart_title = 'Downloads'
-
-  @gems = gems
-  @rank = page * per_page
-
-  @path = '/reports/' + url
-  opts = params.clone
-  opts.delete("splat")
-  opts.delete("captures")
-  opts.delete("url")
-  @opts = opts
-  @range = (1..(report_data.where(:report_id => report_id).reverse_order(:downloads).count / per_page))
-  @page = page + 1
-
-  @type = :reports
-
-  @start = per_page * page + 1
-  @end = per_page * page + @gems.count
-  @count = results.count
-
-  erb :report
 end
 
 get '/gems/:gems' do

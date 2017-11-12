@@ -1,42 +1,75 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['Date', 'Number of Gems'],
-		<% @graph.each{|e| ; d = e[:date]; %>['<%= d.strftime("%b %d, %y") %>', <%= n2n(e[:num_of_gems]) %>],
-		<% }%>
-		]);
+<div class ="container">
+  <div id="title-pane">
+    <h1><%= @name %></h1>
+    <div class="description"><%= @summary %></div>
+  </div>
+</div>
 
-		var options = {
-			title: 'Number of All Gems Trends',
-			colors: ['bc0800'],
-			chartArea: {height: 500}
-		};
+<div class ="container">
+  <div class="trends">
+    <h4>Trends</h4>
+    <div>
+      <canvas id="trends-chart"></canvas>
+    </div>
+  </div>
+</div>
 
-		var chart = new google.visualization.LineChart(document.getElementById('trends'));
-		chart.draw(data, options);
-	}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script>
+'use strict';
+
+var trends_labels = <%= trends_label(@graph) %>;
+var num_of_gems = <%= num_of_gems_data(@graph) %>;
+
+var chart_color_total = '#ED402E';
+var chart_color_daily = '#FC896D';
+
+var trends_data = {
+  labels: trends_labels,
+  datasets: [
+  {
+    label: "Number of All Gems",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: num_of_gems,
+    yAxisID: "y-axis-1",
+  }
+  ]
+};
+
+function draw_trends_chart() {
+  var ctx = document.getElementById("trends-chart").getContext("2d");
+  window.num_of_gems_line = Chart.Line(ctx, {
+    data: trends_data,
+    options: {
+      responsive: true,
+      hoverMode: 'index',
+      stacked: false,
+      title:{
+        display: true,
+        text:'Number of All Gems'
+      },
+      scales: {
+        yAxes: [{
+          type: "linear",
+          display: true,
+          position: "left",
+          id: "y-axis-1",
+          ticks: {
+            reverse: false
+          },
+        }],
+      }
+    }
+  });
+};
+
+window.onload = function() {
+  draw_trends_chart();
+}
 </script>
 
-<div class="container">
-	<%= erb :_header %>
-
-	<hr>
-
-	<div class="jumbotron">
-		<h1><%= @name %></h1>
-		<p class="lead"><%= @summary %></p>
-	</div>
-
-	<hr>
-	
-	<div class="row-fluid marketing">
-		<div class="span12">
-			<div id="trends" style="width: 940px; height: 600px;"></div>
-		</div>
-	</div>
-
-	<%= erb :_banner %>
-</div>
+<%= erb :_banner %>

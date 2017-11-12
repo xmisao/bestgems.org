@@ -1,65 +1,77 @@
-<div class="container-narrow">
-	<%= erb :_header %>
-
-	<hr>
-
-	<div class="jumbotron">
-		<h1 class="logo">BestGems</h1>
-		<p class="lead">Ruby gems download ranking. Find the best gem package for you!</p>
-    <p>BestGems.org is <a href="https://github.com/xmisao/bestgems.org">open source</a>. Please, contribute!</p>
-	</div>
-
-	<hr>
-
-	<div class="row-fluid marketing">
-		<div class="span6">
-			<h4><a href="/total">Total Downloads Ranking</a></h4>
-			<table class="table table-striped">
-				<tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
-				<% @total_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
-				<% } %>
-			</table>
-			<p class="text-right"><a class="btn" href="/total">more...</a></p>
-		</div>
-		<div class="span6">
-			<h4><a href="/daily">Daily Downloads Ranking</a></h4>
-			<table class="table table-striped">
-				<tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
-				<% @daily_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
-				<% } %>
-			</table>
-			<p class="text-right"><a class="btn" href="/daily">more...</a></p>
-		</div>
-	</div>
-	<div class="row-fluid marketing">
-		<div class="span6">
-			<h4><a href="/featured">Featured Gems Ranking</a></h4>
-			<table class="table table-striped">
-				<tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th>Name</th></tr>
-				<% @featured_gems.each{|gem| %>
-				<tr><td class="center"><%= comma(gem[:ranking]) %></td><td class="center"><%= comma_pm(gem[:score]) %></td><td class="center"><%= comma(gem[:daily_ranking]) %></td><td class="center"><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
-				<% } %>
-			</table>
-			<p class="text-right"><a class="btn" href="/featured">more...</a></p>
-		</div>
-		<div class="span6">
-			<h4>Statistics</h4>
-			<table class="table table-striped">
-				<tr><th>#</th><th>Title</th></tr>
-				<tr><td class="center">1</td><td><a href="/stat/gems">Number of All Gems</a></td></tr>
-				<tr><td class="center">2</td><td><a href="/stat/download">Download Trends of All Gems</a></td></tr>
-			</table>
-			<h4>Reports</h4>
-			<table class="table table-striped">
-				<tr><th>Title</th><th>Summary</th></tr>
-				<% @reports.each{|report| %>
-				<tr><td><a href="/reports/<%= report[:url] %>"><%= report[:name] %></td><td><%= report[:summary] %></td></tr>
-					<% } %>
-			</table>
-		</div>
-	</div>
-
-	<%= erb :_banner %>
+<div class="container">
+  <div id="logo-area">
+    <h1>BestGems.org</h1>
+    <div>Ruby gems download ranking. Find the best gem package for you!</div>
+    <div>BestGems.org is open souce. See our <a href="https://github.com/xmisao/bestgems.org"><i class="fa fa-github" aria-hidden="true"></i>GitHub repository</a>.</div>
+  </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <!-- Total downloads ranking -->
+    <div class="one-half column">
+      <h5><a href="/total">Total downloads ranking</a></h5>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @total_gems.each{|gem| %>
+            <tr><td><%= comma(gem[:ranking]) %></td><td><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="more"><a href="/total">More...</a></div>
+    </div>
+
+    <!-- Daily downloads ranking -->
+    <div class="one-half column">
+      <h5><a href="/daily">Daily downloads ranking</a></h5>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @daily_gems.each{|gem| %>
+            <tr><td><%= comma(gem[:ranking]) %></td><td><%= comma(gem[:downloads]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="more"><a href="/daily">More...</a></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Featured gems ranking -->
+    <div class="one-half column">
+      <h5><a href="/featured">Featured gems ranking</a></h5>
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th class="wide-column40">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @featured_gems.each{|gem| %>
+            <tr><td><%= comma(gem[:ranking]) %></td><td><%= comma_pm(gem[:score]) %></td><td><%= comma(gem[:daily_ranking]) %></td><td><%= comma(gem[:total_ranking]) %></td><td><a href="/gems/<%= gem[:name]%>"><%= gem[:name] %></a></td></tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="more"><a href="/featured">More...</a></div>
+    </div>
+
+    <!-- Statistics  -->
+    <div class="one-half column">
+      <h5>Statistics</h5>
+      <table>
+        <thead>
+          <tr><th class="wide-column20">#</th><th>Title</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><a href="/stat/gems">Number of All Gems</a></td></tr>
+          <tr><td>2</td><td><a href="/stat/downloads">Download Trends of All Gems</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%= erb :_banner %>
