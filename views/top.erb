@@ -13,7 +13,7 @@
       <h5><a href="/total">Total downloads ranking</a></h5>
       <table class="u-full-width">
         <thead>
-          <tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
         </thead>
         <tbody>
           <% @total_gems.each{|gem| %>
@@ -29,7 +29,7 @@
       <h5><a href="/daily">Daily downloads ranking</a></h5>
       <table class="u-full-width">
         <thead>
-          <tr><th>Rank</th><th>Downloads</th><th>Name</th></tr>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
         </thead>
         <tbody>
           <% @daily_gems.each{|gem| %>
@@ -47,7 +47,7 @@
       <h5><a href="/featured">Featured gems ranking</a></h5>
       <table>
         <thead>
-          <tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th>Name</th></tr>
+          <tr><th>Rank</th><th>Diff</th><th>Daily Rank</th><th>Total Rank</th><th class="wide-column40">Name</th></tr>
         </thead>
         <tbody>
           <% @featured_gems.each{|gem| %>
@@ -63,11 +63,11 @@
       <h5>Statistics</h5>
       <table>
         <thead>
-          <tr><th>#</th><th>Title</th></tr>
+          <tr><th class="wide-column20">#</th><th>Title</th></tr>
         </thead>
         <tbody>
           <tr><td>1</td><td><a href="/stat/gems">Number of All Gems</a></td></tr>
-          <tr><td>2</td><td><a href="/stat/download">Download Trends of All Gems</a></td></tr>
+          <tr><td>2</td><td><a href="/stat/downloads">Download Trends of All Gems</a></td></tr>
         </tbody>
       </table>
     </div>
