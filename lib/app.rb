@@ -94,8 +94,8 @@ end
 get '/total' do
   redirect '/total' unless is_int?(params[:page])
 
-  @title = 'Total Download Ranking -- Best Gems'
-  @ranking_name = 'Total Download Ranking'
+  @title = 'Total Downloads Ranking -- BestGems.org'
+  @ranking_name = 'Total Downloads Ranking'
   @ranking_description = 'Most downloads over all time'
 
   @chart_title = 'Downloads'
@@ -123,8 +123,8 @@ end
 get '/daily' do
   redirect '/daily' unless is_int?(params[:page])
 
-  @title = 'Daily Download Ranking -- Best Gems'
-  @ranking_name = 'Daily Download Ranking'
+  @title = 'Daily Downloads Ranking -- BestGems.org'
+  @ranking_name = 'Daily Downloads Ranking'
   @ranking_description = 'Most downloads last day.'
 
   @chart_title = 'Downloads '
@@ -152,7 +152,7 @@ end
 get '/featured' do
   redirect '/featured' unless is_int?(params[:page])
 
-  @title = 'Featured Gems Ranking -- Best Gems'
+  @title = 'Featured Gems Ranking -- BestGems.org'
   @ranking_name = 'Featured Gems Ranking'
   @ranking_description = 'Featured gems which are based on difference between daily rank and total rank.'
 
@@ -230,7 +230,7 @@ get '/reports/:url' do
   results = report_data.where(:report_id => report_id).reverse_order(:downloads)
   gems = results.limit(per_page, per_page * page)
 
-  @title = "#{report[:name]} Report -- Best Gems"
+  @title = "#{report[:name]} Report -- BestGems.org"
   @ranking_name = report[:name]
   @ranking_description = report[:summary]
 
