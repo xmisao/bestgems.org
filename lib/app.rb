@@ -10,6 +10,9 @@ statistics = DB[:statistics]
 reports = DB[:reports]
 report_data = DB[:report_data]
 
+SITEMAP_SLICE = 40000
+SITE_URL = 'http://bestgems.org'
+
 def ranking_labels(ranking_trends)
   ranking_trends.map{|t| t[:date]}.to_json
 end
@@ -322,4 +325,21 @@ get '/api/v1/gems/:name/daily_ranking.json' do
   trend = TrendDataSet.new(gem.get_trend_data)
 
   JSON.dump(trend.daily_ranking.reverse)
+end
+
+get '/sitemap.xml' do
+  @site_url = SITE_URL
+  @gems_count = Gems.count
+  @lastmod = Master.first.date.to_time.iso8601
+
+  erb :sitemap_index, layout: false
+end
+
+get '/sitemaps/gems*.xml' do
+  index = params['splat'][0].to_i
+
+  @site_url = SITE_URL
+  @gems = Gems.order(:id).limit(SITEMAP_SLICE, index * SITEMAP_SLICE)
+
+  erb :sitemap_gems, layout: false
 end
