@@ -1,0 +1,6 @@
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% @gems_count.times.each_slice(40000).each_with_index{|_, i| %><sitemap>
+    <loc><%= @site_url %>/sitemaps/gems<%= i %>.xml</loc>
+    <lastmod><%= @lastmod %></lastmod>
+  </sitemap><% } %>
+</sitemapindex>
