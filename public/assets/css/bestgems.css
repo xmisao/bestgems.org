@@ -860,3 +860,33 @@ body {
 .fa-github:before {
   content: "\f09b";
 }
+
+/* Google fonts */
+
+/* teko-regular - latin */
+@font-face {
+  font-family: 'Teko';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/teko-v7-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Teko Regular'), local('Teko-Regular'),
+  url('../fonts/teko-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/teko-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../fonts/teko-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('../fonts/teko-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../fonts/teko-v7-latin-regular.svg#Teko') format('svg'); /* Legacy iOS */
+}
+
+/* saira-semi-condensed-regular - latin */
+@font-face {
+  font-family: 'Saira Semi Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/saira-semi-condensed-v3-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Saira SemiCondensed Regular'), local('SairaSemiCondensed-Regular'),
+  url('../fonts/saira-semi-condensed-v3-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/saira-semi-condensed-v3-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../fonts/saira-semi-condensed-v3-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('../fonts/saira-semi-condensed-v3-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../fonts/saira-semi-condensed-v3-latin-regular.svg#SairaSemiCondensed') format('svg'); /* Legacy iOS */
+}
