@@ -7,14 +7,18 @@
     </div>
     <div class="row info">
       <div class="one-half column">
-        <h3>Total</h3>
-        <div>Ranking: <span class="this-gem"><%= comma(@total_rank) %></span> of <%= comma(@total_count) %></div>
-        <div>Downloads: <%= comma(@total_downloads) %></div>
+        <div class="info-trend">
+          <h3>Total</h3>
+          <div>Ranking: <span class="this-gem"><%= comma(@total_rank) %></span> of <%= comma(@total_count) %></div>
+          <div>Downloads: <%= comma(@total_downloads) %></div>
+        </div>
       </div>
       <div class="one-half column">
-        <h3>Daily</h3>
-        <div>Ranking: <span class="this-gem"><%= comma(@daily_rank) %></span> of <%= comma(@daily_count) %></div>
-        <div>Downloads: <%= comma(@daily_downloads) %></div>
+        <div class="info-trend">
+          <h3>Daily</h3>
+          <div>Ranking: <span class="this-gem"><%= comma(@daily_rank) %></span> of <%= comma(@daily_count) %></div>
+          <div>Downloads: <%= comma(@daily_downloads) %></div>
+        </div>
       </div>
     </div>
   </div>

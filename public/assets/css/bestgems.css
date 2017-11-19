@@ -240,7 +240,7 @@ th {
     padding: 0; }
 }
 
-@media (min-width: 930px) {
+@media (min-width: 900px) {
   .container {
     width: 80%; }
   .column,
@@ -302,7 +302,19 @@ th {
 }
 
 html {
-  font-size: 62.5%; }
+  font-size: 53.125%;
+}
+@media (min-width: 900px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 62.5%;
+  }
+}
+
 body {
   font-size: 1.5em;
   line-height: 1.6;
@@ -320,15 +332,6 @@ h3 { font-size: 3.0rem; line-height: 1.3;  letter-spacing: -.1rem; }
 h4 { font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem; }
 h5 { font-size: 1.8rem; line-height: 1.5;  letter-spacing: -.05rem; }
 h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
-
-@media (min-width: 550px) {
-  h1 { font-size: 5.0rem; }
-  h2 { font-size: 4.2rem; }
-  h3 { font-size: 3.6rem; }
-  h4 { font-size: 3.0rem; }
-  h5 { font-size: 2.4rem; }
-  h6 { font-size: 1.5rem; }
-}
 
 p {
   margin-top: 0;
@@ -531,19 +534,13 @@ hr {
   clear: both;
 }
 
-@media (min-width: 400px) {}
-@media (min-width: 550px) {}
-@media (min-width: 750px) {}
-@media (min-width: 1000px) {}
-@media (min-width: 1200px) {}
-
 /* bestgems */
 
 table {
   table-layout: fixed;
   width: 100%;
-  word-wrap: break-word;
   box-sizing: border-box;
+  font-size: 1.75rem;
 }
 
 a {
@@ -556,7 +553,7 @@ a {
 }
 
 #footer {
-  font-size: 14pt;
+  font-size: 2rem;
   padding-top: 1rem;
   padding-bottom: 0.5rem;
   color: #fff;
@@ -570,7 +567,7 @@ a {
 }
 
 div.description {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 div.numeric {
@@ -578,24 +575,32 @@ div.numeric {
 }
 
 div.ranking-header {
-  font-size: 20pt;
+  font-size: 2rem;
   margin-bottom: 2rem;
 }
 
 div.ranking-header em.numeric {
   font-style: italic;
-  font-size: 30pt;
+  font-size: 3rem;
 }
 
 .logo {
-  font-size: 40pt;
+  font-size: 5rem;
   color: #fff;
   font-family: 'Teko', sans-serif;
+  margin-right: 1rem;
 }
 
 .header-message {
   color: #fff;
-  margin-left: 1em;
+  padding-top: 0.25rem;
+  font-size: 1.75rem;
+}
+
+@media(max-width: 800px){
+  .header-message {
+    display: none;
+  }
 }
 
 #logo-area {
@@ -604,18 +609,18 @@ div.ranking-header em.numeric {
 }
 
 #logo-area h1 {
-  font-size: 80pt;
+  font-size: 8rem;
   color: #ed402e;
   font-family: 'Teko', sans-serif;
 }
 
 body {
   font-family: 'Saira Semi Condensed', sans-serif;
-  font-size: 13pt;
+  font-size: 2rem;
 }
 
 h5 {
-  font-size: 16pt;
+  font-size: 2.5rem;
 }
 
 #main {
@@ -625,7 +630,7 @@ h5 {
 }
 
 .menu-button {
-  font-size: 18pt;
+  font-size: 2rem;
   color: #fff;
 }
 
@@ -638,26 +643,31 @@ h5 {
 }
 
 .info {
-  font-size: 20pt;
+  font-size: 2.75rem;
   font-width: bold;
-  margin-top: 1em;
+}
+
+.info-trend {
+  margin-top: 4rem;
 }
 
 .this-gem {
-  font-size: 40pt;
+  font-size: 4rem;
 }
 
 h2 {
-  font-size: 5.0rem;
+  font-size: 5rem;
   line-height: 1.25;
   letter-spacing: -.1rem;
 }
 
 h3 {
+  font-size: 4rem;
   margin-bottom: 0px;
 }
 
 h4 {
+  font-size: 3rem;
 }
 
 #header {
@@ -671,6 +681,10 @@ h4 {
   */
   background-image: url(../images/header_background.svg);
   background-size:100% 100%;
+}
+
+.line {
+  style: table-cell;
 }
 
 .with-margin {
@@ -692,43 +706,58 @@ h4 {
   margin-right: 0.5em;
 }
 
-#search *{
-}
-
 #navi {
-  padding-top: 0.3em;
+  padding-top: 0.2em;
   background-color: #C11D1C;
   color: #fff;
 }
 
 #navi-menu {
-  float: left;
   text-align: left;
+  font-size: 2rem;
+}
+@media(min-width: 800px){
+  #navi-menu {
+    float: left;
+  }
 }
 
-#navi-menu ul {
-  display: table;
-  margin: 0px;
-}
+@media(min-width: 550px){
+  #navi-menu ul {
+    display: table;
+    margin: 0px;
+  }
 
-#navi-menu ul li{
-  display: table-cell;
-  padding: 0.5rem;
+  #navi-menu ul li{
+    display: table-cell;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 #navi-menu ul li a{
   color: #fff;
 }
 
+#navi-menu ul li a:hover{
+  background-color: #E02E25;
+}
+
 #navi-search {
-  text-align: right;
+  font-size: 1.75rem;
+}
+@media(min-width: 800px){
+  #navi-search {
+    text-align: right;
+  }
+}
+@media(max-width: 800px){
+  #navi-search {
+    margin-top: 1rem;
+  }
 }
 
 #navi-search form {
-  margin-top: 0.25em;
-  margin-bottom: 0.25em;
-  font-size: 12pt;
-  font-size: 12pt;
   display: inline;
 }
 
@@ -736,8 +765,9 @@ h4 {
   color: #fff;
   background-color: #E02E25;
   border-color: #F58E77;
-  margin-left: 0.5em;
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
 
 :placeholder-shown {
@@ -764,8 +794,10 @@ h4 {
   color: #fff;
   background-color: #E02E25;
   border-color: #F58E77;
-  margin-left: 0.5em;
-  padding: 0.25em;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .fontawesome{
