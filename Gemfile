@@ -11,7 +11,7 @@ gem "thin"
 gem "rake"
 gem "bundler"
 gem "minitest"
-gem "rufo"
+gem "rufo", '~> 0.3.0'
 gem "leveldb-ruby"
 gem "msgpack"
 
