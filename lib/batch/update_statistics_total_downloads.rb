@@ -3,14 +3,16 @@ require_relative '../database'
 
 class StatisticsTotalDownloadsUpdater
   def self.execute(date)
-    total_downloads = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
-                                  :date => date).sum(:value)
+    batch_trace('StatisticsTotalDownloadsUpdater', 'execute', [date]){
+      total_downloads = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
+                                    :date => date).sum(:value)
 
-    row = {:type => Statistics::Type::TOTAL_DOWNLOADS,
-           :date => date,
-           :value => total_downloads}
+      row = {:type => Statistics::Type::TOTAL_DOWNLOADS,
+             :date => date,
+             :value => total_downloads}
 
-    Statistics.insert(row)
+      Statistics.insert(row) # TODO: Idempotence
+    }
   end
 end
 

@@ -1,0 +1,1 @@
+BatchLogger = Logger.new(STDOUT)

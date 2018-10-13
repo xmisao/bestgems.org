@@ -3,9 +3,11 @@ require_relative '../database'
 
 class FeaturedScoreUpdater
   def self.execute(date)
-    clear_featured_score(date)
-    featured_score = generate_featured_score(date)
-    update_featured_score(featured_score)
+    batch_trace('FeaturedScoreUpdater', 'execute', [date]){
+      clear_featured_score(date)
+      featured_score = generate_featured_score(date)
+      update_featured_score(featured_score)
+    }
   end
 
   def self.clear_featured_score(date)

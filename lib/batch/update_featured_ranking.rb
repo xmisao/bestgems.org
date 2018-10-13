@@ -3,9 +3,11 @@ require_relative '../database'
 
 class FeaturedRankingUpdater
   def self.execute(date)
-    clear_featured_ranking(date)
-    featured_ranking = generate_featured_ranking(date)
-    update_featured_ranking(featured_ranking)
+    batch_trace('FeaturedRankingUpdater', 'execute', [date]){
+      clear_featured_ranking(date)
+      featured_ranking = generate_featured_ranking(date)
+      update_featured_ranking(featured_ranking)
+    }
   end
 
   def self.clear_featured_ranking(date)

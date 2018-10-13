@@ -3,14 +3,16 @@ require_relative '../database'
 
 class MasterUpdater
   def self.execute(date)
-    case Master.count
-    when 0
-      Master.insert(:date => date)
-    when 1
-      Master.dataset.update(:date => date)
-    else
-      raise 'Database inconsistency.'
-    end
+    batch_trace('MasterUpdater', 'execute', [date]){
+      case Master.count
+      when 0
+        Master.insert(:date => date)
+      when 1
+        Master.dataset.update(:date => date)
+      else
+        raise 'Database inconsistency.'
+      end
+    }
   end
 end
 

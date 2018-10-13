@@ -3,9 +3,11 @@ require_relative '../database'
 
 class DailyDownloadsUpdater
   def self.execute(date)
-    clear_daily_downloads(date)
-    daily_downloads = generate_daily_downloads(date)
-    update_daily_downloads(daily_downloads)
+    batch_trace('DailyDownloadsUpdater', 'execute', [date]){
+      clear_daily_downloads(date)
+      daily_downloads = generate_daily_downloads(date)
+      update_daily_downloads(daily_downloads)
+    }
   end
 
   def self.clear_daily_downloads(date)

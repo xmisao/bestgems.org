@@ -3,9 +3,11 @@ require_relative '../database'
 
 class DailyRankingUpdater
   def self.execute(date)
-    clear_daily_ranking(date)
-    daily_ranking = generate_daily_ranking(date)
-    update_daily_ranking(daily_ranking)
+    batch_trace('DailyRankingUpdater', 'execute', [date]){
+      clear_daily_ranking(date)
+      daily_ranking = generate_daily_ranking(date)
+      update_daily_ranking(daily_ranking)
+    }
   end
 
   def self.clear_daily_ranking(date)

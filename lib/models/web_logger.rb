@@ -1,0 +1,1 @@
+WebLogger = Logger.new(STDOUT)

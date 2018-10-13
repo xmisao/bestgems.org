@@ -3,9 +3,11 @@ require_relative '../database'
 
 class TotalRankingUpdater
   def self.execute(date)
-    clear_total_ranking(date)
-    total_ranking = generate_total_ranking(date)
-    update_total_ranking(total_ranking)
+    batch_trace('TotalRankingUpdater', 'execute', [date]){
+      clear_total_ranking(date)
+      total_ranking = generate_total_ranking(date)
+      update_total_ranking(total_ranking)
+    }
   end
 
   def self.clear_total_ranking(date)

@@ -10,6 +10,9 @@ require 'msgpack'
 require 'leveldb'
 require 'drb/drb'
 require 'logger'
+require 'open-uri'
+require 'nokogiri'
+require 'date'
 
 SLICE_SIZE = 1000
 
@@ -23,6 +26,10 @@ if settings.db['adapter'] == 'sqlite'
   DB.transaction_mode = nil
 end
 
+require_relative 'helper/trace'
+
+require_relative 'models/batch_logger'
+require_relative 'models/web_logger'
 require_relative 'models/model'
 require_relative 'models/master'
 require_relative 'models/scraped_data'
@@ -36,3 +43,4 @@ require_relative 'models/trend'
 require_relative 'models/trend_data'
 require_relative 'models/trend_data_set'
 require_relative 'models/daily_summary'
+require_relative 'models/rubygems_page'

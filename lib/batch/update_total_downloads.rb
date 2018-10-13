@@ -3,9 +3,11 @@ require_relative '../database'
 
 class TotalDownloadsUpdater
   def self.execute(date)
-    clear_total_downloads(date)
-    total_downloads = generate_total_downloads_from_scraped_data(date)
-    update_total_downloads(total_downloads)
+    batch_trace('TotalDownloadsUpdater', 'execute', [date]){
+      clear_total_downloads(date)
+      total_downloads = generate_total_downloads_from_scraped_data(date)
+      update_total_downloads(total_downloads)
+    }
   end
 
   def self.clear_total_downloads(date)

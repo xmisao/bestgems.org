@@ -5,7 +5,6 @@ gem "sinatra-contrib"
 gem "sequel"
 gem "erubis"
 gem "sqlite3"
-gem "mechanize"
 gem "pg"
 gem "thin"
 gem "rake"
@@ -14,6 +13,7 @@ gem "minitest"
 gem "rufo", '~> 0.3.0'
 gem "leveldb-ruby"
 gem "msgpack"
+gem "nokogiri"
 
 group :development do
   gem "pry"
