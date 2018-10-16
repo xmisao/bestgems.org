@@ -4,7 +4,7 @@ task :default => [:test]
 
 desc 'Formatting by rufo'
 task :format do
-  sh 'rufo bin lib test tools migrations'
+  sh "git ls-files '*.rb'|xargs rufo"
 end
 
 namespace :docker do
