@@ -3,8 +3,10 @@ require_relative '../database'
 
 class GemsUpdater
   def self.execute(date)
-    ScrapedData.where(:date => date).order(:name).each{|data|
-      update_gem_from_scraped_data(data)
+    batch_trace('GemsUpdater', 'execute', [date]){
+      ScrapedData.where(:date => date).order(:name).each{|data|
+        update_gem_from_scraped_data(data)
+      }
     }
   end
 

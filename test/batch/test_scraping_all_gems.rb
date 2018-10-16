@@ -9,6 +9,18 @@ class TestScraper < Minitest::Test
     TestHelper.delete_all
   end
 
+  def test_cleaning_gems_data()
+    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-14')
+    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-15')
+    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-16')
+    Master.insert(date: '2018-10-14')
+
+    date = Date.new(2018, 10, 15)
+    Scraper.cleaning_gems_data(date)
+
+    assert_equal 1, ScrapedData.count
+  end
+
   def test_scraping_num_of_gems()
     num = Scraper.scraping_num_of_gems('A')
     assert num

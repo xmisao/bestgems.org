@@ -1,62 +1,66 @@
-require 'mechanize'
-require 'date'
 require_relative '../database'
 
 class Scraper
+  RUBYGEMS_BASE_URL = 'https://rubygems.org'
+
   def self.execute(date, letters)
-    clear_gems_data(date)
-    letters.each{|letter|
-      num = scraping_num_of_gems(letter)
-      (1..(num / 30 + 1)).each{|i|
-        gems = scraping_gems_data(letter, i)
-        save_gems_data(gems, date)
+    batch_trace('Scraper', 'execute', [date, letters]){
+      cleaning_gems_data(date)
+
+      letters.each{|letter|
+        num = scraping_num_of_gems(letter)
+        (1..(num / 30 + 1)).each{|i|
+          gems = scraping_gems_data(letter, i)
+          save_gems_data(gems, date)
+        }
       }
-      sleep 1
     }
   end
 
-  def self.clear_gems_data(date)
-    ScrapedData.where(:date => date).delete
+  def self.cleaning_gems_data(process_date)
+    batch_trace('Scraper', 'cleaning_gems_data', [process_date]){
+      cleaning_processed_scraped_data
+      cleaning_process_date_scraped_data(process_date)
+    }
+  end
+
+  def self.cleaning_processed_scraped_data
+    ScrapedData.where{date <= Master.date}.delete
+  end
+
+  def self.cleaning_process_date_scraped_data(process_date)
+    ScrapedData.where(date: process_date).delete
   end
 
   def self.scraping_num_of_gems(letter)
-    try(3, 60) do
-      agent = Mechanize.new
-      letter_page = agent.get("https://rubygems.org/gems?letter=#{letter}")
-      letter_page.search("p[@class='gems__meter']").first.content.match(/of (\d+)/).to_a[1].to_i
-    end
+    batch_trace('Scraper', 'scraping_num_of_gems', [letter]){
+      try(3, 60) do
+        RubyGemsPage.new(letter).num_of_gems
+      end
+    }
   end
 
   def self.scraping_gems_data(letter, i)
-    try(3, 60) do
-      agent = Mechanize.new
-      page = agent.get("https://rubygems.org/gems?letter=#{letter}&page=#{i}")
-
-      gems = []
-      page.search("a[@class='gems__gem']").each{|gem|
-        name_version = gem.search("h2[@class='gems__gem__name']").first.content.match(/\s*(.+)\s*(.+)/).to_a
-        name = name_version[1]
-        version = name_version[2]
-        summary = gem.search("p[@class='gems__gem__desc t-text']").first.content.strip
-        downloads = gem.search("p[@class='gems__gem__downloads__count']").first.content.gsub(/[^\d]/, '').to_i
-
-        gems << {:name => name, :version => version, :summary => summary, :downloads => downloads}
-      }
-      gems
-    end
+    batch_trace('Scraper', 'scraping_gems_data', [letter, i]){
+      try(3, 60) do
+        RubyGemsPage.new(letter, i).gems_data
+      end
+    }
   end
 
   def self.try(times, sleep_time)
     count = 0
     begin
       yield
-    rescue
+    rescue => e
+      BatchLogger.warn(type: :retrieble_error, error_class: e.class.name, error_message: e.message, error_backtrace: e.backtrace, count: count)
+
       if count < times
         count += 1
         sleep sleep_time
         retry
       else
-        raise "Crawl Error"
+        raise e
       end
     end
   end

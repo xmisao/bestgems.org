@@ -2,63 +2,68 @@ require 'date'
 require_relative '../database'
 
 class TrendUpdater
-  @@logger = Logger.new('update_trend.log')
-
   def self.execute(date)
-    @@logger.info("Start execute (date=#{date})")
+    batch_trace('TrendUpdater', 'execute', [date]){
+      total_downloads_map, daily_downloads_map = fetch_values(date)
 
-    total_downloads_map = {}
-    daily_downloads_map = {}
-    total_ranking_map = {}
-    daily_ranking_map = {}
+      total_ranking_map, daily_ranking_map = fetch_rankings(date)
 
-    @@logger.info('Start fetch values')
+      all_gem_ids = total_downloads_map.keys.sort
 
-    Value.where(date: date).each{|record|
-      case record[:type]
-      when Value::Type::TOTAL_DOWNLOADS
-        total_downloads_map[record[:gem_id]] = record[:value]
-      when Value::Type::DAILY_DOWNLOADS
-        daily_downloads_map[record[:gem_id]] = record[:value]
-      end
+      update_trends(all_gem_ids, total_downloads_map, total_ranking_map, daily_downloads_map, daily_ranking_map, date)
     }
+  end
 
-    @@logger.info('End fetch values')
+  def self.fetch_values(date)
+    batch_trace('TrendUpdater', 'fetch_values'){
+      total_downloads_map = {}
+      daily_downloads_map = {}
+      
+      Value.where(date: date).each{|record|
+        case record[:type]
+        when Value::Type::TOTAL_DOWNLOADS
+          total_downloads_map[record[:gem_id]] = record[:value]
+        when Value::Type::DAILY_DOWNLOADS
+          daily_downloads_map[record[:gem_id]] = record[:value]
+        end
+      }
 
-    @@logger.info('Start fetch rankings')
-
-    Ranking.where(date: date).each{|record|
-      case record[:type]
-      when Ranking::Type::TOTAL_RANKING
-        total_ranking_map[record[:gem_id]] = record[:ranking]
-      when Ranking::Type::DAILY_RANKING
-        daily_ranking_map[record[:gem_id]] = record[:ranking]
-      end
+      return total_downloads_map, daily_downloads_map
     }
+  end
 
-    @@logger.info('End fetch rankings')
+  def self.fetch_rankings(date)
+    batch_trace('TrendUpdater', 'fetch_rankings'){
+      total_ranking_map = {}
+      daily_ranking_map = {}
 
-    all_gem_id = daily_downloads_map.keys.sort
+      Ranking.where(date: date).each{|record|
+        case record[:type]
+        when Ranking::Type::TOTAL_RANKING
+          total_ranking_map[record[:gem_id]] = record[:ranking]
+        when Ranking::Type::DAILY_RANKING
+          daily_ranking_map[record[:gem_id]] = record[:ranking]
+        end
+      }
 
-    @@logger.info('Start put trend data')
-
-    all_gem_id.each{|gem_id|
-      @@logger.info("Put trend data for gem_id #{gem_id}") if gem_id % 100 == 0
-
-      td = TrendData.new(date, total_downloads_map[gem_id], total_ranking_map[gem_id], daily_downloads_map[gem_id], daily_ranking_map[gem_id])
-      Trend.put(gem_id, td)
+      return total_ranking_map, daily_ranking_map
     }
+  end
 
-    @@logger.info('End put trend data')
+  def self.update_trends(all_gem_ids, total_downloads_map, total_ranking_map, daily_downloads_map, daily_ranking_map, date)
+    batch_trace('TrendUpdater', 'update_trends'){
+      all_gem_ids.each_with_index{|gem_id, i|
+        BatchLogger.info(type: 'progress', class: 'TrendUpdater', method: 'update_trends', i: i) if i % 1000 == 0
 
-    @@logger.info('End execute')
-  rescue => e
-    @@logger.error(e)
-    raise
+        td = TrendData.new(date, total_downloads_map[gem_id], total_ranking_map[gem_id], daily_downloads_map[gem_id], daily_ranking_map[gem_id])
+        Trend.put(gem_id, td)
+      }
+    }
   end
 end
 
 if $0 == __FILE__
-  date = ARGV[0] || Date.today - 1
+  date ||= Date.parse(ARGV[0]) if ARGV[0]
+  date ||= Date.today - 1
   TrendUpdater.execute(date)
 end
