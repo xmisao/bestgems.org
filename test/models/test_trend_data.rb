@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'database'
+require "minitest/autorun"
+require "database"
 
 class TestTrendData < Minitest::Test
   def test_initialize
@@ -17,13 +17,13 @@ class TestTrendData < Minitest::Test
 
     packed_tdp = MessagePack.pack(tdp)
 
-    assert_equal [199, 10, 1, 149, 206, 0, 37, 129, 166, 1, 2, 3, 4], packed_tdp.unpack('C*')
+    assert_equal [199, 10, 1, 149, 206, 0, 37, 129, 166, 1, 2, 3, 4], packed_tdp.unpack("C*")
   end
 
   def test_trend_unpack_from_msgpack
     tdp = TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)
 
-    packed_tdp = [199, 10, 1, 149, 206, 0, 37, 129, 166, 1, 2, 3, 4].pack('C*')
+    packed_tdp = [199, 10, 1, 149, 206, 0, 37, 129, 166, 1, 2, 3, 4].pack("C*")
 
     unpacked_tdp = MessagePack.unpack(packed_tdp)
 
@@ -33,7 +33,7 @@ class TestTrendData < Minitest::Test
   def test_key
     tdp = TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)
 
-    assert_equal tdp.key(42), '42.201709'
+    assert_equal tdp.key(42), "42.201709"
   end
 
   def test_equal

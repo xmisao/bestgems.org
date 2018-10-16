@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_total_downloads'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_total_downloads"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateTotalDownloads < Minitest::Test
   def setup
@@ -12,10 +12,10 @@ class TestUpdateTotalDownloads < Minitest::Test
   def test_update_total_downloads_from_scraped_data
     ScrapedData.insert(:id => 1,
                        :date => Date.new(2014, 6, 1),
-                       :name => 'foo',
+                       :name => "foo",
                        :downloads => 42)
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
 
     value = TotalDownloadsUpdater.generate_total_downloads_from_scraped_data(Date.new(2014, 6, 1))[0]
 
@@ -28,21 +28,21 @@ class TestUpdateTotalDownloads < Minitest::Test
   def test_execute
     ScrapedData.insert(:id => 1,
                        :date => Date.new(2014, 6, 1),
-                       :name => 'foo',
+                       :name => "foo",
                        :downloads => 42)
     ScrapedData.insert(:id => 2,
                        :date => Date.new(2014, 6, 1),
-                       :name => 'bar',
+                       :name => "bar",
                        :downloads => 84)
     # duplicate record. this is should be ignored.
     ScrapedData.insert(:id => 3,
                        :date => Date.new(2014, 6, 1),
-                       :name => 'bar',
+                       :name => "bar",
                        :downloads => 84)
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Gems.insert(:id => 2,
-                :name => 'bar')
+                :name => "bar")
 
     TotalDownloadsUpdater.execute(Date.new(2014, 6, 1))
 

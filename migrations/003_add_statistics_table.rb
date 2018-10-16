@@ -1,6 +1,6 @@
 Sequel.migration do
   up do
-    create_table(:statistics, :ignore_index_errors=>true) do
+    create_table(:statistics, :ignore_index_errors => true) do
       Integer :type
       Date :date
       Bignum :value

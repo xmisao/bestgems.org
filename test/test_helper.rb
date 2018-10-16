@@ -10,7 +10,7 @@ module TestHelper
     DailySummary.dataset.delete
     Master.dataset.delete
 
-    Trend.all{|k, v|
+    Trend.all { |k, v|
       Trend.delete_a(k)
     }
   end

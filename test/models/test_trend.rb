@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'database'
+require "minitest/autorun"
+require "database"
 
 class TestTrend < Minitest::Test
   def setup
@@ -7,7 +7,7 @@ class TestTrend < Minitest::Test
   end
 
   def test_put_a_get_a
-    test_key = 'test_key'
+    test_key = "test_key"
     test_td_list = [TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)]
 
     Trend.put_a(test_key, test_td_list)
@@ -18,13 +18,13 @@ class TestTrend < Minitest::Test
   end
 
   def test_all
-    test_key = 'test_key'
+    test_key = "test_key"
     test_td_list = [TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)]
 
     Trend.put_a(test_key, test_td_list)
 
     n = 0
-    Trend.all{|key, td_list|
+    Trend.all { |key, td_list|
       assert_equal test_key, key
       assert_equal test_td_list, td_list
       n += 1
@@ -33,7 +33,7 @@ class TestTrend < Minitest::Test
   end
 
   def test_delete_a
-    test_key = 'test_key'
+    test_key = "test_key"
     test_td_list = [TrendData.new(Date.new(2017, 9, 25), 1, 2, 3, 4)]
 
     Trend.put_a(test_key, test_td_list)
@@ -104,7 +104,7 @@ class TestTrend < Minitest::Test
   end
 
   def test_update
-    test_key = 'test_key'
+    test_key = "test_key"
     td1_1 = TrendData.new(Date.new(2017, 9, 1), 1, 2, 3, 4)
     td1_2 = TrendData.new(Date.new(2017, 9, 1), 2, 3, 4, 5)
     td2 = TrendData.new(Date.new(2017, 9, 2), 3, 4, 5, 6)
@@ -140,7 +140,7 @@ class TestTrend < Minitest::Test
   end
 
   def test_empty_return_false
-    Trend.put_a('test_key', TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4))
+    Trend.put_a("test_key", TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4))
 
     assert_equal false, Trend.empty?
   end

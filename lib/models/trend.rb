@@ -1,10 +1,10 @@
-TREND_DRB_URI = 'druby://localhost:16330'
+TREND_DRB_URI = "druby://localhost:16330"
 
-if ENV['BESTGEMS_TREND_SERVER'] == 'true'
+if ENV["BESTGEMS_TREND_SERVER"] == "true"
   class Trend
     include DRb::DRbUndumped
 
-    LEVELDB_DIR = Settings.leveldb['dir']
+    LEVELDB_DIR = Settings.leveldb["dir"]
 
     @@level_db = LevelDB::DB.new LEVELDB_DIR
 
@@ -21,7 +21,7 @@ if ENV['BESTGEMS_TREND_SERVER'] == 'true'
     end
 
     def self.all(&blk)
-      @@level_db.each{|k, v|
+      @@level_db.each { |k, v|
         blk.call(k, unpack(v))
       }
     end
@@ -32,17 +32,17 @@ if ENV['BESTGEMS_TREND_SERVER'] == 'true'
 
       td_list = []
 
-      @@level_db.each(from: from, to: to){|_, value|
+      @@level_db.each(from: from, to: to) { |_, value|
         td_list += unpack(value) if value
       }
 
-      td_list.sort_by{|td| td.date }
+      td_list.sort_by { |td| td.date }
     end
 
     def self.put(gem_id, *td_list)
       raise ArgumentError if td_list.size == 0
 
-      td_list.group_by{|td| td.key(gem_id) }.each{|key, monthly_td_list|
+      td_list.group_by { |td| td.key(gem_id) }.each { |key, monthly_td_list|
         update(key, monthly_td_list)
       }
     end
@@ -60,11 +60,11 @@ if ENV['BESTGEMS_TREND_SERVER'] == 'true'
     def self.merge_td_list(exist_td_list, new_td_list)
       hash = {}
 
-      exist_td_list.each{|td|
+      exist_td_list.each { |td|
         hash[td.date] = td
       }
 
-      new_td_list.each{|td|
+      new_td_list.each { |td|
         hash[td.date] = td
       }
 
@@ -72,7 +72,7 @@ if ENV['BESTGEMS_TREND_SERVER'] == 'true'
     end
 
     def self.empty?
-      @@level_db.each{|_|
+      @@level_db.each { |_|
         return false
       }
 

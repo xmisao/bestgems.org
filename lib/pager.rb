@@ -5,21 +5,21 @@ class Pager
 
   def conv0(hash, page)
     a = []
-    hash.each{|k, v|
-      if k == 'page'
+    hash.each { |k, v|
+      if k == "page"
         a << "#{k}=#{page}"
       else
         a << "#{k}=#{v}"
       end
     }
 
-    a << "page=#{page}" unless hash.has_key?('page')
+    a << "page=#{page}" unless hash.has_key?("page")
 
-    a.join('&')
+    a.join("&")
   end
 
   def previous(p)
-    text = '&lt;&lt; Previous'
+    text = "&lt;&lt; Previous"
     if @range.begin <= p
       conv_text(p, text)
     else
@@ -28,7 +28,7 @@ class Pager
   end
 
   def next(p)
-    text = '&gt;&gt; Next'
+    text = "&gt;&gt; Next"
     if p <= @range.end
       conv_text(p, text)
     else
@@ -37,11 +37,11 @@ class Pager
   end
 
   def conv_text(p, text)
-    "<li><a href=\"#{@path + '?' + conv0(@opts, p)}\">#{text}</a></li>"
+    "<li><a href=\"#{@path + "?" + conv0(@opts, p)}\">#{text}</a></li>"
   end
 
   def conv(p)
-    "<li><a href=\"#{@path + '?' + conv0(@opts, p)}\">#{p}</a></li>"
+    "<li><a href=\"#{@path + "?" + conv0(@opts, p)}\">#{p}</a></li>"
   end
 
   def conv_active(str)
@@ -53,7 +53,7 @@ class Pager
   end
 
   def each(&blk)
-    @range.each{|p|
+    @range.each { |p|
       if p == @page
         yield conv_active(p)
       elsif p == @range.begin
@@ -67,7 +67,7 @@ class Pager
       elsif @page - 5 < p and p < @page + 5
         yield conv(p)
       elsif p == @page - 5 or @page + 5 == p
-        yield conv_active('...')
+        yield conv_active("...")
       end
     }
   end

@@ -1,17 +1,17 @@
 # CAUTION!!
 # This tool is working only PostgreSQL.
 
-require_relative '../lib/database'
+require_relative "../lib/database"
 
-case ENV['RACK_ENV']
-when 'production'
+case ENV["RACK_ENV"]
+when "production"
 else
   puts "You should set value 'production'(to use PostgreSQL) to RACK_ENV environment variable."
   exit 1
 end
 
-require 'logger'
-$logger = Logger.new('archive.log')
+require "logger"
+$logger = Logger.new("archive.log")
 
 class ArchiveError < StandardError; end
 
@@ -23,9 +23,9 @@ class Archiver
   end
 
   def archive
-    tables = ['values', 'rankings']
+    tables = ["values", "rankings"]
 
-    tables.each{|table|
+    tables.each { |table|
       begin
         atn = archive_table_name(table)
         unless DB.table_exists?(atn)
@@ -56,7 +56,7 @@ class Archiver
   end
 
   def archive_table_name(table)
-    yyyymm = sprintf('%04d%02d', year, month)
+    yyyymm = sprintf("%04d%02d", year, month)
 
     "archived_#{table}_#{yyyymm}"
   end
@@ -74,12 +74,12 @@ SQL
   end
 
   def generate_copy_sql(table)
-    first_day_of_month = sprintf('%04d-%02d-01', year, month)
+    first_day_of_month = sprintf("%04d-%02d-01", year, month)
 
     next_year = month == 12 ? year + 1 : year
     next_month = month == 12 ? 1 : month + 1
 
-    first_day_of_next_month = sprintf('%04d-%02d-01', next_year, next_month)
+    first_day_of_next_month = sprintf("%04d-%02d-01", next_year, next_month)
 
     tmpl = <<SQL
 INSERT INTO #{archive_table_name(table)} 
@@ -89,12 +89,12 @@ SQL
   end
 
   def generate_delete_sql(table)
-    first_day_of_month = sprintf('%04d-%02d-01', year, month)
+    first_day_of_month = sprintf("%04d-%02d-01", year, month)
 
     next_year = month == 12 ? year + 1 : year
     next_month = month == 12 ? 1 : month + 1
 
-    first_day_of_next_month = sprintf('%04d-%02d-01', next_year, next_month)
+    first_day_of_next_month = sprintf("%04d-%02d-01", next_year, next_month)
 
     tmpl = <<SQL
 DELETE FROM #{table} WHERE date >= '#{first_day_of_month}' AND date < '#{first_day_of_next_month}';
@@ -108,9 +108,9 @@ min_date = min_date - (min_date.day - 1)
 
 last_archive_date = Date.today - 32
 
-raise 'No data to archive' unless min_date < last_archive_date
+raise "No data to archive" unless min_date < last_archive_date
 
-(min_date..last_archive_date).each{|date|
+(min_date..last_archive_date).each { |date|
   if date.day == 1
     Archiver.new(date.year, date.month).archive
   end

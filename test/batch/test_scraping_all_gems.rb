@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/scraping_all_gems'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/scraping_all_gems"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestScraper < Minitest::Test
   def setup
@@ -10,10 +10,10 @@ class TestScraper < Minitest::Test
   end
 
   def test_cleaning_gems_data()
-    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-14')
-    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-15')
-    ScrapedData.insert(name: 'foo', version: '1.0.0', summary: 'foo is ...', downloads: 123, date: '2018-10-16')
-    Master.insert(date: '2018-10-14')
+    ScrapedData.insert(name: "foo", version: "1.0.0", summary: "foo is ...", downloads: 123, date: "2018-10-14")
+    ScrapedData.insert(name: "foo", version: "1.0.0", summary: "foo is ...", downloads: 123, date: "2018-10-15")
+    ScrapedData.insert(name: "foo", version: "1.0.0", summary: "foo is ...", downloads: 123, date: "2018-10-16")
+    Master.insert(date: "2018-10-14")
 
     date = Date.new(2018, 10, 15)
     Scraper.cleaning_gems_data(date)
@@ -22,12 +22,12 @@ class TestScraper < Minitest::Test
   end
 
   def test_scraping_num_of_gems()
-    num = Scraper.scraping_num_of_gems('A')
+    num = Scraper.scraping_num_of_gems("A")
     assert num
   end
 
   def test_scraping_gems_data()
-    gem = Scraper.scraping_gems_data('A', 1).first
+    gem = Scraper.scraping_gems_data("A", 1).first
     assert gem[:name]
     assert gem[:version]
     assert gem[:summary]
@@ -35,18 +35,18 @@ class TestScraper < Minitest::Test
   end
 
   def test_save_gems_data()
-    gem = {:name => 'foo',
-           :version => '1.0',
-           :summary => 'Awesome gem.',
+    gem = {:name => "foo",
+           :version => "1.0",
+           :summary => "Awesome gem.",
            :downloads => 42}
     date = Date.new(2014, 6, 1)
 
     Scraper.save_gems_data([gem], date)
 
     data = ScrapedData.first
-    assert_equal 'foo', data[:name]
-    assert_equal '1.0', data[:version]
-    assert_equal 'Awesome gem.', data[:summary]
+    assert_equal "foo", data[:name]
+    assert_equal "1.0", data[:version]
+    assert_equal "Awesome gem.", data[:summary]
     assert_equal 42, data[:downloads]
     assert_equal Date.new(2014, 6, 1), data[:date]
   end

@@ -4,5 +4,4 @@ class Value < Sequel::Model
     DAILY_DOWNLOADS = 1
     FEATURED_SCORE = 2
   end
-
 end

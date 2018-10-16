@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_statistics_num_of_gems'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_statistics_num_of_gems"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateStatisticsNumOfGems < Minitest::Test
   def setup
@@ -11,11 +11,11 @@ class TestUpdateStatisticsNumOfGems < Minitest::Test
 
   def test_execute
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Gems.insert(:id => 2,
-                :name => 'bar')
+                :name => "bar")
     Gems.insert(:id => 3,
-                :name => 'baz')
+                :name => "baz")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,

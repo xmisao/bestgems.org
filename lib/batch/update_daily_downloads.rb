@@ -1,9 +1,9 @@
-require 'date'
-require_relative '../database'
+require "date"
+require_relative "../database"
 
 class DailyDownloadsUpdater
   def self.execute(date)
-    batch_trace('DailyDownloadsUpdater', 'execute', [date]){
+    batch_trace("DailyDownloadsUpdater", "execute", [date]) {
       clear_daily_downloads(date)
       daily_downloads = generate_daily_downloads(date)
       update_daily_downloads(daily_downloads)
@@ -18,7 +18,7 @@ class DailyDownloadsUpdater
     daily_downloads = []
     Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                 :date => date)
-         .each{|value1|
+         .each { |value1|
       value2 = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                            :date => value1[:date] - 1,
                            :gem_id => value1[:gem_id]).first

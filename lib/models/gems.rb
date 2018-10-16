@@ -1,6 +1,6 @@
 class Gems < Sequel::Model
   def self.search(date, query)
-    like_clause = query.split(/\s+/)[0..4].inject(nil){|like_clause, q|
+    like_clause = query.split(/\s+/)[0..4].inject(nil) { |like_clause, q|
       cond = (Sequel.ilike(:name, "%#{q}%") | Sequel.ilike(:summary, "%#{q}%"))
       like_clause ? like_clause & cond : cond
     }
@@ -52,7 +52,7 @@ class Gems < Sequel::Model
         total_downloads: self[:latest_total_downloads],
         daily_downloads: self[:latest_daily_downloads],
         total_ranking: self[:latest_total_ranking],
-        daily_ranking: self[:latest_daily_ranking]
+        daily_ranking: self[:latest_daily_ranking],
       }
     elsif date < self[:latest_update_date]
       # This state will occure when running update_gems_latest_columns.rb
@@ -64,7 +64,7 @@ class Gems < Sequel::Model
         total_downloads: nil,
         daily_downloads: nil,
         total_ranking: nil,
-        daily_ranking: nil
+        daily_ranking: nil,
       }
     end
   end

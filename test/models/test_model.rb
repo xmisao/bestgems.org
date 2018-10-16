@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'database'
-require_relative '../run_migration'
+require "minitest/autorun"
+require "database"
+require_relative "../run_migration"
 
 DB.create_table! :test do
   primary_key :id

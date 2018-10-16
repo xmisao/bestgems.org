@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_total_ranking'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_total_ranking"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateTotalRanking < Minitest::Test
   def setup
@@ -11,13 +11,13 @@ class TestUpdateTotalRanking < Minitest::Test
 
   def test_execute
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Gems.insert(:id => 2,
-                :name => 'bar')
+                :name => "bar")
     Gems.insert(:id => 3,
-                :name => 'baz')
+                :name => "baz")
     Gems.insert(:id => 4,
-                :name => 'qux')
+                :name => "qux")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,

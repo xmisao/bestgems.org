@@ -1,11 +1,11 @@
-require 'sequel'
-require 'date'
+require "sequel"
+require "date"
 
-DB = Sequel.sqlite('db/master.sqlite3')
+DB = Sequel.sqlite("db/master.sqlite3")
 total = DB[:total]
 daily = DB[:daily]
 
-total.where(:date => Date::today - 2).order(:name).each{|row0|
+total.where(:date => Date::today - 2).order(:name).each { |row0|
   row1 = total.where(:name => row0[:name], :date => Date::today - 3).first
   next unless row1
 

@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'database'
-require_relative '../run_migration'
+require "minitest/autorun"
+require "database"
+require_relative "../run_migration"
 
 class TestGems < Minitest::Test
   def setup
@@ -9,23 +9,23 @@ class TestGems < Minitest::Test
 
   def test_search
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem',
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem",
                 :latest_total_ranking => 10,
                 :latest_total_downloads => 300,
                 :latest_update_date => Date.new(2014, 6, 1))
     Gems.insert(:id => 2,
-                :name => 'bar',
-                :version => '1.0',
-                :summary => 'BAR gem',
+                :name => "bar",
+                :version => "1.0",
+                :summary => "BAR gem",
                 :latest_total_ranking => 20,
                 :latest_total_downloads => 200,
                 :latest_update_date => Date.new(2014, 6, 1))
     Gems.insert(:id => 3,
-                :name => 'foobar',
-                :version => '1.0',
-                :summary => 'BAZ gem',
+                :name => "foobar",
+                :version => "1.0",
+                :summary => "BAZ gem",
                 :latest_total_ranking => 30,
                 :latest_total_downloads => 100,
                 :latest_update_date => Date.new(2014, 6, 1))
@@ -35,17 +35,17 @@ class TestGems < Minitest::Test
     gem = result.first
 
     assert_equal 1, result.count
-    assert_equal 'foobar', gem[:name]
-    assert_equal 'BAZ gem', gem[:summary]
+    assert_equal "foobar", gem[:name]
+    assert_equal "BAZ gem", gem[:summary]
     assert_equal 30, gem[:latest_total_ranking]
     assert_equal 100, gem[:latest_total_downloads]
   end
 
   def test_total_downloads_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -68,9 +68,9 @@ class TestGems < Minitest::Test
 
   def test_daily_downloads_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::DAILY_DOWNLOADS,
                  :gem_id => 1,
@@ -93,9 +93,9 @@ class TestGems < Minitest::Test
 
   def test_downloads_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -124,9 +124,9 @@ class TestGems < Minitest::Test
 
   def test_total_ranking_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
@@ -149,9 +149,9 @@ class TestGems < Minitest::Test
 
   def test_daily_ranking_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::DAILY_RANKING,
                    :gem_id => 1,
@@ -174,9 +174,9 @@ class TestGems < Minitest::Test
 
   def test_ranking_trends
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
@@ -205,9 +205,9 @@ class TestGems < Minitest::Test
 
   def test_info
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -242,9 +242,9 @@ class TestGems < Minitest::Test
 
   def test_info_total_only
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -269,9 +269,9 @@ class TestGems < Minitest::Test
 
   def test_trend_by_rdb
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -300,9 +300,9 @@ class TestGems < Minitest::Test
 
   def test_get_trend_data_from_rdb
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2017, 10, 1),
@@ -329,9 +329,9 @@ class TestGems < Minitest::Test
 
   def test_get_trend_data_from_rdb_when_no_data
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
 
     gem = Gems[1]
 
@@ -342,21 +342,21 @@ class TestGems < Minitest::Test
 
   def test_put_trend_data
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
 
     td = TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)
     Gems[1].put_trend_data(td)
 
-    assert_equal [td], Trend.get_a('1.201710')
+    assert_equal [td], Trend.get_a("1.201710")
   end
 
   def test_get_trend_data
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
 
     td = TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4)
     Trend.put(1, td)

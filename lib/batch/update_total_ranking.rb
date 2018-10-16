@@ -1,9 +1,9 @@
-require 'date'
-require_relative '../database'
+require "date"
+require_relative "../database"
 
 class TotalRankingUpdater
   def self.execute(date)
-    batch_trace('TotalRankingUpdater', 'execute', [date]){
+    batch_trace("TotalRankingUpdater", "execute", [date]) {
       clear_total_ranking(date)
       total_ranking = generate_total_ranking(date)
       update_total_ranking(total_ranking)
@@ -24,7 +24,7 @@ class TotalRankingUpdater
                 :date => date)
          .order(:value)
          .reverse
-         .each{|value|
+         .each { |value|
       if value[:value] < last_downloads
         last_rank = rank
         last_downloads = value[:value]

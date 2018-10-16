@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_daily_summary'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_daily_summary"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateDailySummary < Minitest::Test
   def setup
@@ -10,8 +10,8 @@ class TestUpdateDailySummary < Minitest::Test
   end
 
   def test_execute_when_insert
-    Gems.insert(id: 1, name: 'foo')
-    Gems.insert(id: 2, name: 'bar')
+    Gems.insert(id: 1, name: "foo")
+    Gems.insert(id: 2, name: "bar")
 
     Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
                    gem_id: 1,
@@ -35,8 +35,8 @@ class TestUpdateDailySummary < Minitest::Test
   end
 
   def test_execute_when_update
-    Gems.insert(id: 1, name: 'foo')
-    Gems.insert(id: 2, name: 'bar')
+    Gems.insert(id: 1, name: "foo")
+    Gems.insert(id: 2, name: "bar")
 
     Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
                    gem_id: 1,

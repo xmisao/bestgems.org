@@ -1,5 +1,5 @@
-require 'minitest/autorun'
-require 'database'
+require "minitest/autorun"
+require "database"
 
 class TestTrendDataSet < Minitest::Test
   def test_downloads_trends
