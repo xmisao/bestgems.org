@@ -363,4 +363,26 @@ class TestGems < Minitest::Test
 
     assert_equal [td], Gems[1].get_trend_data
   end
+
+  def test_fetch_gems_on_page_first_page
+    2.times { |i|
+      Gems.insert(:id => i,
+                  :name => "foo#{i}",
+                  :version => "1.0",
+                  :summary => "FOO gem")
+    }
+
+    assert_equal Gems.to_a, Gems.fetch_gems_on_page(1)
+  end
+
+  def test_fetch_gems_on_page_second_page
+    2.times { |i|
+      Gems.insert(:id => i,
+                  :name => "foo#{i}",
+                  :version => "1.0",
+                  :summary => "FOO gem")
+    }
+
+    assert_equal Gems.to_a[1, 1], Gems.fetch_gems_on_page(2, 1)
+  end
 end

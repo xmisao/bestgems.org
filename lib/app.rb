@@ -343,3 +343,19 @@ get "/sitemaps/gems*.xml" do
 
   erb :sitemap_gems, layout: false
 end
+
+# NOTE BestGems API v2 is under designing!
+
+get "/api/v2/gems.json" do
+  content_type :json
+
+  page = if params[:page]
+           break 400 unless params[:page].match(/\A\d{1,4}\Z/)
+
+           params[:page].to_i
+         else
+           1
+         end
+
+  Gems.fetch_gems_on_page(page).map(&:to_hash).to_json
+end
