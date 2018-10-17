@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_gems_latest_columns'
-require_relative '../run_migration'
+require "minitest/autorun"
+require "database"
+require "batch/update_gems_latest_columns"
+require_relative "../run_migration"
 
 class TestUpdateGemsLatestColumns < Minitest::Test
   def setup
@@ -10,9 +10,9 @@ class TestUpdateGemsLatestColumns < Minitest::Test
 
   def test_execute
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
     Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2017, 10, 1),
@@ -43,9 +43,9 @@ class TestUpdateGemsLatestColumns < Minitest::Test
 
   def test_execute_when_no_data
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'FOO gem')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "FOO gem")
 
     before = Gems.where(id: 1).first
 

@@ -1,9 +1,9 @@
-require 'date'
-require_relative '../database'
+require "date"
+require_relative "../database"
 
 class StatisticsNumOfGemsUpdater
   def self.execute(date)
-    batch_trace('StatisticsNumOfGemsUpdater', 'execute', [date]){
+    batch_trace("StatisticsNumOfGemsUpdater", "execute", [date]) {
       num_of_gems = Value.where(:type => Value::Type::TOTAL_DOWNLOADS,
                                 :date => date).count
 

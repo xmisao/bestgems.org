@@ -40,9 +40,9 @@ Sequel.migration do
       create_table(:scraped_data) do
         primary_key :id
         Date :date
-        String :name, :size=>255
-        String :version, :size=>255
-        String :summary, :text=>true
+        String :name, :size => 255
+        String :version, :size => 255
+        String :summary, :text => true
         Integer :downloads
 
         index [:date]

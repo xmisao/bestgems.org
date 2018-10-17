@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_featured_score'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_featured_score"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateFeaturedScore < Minitest::Test
   def setup
@@ -11,7 +11,7 @@ class TestUpdateFeaturedScore < Minitest::Test
 
   def test_generate_featured_score
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
@@ -33,9 +33,9 @@ class TestUpdateFeaturedScore < Minitest::Test
 
   def test_execute
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Gems.insert(:id => 2,
-                :name => 'bar')
+                :name => "bar")
     Ranking.insert(:id => 1,
                    :type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,

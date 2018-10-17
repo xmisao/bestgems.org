@@ -1,11 +1,11 @@
-require 'sinatra'
-require 'sinatra/config_file'
-config_file File.expand_path('../../../config/database.yml.erb', __FILE__)
+require "sinatra"
+require "sinatra/config_file"
+config_file File.expand_path("../../../config/database.yml.erb", __FILE__)
 
-require 'sequel'
+require "sequel"
 
-require 'logger'
-require 'date'
+require "logger"
+require "date"
 
 class Migrator
   def initialize(database_setting)
@@ -15,16 +15,16 @@ class Migrator
   end
 
   def execute_migration
-    @logger.info('Migration started.')
+    @logger.info("Migration started.")
 
     Sequel.extension :migration
 
     Sequel::Migrator.run(
       Sequel.connect(@database_setting),
-      File.expand_path('../../../migrations', __FILE__)
+      File.expand_path("../../../migrations", __FILE__)
     )
 
-    @logger.info('Migration finished.')
+    @logger.info("Migration finished.")
   rescue => e
     @logger.fatal e.inspect
     @logger.fatal e.backtrace
@@ -32,7 +32,7 @@ class Migrator
   end
 
   def insert_initial_data
-    @logger.info('Insert initial data started.')
+    @logger.info("Insert initial data started.")
 
     Sequel.connect(@database_setting) do |db|
       if db[:master].count == 0
@@ -40,7 +40,7 @@ class Migrator
       end
     end
 
-    @logger.info('Insert initial data finished.')
+    @logger.info("Insert initial data finished.")
   rescue => e
     @logger.fatal e.inspect
     @logger.fatal e.backtrace

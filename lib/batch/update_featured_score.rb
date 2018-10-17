@@ -1,9 +1,9 @@
-require 'date'
-require_relative '../database'
+require "date"
+require_relative "../database"
 
 class FeaturedScoreUpdater
   def self.execute(date)
-    batch_trace('FeaturedScoreUpdater', 'execute', [date]){
+    batch_trace("FeaturedScoreUpdater", "execute", [date]) {
       clear_featured_score(date)
       featured_score = generate_featured_score(date)
       update_featured_score(featured_score)
@@ -20,11 +20,11 @@ class FeaturedScoreUpdater
                   :date => date)
            .order(:ranking)
            .limit(1000)
-           .each{|daily_ranking|
+           .each { |daily_ranking|
       total_ranking = Ranking.where(:type => Ranking::Type::TOTAL_RANKING,
                                     :gem_id => daily_ranking[:gem_id],
                                     :date => daily_ranking[:date]).first
-      raise 'Database inconsistency.' unless total_ranking
+      raise "Database inconsistency." unless total_ranking
 
       rank_diff = total_ranking[:ranking] - daily_ranking[:ranking]
 

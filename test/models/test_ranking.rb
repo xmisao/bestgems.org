@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_gems_latest_columns'
-require_relative '../run_migration'
+require "minitest/autorun"
+require "database"
+require "batch/update_gems_latest_columns"
+require_relative "../run_migration"
 
 class TestRanking < Minitest::Test
   def setup
@@ -10,9 +10,9 @@ class TestRanking < Minitest::Test
 
   def test_total
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
@@ -34,8 +34,8 @@ class TestRanking < Minitest::Test
     total = Ranking.total(Date.new(2014, 6, 1), 1)
     top = total.first
 
-    assert_equal 'foo', top[:name]
-    assert_equal 'Awesome gem.', top[:summary]
+    assert_equal "foo", top[:name]
+    assert_equal "Awesome gem.", top[:summary]
     assert_equal 42, top[:downloads]
     assert_equal 20, top[:ranking]
   end
@@ -48,13 +48,13 @@ class TestRanking < Minitest::Test
 
   def test_total_count_return_ranking_count
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Gems.insert(:id => 2,
-                :name => 'bar',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "bar",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Ranking.insert(:type => Ranking::Type::TOTAL_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2017, 11, 1),
@@ -69,9 +69,9 @@ class TestRanking < Minitest::Test
 
   def test_daily
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
@@ -93,8 +93,8 @@ class TestRanking < Minitest::Test
     daily = Ranking.daily(Date.new(2014, 6, 1), 1)
     top = daily.first
 
-    assert_equal 'foo', top[:name]
-    assert_equal 'Awesome gem.', top[:summary]
+    assert_equal "foo", top[:name]
+    assert_equal "Awesome gem.", top[:summary]
     assert_equal 23, top[:downloads]
     assert_equal 10, top[:ranking]
   end
@@ -107,13 +107,13 @@ class TestRanking < Minitest::Test
 
   def test_daily_count_return_ranking_count
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Gems.insert(:id => 2,
-                :name => 'bar',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "bar",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Ranking.insert(:type => Ranking::Type::DAILY_RANKING,
                    :gem_id => 1,
                    :date => Date.new(2017, 11, 1),
@@ -128,9 +128,9 @@ class TestRanking < Minitest::Test
 
   def test_featured
     Gems.insert(:id => 1,
-                :name => 'foo',
-                :version => '1.0',
-                :summary => 'Awesome gem.')
+                :name => "foo",
+                :version => "1.0",
+                :summary => "Awesome gem.")
     Value.insert(:type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
                  :date => Date.new(2014, 6, 1),
@@ -160,8 +160,8 @@ class TestRanking < Minitest::Test
     featured = Ranking.featured(Date.new(2014, 6, 1), 1)
     top = featured.first
 
-    assert_equal 'foo', top[:name]
-    assert_equal 'Awesome gem.', top[:summary]
+    assert_equal "foo", top[:name]
+    assert_equal "Awesome gem.", top[:summary]
     assert_equal 30, top[:ranking]
     assert_equal 10, top[:score]
     assert_equal 20, top[:total_ranking]

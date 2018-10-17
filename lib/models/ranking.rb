@@ -60,24 +60,24 @@ class Ranking < Sequel::Model
   def self.featured(date, *limit)
     featured_ranking = Ranking.where(
       :type => Ranking::Type::FEATURED_RANKING,
-      :date => date
+      :date => date,
     )
       .order(:ranking)
       .limit(*limit)
       .select(:gem_id, :ranking)
 
-    gem_info = featured_ranking.map{|ranking| {gem_id: ranking[:gem_id], featured_ranking: ranking[:ranking]}}
+    gem_info = featured_ranking.map { |ranking| {gem_id: ranking[:gem_id], featured_ranking: ranking[:ranking]} }
 
-    Gems.where(id: gem_info.map{|info| info[:gem_id]}).map{|gem|
+    Gems.where(id: gem_info.map { |info| info[:gem_id] }).map { |gem|
       {
         name: gem[:name],
         summary: gem[:summary],
         score: gem[:latest_total_ranking] - gem[:latest_daily_ranking],
-        ranking: gem_info.select{|gi| gi[:gem_id] == gem[:id]}.first[:featured_ranking],
+        ranking: gem_info.select { |gi| gi[:gem_id] == gem[:id] }.first[:featured_ranking],
         total_ranking: gem[:latest_total_ranking],
-        daily_ranking: gem[:latest_daily_ranking]
+        daily_ranking: gem[:latest_daily_ranking],
       }
-    }.sort_by{|gem| gem[:ranking]}
+    }.sort_by { |gem| gem[:ranking] }
   end
 
   def self.featured_count(date)

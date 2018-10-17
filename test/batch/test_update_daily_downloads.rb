@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'database'
-require 'batch/update_daily_downloads'
-require_relative '../run_migration'
-require_relative '../test_helper'
+require "minitest/autorun"
+require "database"
+require "batch/update_daily_downloads"
+require_relative "../run_migration"
+require_relative "../test_helper"
 
 class TestUpdateDailyDownloads < Minitest::Test
   def setup
@@ -11,7 +11,7 @@ class TestUpdateDailyDownloads < Minitest::Test
 
   def test_generate_daily_downloads
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
@@ -33,9 +33,9 @@ class TestUpdateDailyDownloads < Minitest::Test
 
   def test_execute
     Gems.insert(:id => 1,
-                :name => 'foo')
+                :name => "foo")
     Gems.insert(:id => 2,
-                :name => 'bar')
+                :name => "bar")
     Value.insert(:id => 1,
                  :type => Value::Type::TOTAL_DOWNLOADS,
                  :gem_id => 1,
