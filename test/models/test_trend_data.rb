@@ -45,4 +45,16 @@ class TestTrendData < Minitest::Test
     assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 9)
     assert_equal false, TrendData.new(Date.new(2017, 10, 1), 1, 2, 3, 4) == nil
   end
+
+  def test_to_hash
+    tdp = TrendData.new(Date.new(2018, 10, 17), 1, 2, 3, 4)
+
+    hash = tdp.to_hash
+
+    assert_equal Date.new(2018, 10, 17), hash[:date]
+    assert_equal 1, hash[:total_downloads]
+    assert_equal 2, hash[:total_ranking]
+    assert_equal 3, hash[:daily_downloads]
+    assert_equal 4, hash[:daily_ranking]
+  end
 end

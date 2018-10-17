@@ -14,6 +14,10 @@ class Gems < Sequel::Model
     self.order(:id).offset(offset).limit(per_page).to_a
   end
 
+  def self.fetch_gem_by_name(name)
+    Gems.where(:name => name).first
+  end
+
   def total_downloads_trends()
     Value.where(:gem_id => self[:id], :type => Value::Type::TOTAL_DOWNLOADS)
          .order(:date)

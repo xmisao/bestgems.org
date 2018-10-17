@@ -359,3 +359,12 @@ get "/api/v2/gems.json" do
 
   Gems.fetch_gems_on_page(page).map(&:to_hash).to_json
 end
+
+get "/api/v2/gems/:name/trends.json" do
+  content_type :json
+
+  gem = Gems.fetch_gem_by_name(params[:name])
+  break 404 unless gem
+
+  TrendDataSet.new(gem.get_trend_data).as_json.to_json
+end
