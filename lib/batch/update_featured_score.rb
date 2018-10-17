@@ -28,10 +28,13 @@ class FeaturedScoreUpdater
 
       rank_diff = total_ranking[:ranking] - daily_ranking[:ranking]
 
+      next unless rank_diff > 0
+
       record = {:type => Value::Type::FEATURED_SCORE,
                 :gem_id => daily_ranking[:gem_id],
                 :date => daily_ranking[:date],
                 :value => rank_diff}
+
       featured_score << record
     }
     featured_score
