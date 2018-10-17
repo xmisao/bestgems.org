@@ -8,6 +8,12 @@ class Gems < Sequel::Model
     Gems.where(latest_update_date: date).where(like_clause).order(:latest_total_ranking)
   end
 
+  def self.fetch_gems_on_page(page, per_page = 1000)
+    offset = (page - 1) * per_page
+
+    self.order(:id).offset(offset).limit(per_page).to_a
+  end
+
   def total_downloads_trends()
     Value.where(:gem_id => self[:id], :type => Value::Type::TOTAL_DOWNLOADS)
          .order(:date)
@@ -108,5 +114,19 @@ class Gems < Sequel::Model
 
   def get_trend_data()
     Trend.get(id)
+  end
+
+  def to_hash
+    {
+      gem_id: id,
+      name: name,
+      summary: summary,
+      version: version,
+      latest_total_downloads: latest_total_downloads,
+      latest_total_ranking: latest_total_ranking,
+      latest_daily_downloads: latest_daily_downloads,
+      latest_daily_ranking: latest_daily_ranking,
+      latest_update_date: latest_update_date
+    }
   end
 end
