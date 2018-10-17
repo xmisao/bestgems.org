@@ -40,4 +40,8 @@ class TrendDataSet
       {date: td.date, daily_ranking: td.daily_ranking}
     }
   end
+
+  def as_json
+    @sorted_td_list.map { |td| td.to_hash }
+  end
 end

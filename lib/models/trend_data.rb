@@ -32,5 +32,15 @@ class TrendData
       && @daily_ranking == other.daily_ranking
   end
 
+  def to_hash
+    {
+      date: @date,
+      total_downloads: @total_downloads,
+      total_ranking: @total_ranking,
+      daily_downloads: @daily_downloads,
+      daily_ranking: @daily_ranking,
+    }
+  end
+
   MessagePack::DefaultFactory.register_type(self.msgpack_type, self, packer: :to_msgpack_ext, unpacker: :from_msgpack_ext)
 end

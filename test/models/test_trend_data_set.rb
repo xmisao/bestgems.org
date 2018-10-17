@@ -37,4 +37,14 @@ class TestTrendDataSet < Minitest::Test
 
     assert_equal [{date: Date.new(2017, 10, 1), daily_ranking: 4}], tds.daily_ranking
   end
+
+  def test_as_json
+    tds = TrendDataSet.new([TrendData.new(Date.new(2018, 10, 17), 1, 2, 3, 4)])
+
+    json_struct = tds.as_json
+
+    assert json_struct.is_a?(Array)
+    assert_equal 1, json_struct.count
+    assert json_struct.first.is_a?(Hash)
+  end
 end
