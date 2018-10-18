@@ -130,7 +130,7 @@ class Gems < Sequel::Model
       latest_total_ranking: latest_total_ranking,
       latest_daily_downloads: latest_daily_downloads,
       latest_daily_ranking: latest_daily_ranking,
-      latest_update_date: latest_update_date
+      latest_update_date: latest_update_date,
     }
   end
 end
