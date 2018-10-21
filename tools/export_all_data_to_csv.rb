@@ -1,32 +1,7 @@
 require "open-uri"
 require "json"
 require "csv"
-
-class BestGemsApi
-  def gems(page)
-    open(gems_api_endpoint(page)) { |f|
-      JSON.parse(f.read)
-    }
-  end
-
-  def gems_api_endpoint(page)
-    "#{bestgems_api_base_url}/v2/gems.json?page=#{page}"
-  end
-
-  def trends(name)
-    open(trends_api_endpoint(name)) { |f|
-      JSON.parse(f.read)
-    }
-  end
-
-  def trends_api_endpoint(name)
-    "#{bestgems_api_base_url}/v2/gems/#{name}/trends.json"
-  end
-
-  def bestgems_api_base_url
-    ARGV[0]
-  end
-end
+require_relative "./bestgems_api"
 
 class BestGemsExporter
   GEM_ATTRIBUTES = %w(

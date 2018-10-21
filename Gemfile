@@ -14,6 +14,8 @@ gem "rufo", '~> 0.3.0'
 gem "leveldb-ruby"
 gem "msgpack"
 gem "nokogiri"
+gem "parallel"
+gem "retriable"
 
 group :development do
   gem "pry"
