@@ -18,6 +18,19 @@ class Gems < Sequel::Model
     Gems.where(:name => name).first
   end
 
+  def self.from_json(json)
+    self.new(
+      name: json["name"],
+      summary: json["summary"],
+      version: json["version"],
+      latest_total_downloads: json["latest_total_downloads"],
+      latest_total_ranking: json["latest_total_ranking"],
+      latest_daily_downloads: json["latest_daily_downloads"],
+      latest_daily_ranking: json["latest_daily_ranking"],
+      latest_update_date: json["latest_update_date"],
+    )
+  end
+
   def total_downloads_trends()
     Value.where(:gem_id => self[:id], :type => Value::Type::TOTAL_DOWNLOADS)
          .order(:date)

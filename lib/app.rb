@@ -368,3 +368,27 @@ get "/api/v2/gems/:name/trends.json" do
 
   TrendDataSet.new(gem.get_trend_data).as_json.to_json
 end
+
+put "/api/v2/gems/:name.json" do
+  begin
+    content_type :json
+
+    break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+
+    begin
+      gem = Gems.from_json(JSON.parse(request.body.read))
+    rescue => e
+      WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+      break 400
+    end
+
+    gem.save
+
+    201
+  rescue => e
+    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+    500
+  end
+end
