@@ -376,14 +376,43 @@ put "/api/v2/gems/:name.json" do
     break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
 
     begin
-      gem = Gems.from_json(JSON.parse(request.body.read))
+      json = JSON.parse(request.body.read)
     rescue => e
       WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
 
       break 400
     end
 
-    gem.save
+    name = json["name"]
+    gem = Gems.fetch_gem_by_name(name) || Gems.new
+    gem.update_by_json(json)
+
+    gem.save(raise_on_failure: true)
+
+    201
+  rescue => e
+    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+    500
+  end
+end
+
+put "/api/v2/gems/:name/trends.json" do
+  begin
+    content_type :json
+
+    break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+
+    begin
+      tds = TrendDataSet.from_json(JSON.parse(request.body.read))
+    rescue => e
+      WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+      break 400
+    end
+
+    gem = Gems.fetch_gem_by_name(params[:name])
+    Trend.put(gem.id, *tds.to_td_list)
 
     201
   rescue => e
