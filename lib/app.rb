@@ -2,6 +2,8 @@ require_relative "database"
 require_relative "pager"
 require_relative "stat"
 
+helpers WebUtils
+
 total = DB[:total]
 daily = DB[:daily]
 featured = DB[:featured]
@@ -347,137 +349,77 @@ end
 # NOTE BestGems API v2 is under designing!
 
 get "/api/v2/gems.json" do
-  content_type :json
-
-  page = if params[:page]
-           break 400 unless params[:page].match(/\A\d{1,4}\Z/)
-
-           params[:page].to_i
-         else
-           1
-         end
-
-  Gems.fetch_gems_on_page(page).map(&:to_hash).to_json
+  api_handler do
+    Gems.fetch_gems_on_page(page).map(&:to_hash).to_json
+  end
 end
 
 get "/api/v2/gems/:name/trends.json" do
-  content_type :json
+  api_handler do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
 
-  gem = Gems.fetch_gem_by_name(params[:name])
-  break 404 unless gem
-
-  TrendDataSet.new(gem.get_trend_data).as_json.to_json
+    TrendDataSet.new(gem.get_trend_data).as_json.to_json
+  end
 end
 
 put "/api/v2/gems/:name.json" do
-  begin
-    content_type :json
-
-    break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
-
-    begin
-      json = JSON.parse(request.body.read)
-    rescue => e
-      WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-      break 400
-    end
-
+  api_handler(require_authentication: true, succeed: 201) do
     name = json["name"]
+
     gem = Gems.fetch_gem_by_name(name) || Gems.new
+
     gem.update_by_json(json)
 
     gem.save(raise_on_failure: true)
 
-    201
-  rescue => e
-    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-    500
+    ""
   end
 end
 
 put "/api/v2/gems/:name/trends.json" do
-  begin
-    content_type :json
+  api_handler(require_authentication: true, succeed: 201) do
+    tds = TrendDataSet.from_json(json)
 
-    break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
 
-    begin
-      tds = TrendDataSet.from_json(JSON.parse(request.body.read))
-    rescue => e
-      WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-      break 400
-    end
-
-    gem = Gems.fetch_gem_by_name(params[:name])
     Trend.put(gem.id, *tds.to_td_list)
 
-    201
-  rescue => e
-    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-    500
+    ""
   end
 end
 
 get "/api/v2/statistics/gems/count.json" do
-  Statistics.gems_count_as_json.to_json
+  api_handler do
+    Statistics.gems_count_as_json.to_json
+  end
 end
 
 put "/api/v2/statistics/gems/count.json" do
-  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
-
-  begin
-    json = JSON.parse(request.body.read)
-  rescue => e
-    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-    break 400
+  api_handler(require_authentication: true, succeed: 201) do
+    Statistics.replace_gems_count_from_json(json)
   end
-
-  Statistics.replace_gems_count_from_json(json)
-
-  201
 end
 
 get "/api/v2/statistics/downloads/total.json" do
-  Statistics.total_downloads_as_json.to_json
+  api_handler do
+    Statistics.total_downloads_as_json.to_json
+  end
 end
 
 put "/api/v2/statistics/downloads/total.json" do
-  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
-
-  begin
-    json = JSON.parse(request.body.read)
-  rescue => e
-    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-    break 400
+  api_handler(require_authentication: true, succeed: 201) do
+    Statistics.replace_total_downloads_from_json(json)
   end
-
-  Statistics.replace_total_downloads_from_json(json)
-
-  201
 end
 
 get "/api/v2/statistics/downloads/daily.json" do
-  Statistics.daily_downloads_as_json.to_json
+  api_handler do
+    Statistics.daily_downloads_as_json.to_json
+  end
 end
 
 put "/api/v2/statistics/downloads/daily.json" do
-  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
-
-  begin
-    json = JSON.parse(request.body.read)
-  rescue => e
-    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
-
-    break 400
+  api_handler(require_authentication: true, succeed: 201) do
+    Statistics.replace_daily_downloads_from_json(json)
   end
-
-  Statistics.replace_daily_downloads_from_json(json)
-
-  201
 end

@@ -27,6 +27,7 @@ if settings.db["adapter"] == "sqlite"
 end
 
 require_relative "helper/trace"
+require_relative "helper/web_utils"
 
 require_relative "models/batch_logger"
 require_relative "models/web_logger"
