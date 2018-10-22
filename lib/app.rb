@@ -86,9 +86,9 @@ end
 get "/" do
   @title = "BestGems -- Ruby Gems Download Ranking"
   date = Master.first[:date]
-  @total_gems = Ranking.total(date, 10) # total.where(:date => date).reverse_order(:downloads).limit(10)
-  @daily_gems = Ranking.daily(date, 10) # daily.where(:date => date).reverse_order(:downloads).limit(10)
-  @featured_gems = Ranking.featured(date, 10) # featured.where(:date => date).order(:rank).limit(10)
+  @total_gems = Ranking.total(date, 10)
+  @daily_gems = Ranking.daily(date, 10)
+  @featured_gems = Ranking.featured(date, 10)
   @reports = reports.reverse_order(:id).limit(5)
 
   erb :top
