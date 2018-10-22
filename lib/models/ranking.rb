@@ -14,7 +14,7 @@ class Ranking < Sequel::Model
   end
 
   def self.total(date, *limit)
-    Gems.where(latest_update_date: date).order(:latest_total_ranking).limit(*limit).select(
+    Gems.where(latest_update_date: date).where{latest_total_ranking >= 0}.order(:latest_total_ranking).limit(*limit).select(
       :name,
       :summary,
       Sequel.as(:latest_total_ranking, :ranking),
@@ -36,7 +36,7 @@ class Ranking < Sequel::Model
   end
 
   def self.daily(date, *limit)
-    Gems.where(latest_update_date: date).order(:latest_daily_ranking).limit(*limit).select(
+    Gems.where(latest_update_date: date).where{latest_daily_ranking >= 0}.order(:latest_daily_ranking).limit(*limit).select(
       :name,
       :summary,
       Sequel.as(:latest_daily_ranking, :ranking),
