@@ -421,3 +421,63 @@ put "/api/v2/gems/:name/trends.json" do
     500
   end
 end
+
+get "/api/v2/statistics/gems/count.json" do
+  Statistics.gems_count_as_json.to_json
+end
+
+put "/api/v2/statistics/gems/count.json" do
+  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+
+  begin
+    json = JSON.parse(request.body.read)
+  rescue => e
+    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+    break 400
+  end
+
+  Statistics.replace_gems_count_from_json(json)
+
+  201
+end
+
+get "/api/v2/statistics/downloads/total.json" do
+  Statistics.total_downloads_as_json.to_json
+end
+
+put "/api/v2/statistics/downloads/total.json" do
+  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+
+  begin
+    json = JSON.parse(request.body.read)
+  rescue => e
+    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+    break 400
+  end
+
+  Statistics.replace_total_downloads_from_json(json)
+
+  201
+end
+
+get "/api/v2/statistics/downloads/daily.json" do
+  Statistics.daily_downloads_as_json.to_json
+end
+
+put "/api/v2/statistics/downloads/daily.json" do
+  break 403 if Settings.api_key.nil? || Settings.api_key.empty? || Settings.api_key != params[:api_key]
+
+  begin
+    json = JSON.parse(request.body.read)
+  rescue => e
+    WebLogger.error(error_class: e.class, error_message: e.message, error_backtrace: e.backtrace)
+
+    break 400
+  end
+
+  Statistics.replace_daily_downloads_from_json(json)
+
+  201
+end
