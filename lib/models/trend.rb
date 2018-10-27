@@ -40,7 +40,7 @@ if ENV["BESTGEMS_TREND_SERVER"] == "true"
     end
 
     def self.put(gem_id, *td_list)
-      raise ArgumentError if td_list.size == 0
+      return if td_list.size == 0
 
       td_list.group_by { |td| td.key(gem_id) }.each { |key, monthly_td_list|
         update(key, monthly_td_list)

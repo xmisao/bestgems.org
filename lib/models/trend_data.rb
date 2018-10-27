@@ -5,6 +5,16 @@ class TrendData
     0x01
   end
 
+  def self.from_json(json)
+    self.new(
+      Date.parse(json["date"]),
+      json["total_downloads"],
+      json["total_ranking"],
+      json["daily_downloads"],
+      json["daily_ranking"]
+    )
+  end
+
   def to_msgpack_ext
     MessagePack.pack [@date.jd, @total_downloads, @total_ranking, @daily_downloads, @daily_ranking]
   end
