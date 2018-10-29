@@ -10,21 +10,8 @@ class TestUpdateDailySummary < Minitest::Test
   end
 
   def test_execute_when_insert
-    Gems.insert(id: 1, name: "foo")
-    Gems.insert(id: 2, name: "bar")
-
-    Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
-                   gem_id: 1,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 1)
-    Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
-                   gem_id: 2,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 2)
-    Ranking.insert(type: Ranking::Type::DAILY_RANKING,
-                   gem_id: 1,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 1)
+    Gems.insert(id: 1, name: "foo", latest_total_ranking: 1, latest_daily_ranking: 1, latest_update_date: Date.new(2017, 11, 1))
+    Gems.insert(id: 2, name: "bar", latest_total_ranking: 2, latest_daily_ranking: nil, latest_update_date: Date.new(2017, 11, 1))
 
     DailySummaryUpdater.execute(Date.new(2017, 11, 1))
 
@@ -35,21 +22,8 @@ class TestUpdateDailySummary < Minitest::Test
   end
 
   def test_execute_when_update
-    Gems.insert(id: 1, name: "foo")
-    Gems.insert(id: 2, name: "bar")
-
-    Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
-                   gem_id: 1,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 1)
-    Ranking.insert(type: Ranking::Type::TOTAL_RANKING,
-                   gem_id: 2,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 2)
-    Ranking.insert(type: Ranking::Type::DAILY_RANKING,
-                   gem_id: 1,
-                   date: Date.new(2017, 11, 1),
-                   ranking: 1)
+    Gems.insert(id: 1, name: "foo", latest_total_ranking: 1, latest_daily_ranking: 1, latest_update_date: Date.new(2017, 11, 1))
+    Gems.insert(id: 2, name: "bar", latest_total_ranking: 2, latest_daily_ranking: nil, latest_update_date: Date.new(2017, 11, 1))
 
     DailySummary.insert(date: Date.new(2017, 11, 1), ranking_total_count: 10, ranking_daily_count: 20)
 

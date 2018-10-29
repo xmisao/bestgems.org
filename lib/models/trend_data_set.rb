@@ -3,6 +3,10 @@ class TrendDataSet
     @sorted_td_list = td_list.sort_by { |td| td.date }
   end
 
+  def self.from_json(json)
+    self.new(json.map { |td_json| TrendData.from_json(td_json) })
+  end
+
   # For Web
   def downloads_trends
     @sorted_td_list.map { |td|
@@ -43,5 +47,9 @@ class TrendDataSet
 
   def as_json
     @sorted_td_list.map { |td| td.to_hash }
+  end
+
+  def to_td_list
+    @sorted_td_list.dup
   end
 end

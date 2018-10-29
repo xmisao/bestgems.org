@@ -4,6 +4,7 @@ test:
     timeout: 60000
   leveldb:
     dir: "db/test_trends"
+  api_key: "key"
 
 development:
   db:
@@ -12,6 +13,7 @@ development:
     timeout: 60000
   leveldb:
     dir: "db/trends"
+  api_key: "key"
 
 production:
   db:
@@ -22,3 +24,4 @@ production:
     database: "<%= ENV['BESTGEMS_DB_NAME'] %>"
   leveldb:
     dir:  "<%= ENV['BESTGEMS_LEVELDB_DIR'] %>"
+  api_key: "<%= ENV['BESTGEMS_API_KEY'] %>"
