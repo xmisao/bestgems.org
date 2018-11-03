@@ -223,9 +223,11 @@ get "/stat/downloads" do
 end
 
 get "/gems/:gems" do
-  redirect "/" unless params[:gems]
+  gem_name = params[:gems]
 
-  gem = Gems.where(:name => params[:gems]).first
+  redirect "/" unless gem_name
+
+  gem = Gems.fetch_gem_by_name(gem_name)
   redirect "/" unless gem
 
   date = Master.first[:date]
@@ -240,8 +242,8 @@ get "/gems/:gems" do
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
 
-  @gem_name = gem[:name]
-  @gem_summary = gem[:summary]
+  @gem_name = gem.name
+  @gem_summary = gem.description
   @total_downloads = latest[:total_downloads]
   @total_rank = latest[:total_ranking]
   @daily_downloads = latest[:daily_downloads]

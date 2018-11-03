@@ -2,8 +2,8 @@
   <div id="title-pane">
     <h1><%= @gem_name %></h1>
     <div id="gem-summary">
-      <div><%= @gem_summary %></div>
       <div><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></div>
+      <div><%= abbr(@gem_summary) %></div>
     </div>
     <div class="row info">
       <div class="one-half column">
