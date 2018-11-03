@@ -388,6 +388,20 @@ put "/api/v2/gems/:name/trends.json" do
   end
 end
 
+put "/api/v2/gems/:name/detail.json" do
+  api_handler(require_authentication: true, succeed: 201) do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
+
+    detail = Detail.fetch_by_gem_id(gem.id) || Detail.new(gem_id: gem.id)
+
+    detail.update_by_json(json)
+
+    detail.save(raise_on_failure: true)
+
+    ""
+  end
+end
+
 get "/api/v2/statistics/gems/count.json" do
   api_handler do
     Statistics.gems_count_as_json.to_json
