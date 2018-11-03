@@ -24,6 +24,7 @@ class PutGemDetail
   def execute
     info = rubygems_api.info(@gem_name)
     bestgems_api.put_detail(info)
+    bestgems_api.put_dependencies(info)
   end
 
   def bestgems_api
