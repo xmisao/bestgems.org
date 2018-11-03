@@ -402,6 +402,16 @@ put "/api/v2/gems/:name/detail.json" do
   end
 end
 
+put "/api/v2/gems/:name/dependencies.json" do
+  api_handler(require_authentication: true, succeed: 201) do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
+
+    Dependency.replace_by_json(gem, json)
+
+    ""
+  end
+end
+
 get "/api/v2/statistics/gems/count.json" do
   api_handler do
     Statistics.gems_count_as_json.to_json
