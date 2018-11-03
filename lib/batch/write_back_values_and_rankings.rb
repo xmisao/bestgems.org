@@ -9,8 +9,8 @@ class WriteBackValuesAndRankings
 
   def execute()
     batch_trace("WriteBackValuesAndRankings", "execute", []) {
-      Gems.where(latest_update_date: @date).paged_each.each_with_index { |gem, i|
-        BatchLogger.info(type: :progress, i: i) if i % 1000 == 0
+      Gems.where(latest_update_date: @date).paged_each { |gem|
+        BatchLogger.info(type: :progress, gem_id: gem.id)
 
         DB.transaction {
           insert_total_downloads(gem)
