@@ -30,7 +30,7 @@ class PutGemDetail
   def process_gem(gem_name)
     logger.info(gem_name: gem_name)
 
-    info = retry_with{ rubygems_api.info(gem_name) }
+    info = retry_with { rubygems_api.info(gem_name) }
 
     unless info
       logger.error(type: :fetch_failed, gem_name: gem_name)
@@ -55,7 +55,7 @@ class PutGemDetail
       break unless gems.count > 0
 
       Parallel.each(gems, in_processes: 4) do |gem|
-        process_gem(gem['name'])
+        process_gem(gem["name"])
       end
 
       page += 1
