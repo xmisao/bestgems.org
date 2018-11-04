@@ -1,3 +1,5 @@
+require "logger"
+
 require "sinatra"
 require "sinatra/config_file"
 config_file File.expand_path("../../config/database.yml.erb", __FILE__)
@@ -9,7 +11,6 @@ require "yaml"
 require "msgpack"
 require "leveldb"
 require "drb/drb"
-require "logger"
 require "open-uri"
 require "nokogiri"
 require "date"
@@ -28,6 +29,7 @@ end
 
 require_relative "helper/trace"
 require_relative "helper/web_utils"
+require_relative "helper/view_utils"
 
 require_relative "models/batch_logger"
 require_relative "models/web_logger"
@@ -45,3 +47,7 @@ require_relative "models/trend_data"
 require_relative "models/trend_data_set"
 require_relative "models/daily_summary"
 require_relative "models/rubygems_page"
+require_relative "models/detail"
+require_relative "models/dependency"
+require_relative "models/depends_on_gem"
+require_relative "models/depended_by_gem"

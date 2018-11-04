@@ -223,9 +223,11 @@ get "/stat/downloads" do
 end
 
 get "/gems/:gems" do
-  redirect "/" unless params[:gems]
+  gem_name = params[:gems]
 
-  gem = Gems.where(:name => params[:gems]).first
+  redirect "/" unless gem_name
+
+  gem = Gems.fetch_gem_by_name(gem_name)
   redirect "/" unless gem
 
   date = Master.first[:date]
@@ -240,12 +242,14 @@ get "/gems/:gems" do
   @total_count = Ranking.total_count(date)
   @daily_count = Ranking.daily_count(date)
 
-  @gem_name = gem[:name]
-  @gem_summary = gem[:summary]
+  @gem_name = gem.name
+  @gem_summary = gem.description
   @total_downloads = latest[:total_downloads]
   @total_rank = latest[:total_ranking]
   @daily_downloads = latest[:daily_downloads]
   @daily_rank = latest[:daily_ranking]
+  @depends_on = gem.depends_on_gems
+  @depended_by = gem.depended_by_gems
 
   erb :gems
 end
@@ -383,6 +387,30 @@ put "/api/v2/gems/:name/trends.json" do
     gem = expect(Gems.fetch_gem_by_name(params[:name]))
 
     Trend.put(gem.id, *tds.to_td_list)
+
+    ""
+  end
+end
+
+put "/api/v2/gems/:name/detail.json" do
+  api_handler(require_authentication: true, succeed: 201) do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
+
+    detail = Detail.fetch_by_gem_id(gem.id) || Detail.new(gem_id: gem.id)
+
+    detail.update_by_json(json)
+
+    detail.save(raise_on_failure: true)
+
+    ""
+  end
+end
+
+put "/api/v2/gems/:name/dependencies.json" do
+  api_handler(require_authentication: true, succeed: 201) do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
+
+    Dependency.replace_by_json(gem, json)
 
     ""
   end

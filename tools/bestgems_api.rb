@@ -77,6 +77,30 @@ class BestGemsApi
     end
   end
 
+  def put_detail(detail)
+    Net::HTTP.start(host, port) do |http|
+      name = detail["name"]
+
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/detail.json?api_key=#{api_key}")
+
+      req.body = detail.to_json
+
+      http.request(req)
+    end
+  end
+
+  def put_dependencies(dependencies)
+    Net::HTTP.start(host, port) do |http|
+      name = dependencies["name"]
+
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/dependencies.json?api_key=#{api_key}")
+
+      req.body = dependencies.to_json
+
+      http.request(req)
+    end
+  end
+
   def put_trends(gem, trends)
     Net::HTTP.start(host, port) do |http|
       name = gem["name"]

@@ -92,7 +92,12 @@ class Gems < Sequel::Model
       # This state will occure when running update_gems_latest_columns.rb
       # Should failback to old means
 
-      info(date)
+      info(date) || {
+        total_downloads: nil,
+        daily_downloads: nil,
+        total_ranking: nil,
+        daily_ranking: nil,
+      }
     else
       {
         total_downloads: nil,
@@ -156,5 +161,23 @@ class Gems < Sequel::Model
       latest_daily_ranking: latest_daily_ranking,
       latest_update_date: latest_update_date,
     }
+  end
+
+  def description
+    detail = Detail.fetch_by_gem_id(id)
+
+    if detail && latest_update_date && (latest_update_date - 7).to_time < detail.updated_at
+      detail.info
+    else
+      summary
+    end
+  end
+
+  def depends_on_gems
+    @depended_by_gems ||= DependsOnGem.fetch_by_gem_id(id)
+  end
+
+  def depended_by_gems
+    @depends_on_gems ||= DependedByGem.fetch_by_gem_id(id)
   end
 end

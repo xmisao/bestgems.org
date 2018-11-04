@@ -2,8 +2,8 @@
   <div id="title-pane">
     <h1><%= @gem_name %></h1>
     <div id="gem-summary">
-      <div><%= @gem_summary %></div>
       <div><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></div>
+      <div><%= abbr(@gem_summary) %></div>
     </div>
     <div class="row info">
       <div class="one-half column">
@@ -36,6 +36,40 @@
     <h4>Ranking Trends</h4>
     <div>
       <canvas id="ranking-trends-chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="one-half column">
+    <h4>Depended by</h4>
+    <div>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @depended_by.each do |d|  %>
+            <tr><td><%= comma(d.total_ranking) %></td><td><%= comma(d.total_downloads) =%></td><td><a href="/gems/<%= d.name %>"><%= d.name %></a></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="one-half column">
+    <h4>Depends on</h4>
+    <div>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @depends_on.each do |d|  %>
+            <tr><td><%= comma(d.total_ranking) %></td><td><%= comma(d.total_downloads) =%></td><td><a href="/gems/<%= d.name %>"><%= d.name %></a></td></tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
