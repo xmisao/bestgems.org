@@ -248,6 +248,8 @@ get "/gems/:gems" do
   @total_rank = latest[:total_ranking]
   @daily_downloads = latest[:daily_downloads]
   @daily_rank = latest[:daily_ranking]
+  @depends_on = gem.depends_on_gems
+  @depended_by = gem.depended_by_gems
 
   erb :gems
 end

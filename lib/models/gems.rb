@@ -172,4 +172,12 @@ class Gems < Sequel::Model
       summary
     end
   end
+
+  def depends_on_gems
+    @depended_by_gems ||= DependsOnGem.fetch_by_gem_id(id)
+  end
+
+  def depended_by_gems
+    @depends_on_gems ||= DependedByGem.fetch_by_gem_id(id)
+  end
 end

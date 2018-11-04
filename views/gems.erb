@@ -40,6 +40,40 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="one-half column">
+    <h4>Depended by</h4>
+    <div>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @depended_by.each do |d|  %>
+            <tr><td><%= comma(d.total_ranking) %></td><td><%= comma(d.total_downloads) =%></td><td><a href="/gems/<%= d.name %>"><%= d.name %></a></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="one-half column">
+    <h4>Depends on</h4>
+    <div>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>Rank</th><th>Downloads</th><th class="wide-column">Name</th></tr>
+        </thead>
+        <tbody>
+          <% @depends_on.each do |d|  %>
+            <tr><td><%= comma(d.total_ranking) %></td><td><%= comma(d.total_downloads) =%></td><td><a href="/gems/<%= d.name %>"><%= d.name %></a></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 <script>
 'use strict';

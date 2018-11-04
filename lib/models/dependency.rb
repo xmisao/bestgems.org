@@ -2,6 +2,8 @@ class Dependency < Sequel::Model
   DEVELOPMENT = 0
   RUNTIME = 1
 
+  one_to_one :gem, class: "Gems", key: :id
+
   def self.replace_by_json(gem, json)
     DB.transaction do
       self.where(gem_id: gem.id).delete
