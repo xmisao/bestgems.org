@@ -101,6 +101,16 @@ class BestGemsApi
     end
   end
 
+  def put_versions(name, versions)
+    Net::HTTP.start(host, port) do |http|
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/versions.json?api_key=#{api_key}")
+
+      req.body = versions.to_json
+
+      http.request(req)
+    end
+  end
+
   def put_trends(gem, trends)
     Net::HTTP.start(host, port) do |http|
       name = gem["name"]
