@@ -33,13 +33,23 @@ class PutGemDetail
     info = retry_with { rubygems_api.info(gem_name) }
 
     unless info
-      logger.error(type: :fetch_failed, gem_name: gem_name)
+      logger.error(type: :fetch_info_failed, gem_name: gem_name)
 
       return
     end
 
     retry_with { bestgems_api.put_detail(info) }
     retry_with { bestgems_api.put_dependencies(info) }
+
+    versions = retry_with { rubygems_api.versions(gem_name) }
+
+    unless versions
+      logger.error(type: :fetch_versions_failed, gem_name: gem_name)
+
+      return
+    end
+
+    retry_with { bestgems_api.put_versions(gem_name, versions) }
   end
 
   def import_gem_detail
@@ -54,7 +64,7 @@ class PutGemDetail
 
       break unless gems.count > 0
 
-      Parallel.each(gems, in_processes: 4) do |gem|
+      Parallel.each(gems, in_processes: 2) do |gem|
         process_gem(gem["name"])
       end
 
