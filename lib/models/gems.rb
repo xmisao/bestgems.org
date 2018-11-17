@@ -202,4 +202,38 @@ class Gems < Sequel::Model
       {date: d, num: num_of_versions}
     }
   end
+
+  def popular_versions_by_major_version
+    version_count = Hash.new { |h, k| h[k] = 0 }
+
+    versions.group_by { |v| v.major_version }.each { |k, v|
+      version_count[k] += v.inject(0) { |m, va| m + va.downloads_count }
+    }
+
+    histgram = version_count.map { |(k, v)| {version: k, downloads: v} }.sort_by { |e| -1 * e[:downloads] }
+
+    if histgram.count > 9
+      histgram[0..8] + histgram[9..-1].each_with_object({version: "Others", downloads: 0}) { |e, m| m[:downloads] += e[:downloads] }
+    else
+      histgram
+    end
+  end
+
+  def popular_versions_by_major_minor_version
+    version_count = Hash.new { |h, k| h[k] = 0 }
+
+    versions.group_by { |v| v.major_minor_version }.each { |k, v|
+      version_count[k] += v.inject(0) { |m, va| m + va.downloads_count }
+    }
+
+    histgram = version_count.map { |(k, v)| {version: k, downloads: v} }.sort_by { |e| -1 * e[:downloads] }
+
+    p histgram
+
+    if histgram.count > 9
+      histgram[0..8] << histgram[9..-1].each_with_object({version: "Others", downloads: 0}) { |e, m| p e; p m; m[:downloads] += e[:downloads] }
+    else
+      histgram
+    end
+  end
 end
