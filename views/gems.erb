@@ -38,6 +38,13 @@
       <canvas id="ranking-trends-chart"></canvas>
     </div>
   </div>
+
+  <div class="trends">
+    <h4>Num of Versions Trends</h4>
+    <div>
+      <canvas id="num-of-versions-trends-chart"></canvas>
+    </div>
+  </div>
 </div>
 
 <div class="container">
@@ -85,6 +92,9 @@ var daily_downloads = <%= downloads_daily_data(@downloads_trends) %>;
 var ranking_labels = <%= ranking_labels(@ranking_trends) %>;
 var total_ranking = <%= ranking_total_data(@ranking_trends) %>;
 var daily_ranking = <%= ranking_daily_data(@ranking_trends) %>;
+
+var num_of_versions_labels = <%= num_of_versions_labels(@num_of_versions_trends) %>;
+var num_of_versions = <%= num_of_versions(@num_of_versions_trends) %>;
 
 var chart_color_total = '#ED402E';
 var chart_color_daily = '#FC896D';
@@ -139,6 +149,23 @@ var ranking_data = {
   }]
 };
 
+var num_of_versions_data = {
+  labels: num_of_versions_labels,
+  datasets: [
+  {
+    label: "Num of Versions",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: num_of_versions,
+    yAxisID: "y-axis-1",
+  }
+  ]
+};
+
+
 function draw_downloads_chart() {
   var ctx = document.getElementById("downloads-trends-chart").getContext("2d");
   window.downloads_line = Chart.Line(ctx, {
@@ -158,7 +185,8 @@ function draw_downloads_chart() {
           position: "left",
           id: "y-axis-1",
           ticks: {
-            reverse: false
+            reverse: false,
+            min: 0
           },
 
         }, {
@@ -167,7 +195,8 @@ function draw_downloads_chart() {
           position: "right",
           id: "y-axis-2",
           ticks: {
-            reverse: false
+            reverse: false,
+            min: 0
           },
           gridLines: {
             drawOnChartArea: false,
@@ -223,9 +252,41 @@ function draw_ranking_chart() {
   });
 };
 
+function draw_num_of_versions_chart() {
+  var ctx = document.getElementById("num-of-versions-trends-chart").getContext("2d");
+  window.ranking_line = Chart.Line(ctx, {
+    data: num_of_versions_data,
+    options: {
+      responsive: true,
+      hoverMode: 'index',
+      stacked: false,
+      title:{
+        display: true,
+        text:'Num of Versions Trends'
+      },
+      scales: {
+        yAxes: [{
+          type: "linear",
+          display: true,
+          position: "left",
+          id: "y-axis-1",
+          ticks: {
+            reverse: false,
+            min: 0
+          },
+        }],
+      },
+      animation: {
+        duration: 0
+      }
+    }
+  });
+};
+
 window.onload = function() {
   draw_downloads_chart();
   draw_ranking_chart();
+  draw_num_of_versions_chart();
 }
 </script>
 

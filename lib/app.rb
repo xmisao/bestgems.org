@@ -47,6 +47,14 @@ def num_of_gems_data(graph)
   graph.map { |t| t[:num_of_gems] }.to_json
 end
 
+def num_of_versions_labels(num_of_versions_trends)
+  num_of_versions_trends.map { |t| t[:date] }.to_json
+end
+
+def num_of_versions(num_of_versions_trends)
+  num_of_versions_trends.map { |t| n2n(t[:num]) }.to_json
+end
+
 def comma(i)
   if i
     i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
@@ -250,6 +258,10 @@ get "/gems/:gems" do
   @daily_rank = latest[:daily_ranking]
   @depends_on = gem.depends_on_gems
   @depended_by = gem.depended_by_gems
+
+  from_date = @downloads_trends.first[:date]
+  to_date = @downloads_trends.last[:date]
+  @num_of_versions_trends = gem.num_of_versions_trends(from_date, to_date)
 
   erb :gems
 end

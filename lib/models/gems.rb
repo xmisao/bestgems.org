@@ -180,4 +180,26 @@ class Gems < Sequel::Model
   def depended_by_gems
     @depends_on_gems ||= DependedByGem.fetch_by_gem_id(id)
   end
+
+  def versions
+    @versions ||= GemVersion.where(gem_id: id).order(:built_at).to_a
+  end
+
+  def num_of_versions_trends(from_date, to_date)
+    # NOTE: This method is order sensitive
+
+    version_count = Hash.new { |h, k| h[k] = 0 }
+
+    versions.group_by { |v| v.built_at.to_date }.each { |k, v|
+      version_count[k] = v.count
+    }
+
+    num_of_versions = version_count.select { |(k, v)| k < from_date }.inject(0) { |m, (k, v)| m + v }
+
+    (from_date..to_date).map { |d, m|
+      num_of_versions = num_of_versions + version_count[d]
+
+      {date: d, num: num_of_versions}
+    }
+  end
 end
