@@ -22,4 +22,16 @@ class GemVersion < Sequel::Model
 
     true
   end
+
+  def numbers
+    @numbers ||= number.scan(/\d+/)
+  end
+
+  def major_version
+    @major_version ||= numbers[0].to_s
+  end
+
+  def major_minor_version
+    @major_minor_version ||= numbers[0..1].join(".")
+  end
 end
