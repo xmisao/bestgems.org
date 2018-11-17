@@ -55,6 +55,18 @@ def num_of_versions(num_of_versions_trends)
   num_of_versions_trends.map { |t| n2n(t[:num]) }.to_json
 end
 
+def popular_versions_labels(popular_versions)
+  popular_versions.map { |t| t[:version] }.to_json
+end
+
+def popular_versions_data(popular_versions)
+  popular_versions.map { |t| n2n(t[:downloads]) }.to_json
+end
+
+def padding_versions(popular_versions, num)
+  popular_versions + (num - popular_versions.length).times.map { {version: "-", downloads: 0} }
+end
+
 def comma(i)
   if i
     i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
@@ -262,6 +274,9 @@ get "/gems/:gems" do
   from_date = @downloads_trends.first[:date]
   to_date = @downloads_trends.last[:date]
   @num_of_versions_trends = gem.num_of_versions_trends(from_date, to_date)
+
+  @popular_versions_by_major_version = padding_versions(gem.popular_versions_by_major_version, 10)
+  @popular_versions_by_major_minor_version = padding_versions(gem.popular_versions_by_major_minor_version, 10)
 
   erb :gems
 end

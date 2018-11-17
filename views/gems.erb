@@ -49,6 +49,21 @@
 
 <div class="container">
   <div class="one-half column">
+    <div class="trends">
+      <h4>Popular Versions (Major)</h4>
+      <canvas id="popular-versions-by-major-version-chart"></canvas>
+    </div>
+  </div>
+  <div class="one-half column">
+    <div class="trends">
+      <h4>Popular Versions (Major.Minor)</h4>
+      <canvas id="popular-versions-by-major-minor-version-chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="one-half column">
     <h4>Depended by</h4>
     <div>
       <table class="u-full-width">
@@ -95,6 +110,12 @@ var daily_ranking = <%= ranking_daily_data(@ranking_trends) %>;
 
 var num_of_versions_labels = <%= num_of_versions_labels(@num_of_versions_trends) %>;
 var num_of_versions = <%= num_of_versions(@num_of_versions_trends) %>;
+
+var popular_versions_by_major_version_labels = <%= popular_versions_labels(@popular_versions_by_major_version) %>;
+var popular_versions_by_major_version = <%= popular_versions_data(@popular_versions_by_major_version) %>;
+
+var popular_versions_by_major_minor_version_labels = <%= popular_versions_labels(@popular_versions_by_major_minor_version) %>;
+var popular_versions_by_major_minor_version = <%= popular_versions_data(@popular_versions_by_major_minor_version) %>;
 
 var chart_color_total = '#ED402E';
 var chart_color_daily = '#FC896D';
@@ -161,6 +182,36 @@ var num_of_versions_data = {
     borderWidth: 2,
     data: num_of_versions,
     yAxisID: "y-axis-1",
+  }
+  ]
+};
+
+var popular_versions_by_major_version_data = {
+  labels: popular_versions_by_major_version_labels,
+  datasets: [
+  {
+    label: "Total Donwloads",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: popular_versions_by_major_version,
+  }
+  ]
+};
+
+var popular_versions_by_major_minor_version_data = {
+  labels: popular_versions_by_major_minor_version_labels,
+  datasets: [
+  {
+    label: "Total Donwloads",
+    borderColor: chart_color_total,
+    backgroundColor: chart_color_total,
+    fill: false,
+    pointRadius: 0,
+    borderWidth: 2,
+    data: popular_versions_by_major_version,
   }
   ]
 };
@@ -254,7 +305,7 @@ function draw_ranking_chart() {
 
 function draw_num_of_versions_chart() {
   var ctx = document.getElementById("num-of-versions-trends-chart").getContext("2d");
-  window.ranking_line = Chart.Line(ctx, {
+  window.num_of_versions_line = Chart.Line(ctx, {
     data: num_of_versions_data,
     options: {
       responsive: true,
@@ -283,10 +334,46 @@ function draw_num_of_versions_chart() {
   });
 };
 
+function draw_popular_versions_by_major_version() {
+  var ctx = document.getElementById("popular-versions-by-major-version-chart").getContext("2d");
+  window.popular_versions_by_major_version_line = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: popular_versions_by_major_version_data,
+    options: {
+      title:{
+        display: true,
+        text:'Most Downloaded Major Versions'
+      },
+      animation: {
+        duration: 0
+      }
+    }
+  });
+};
+
+function draw_popular_versions_by_major_minor_version() {
+  var ctx = document.getElementById("popular-versions-by-major-minor-version-chart").getContext("2d");
+  window.popular_versions_by_major_minor_version_line = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: popular_versions_by_major_minor_version_data,
+    options: {
+      title:{
+        display: true,
+        text:'Most Downloaded Major.Minor Versions'
+      },
+      animation: {
+        duration: 0
+      }
+    }
+  });
+};
+
 window.onload = function() {
   draw_downloads_chart();
   draw_ranking_chart();
   draw_num_of_versions_chart();
+  draw_popular_versions_by_major_version();
+  draw_popular_versions_by_major_minor_version();
 }
 </script>
 
