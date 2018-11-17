@@ -88,7 +88,7 @@ class Gems < Sequel::Model
         total_ranking: self[:latest_total_ranking],
         daily_ranking: self[:latest_daily_ranking],
       }
-    elsif date < self[:latest_update_date]
+    elsif self[:latest_update_date] && date < self[:latest_update_date]
       # This state will occure when running update_gems_latest_columns.rb
       # Should failback to old means
 
