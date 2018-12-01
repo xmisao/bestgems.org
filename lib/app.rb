@@ -326,7 +326,7 @@ get "/categories" do
 end
 
 get "/categories/:name" do
-  name = CGI.unescape(params[:name])
+  name = Category.unescape(params[:name])
 
   @category = Category.fetch_by_name(name)
 
