@@ -18,6 +18,12 @@ class Gems < Sequel::Model
     Gems.where(:name => name).first
   end
 
+  def self.fetch_by_ids(gem_ids)
+    return [] if gem_ids.empty?
+
+    Gems.where(id: gem_ids).to_a
+  end
+
   def self.from_json(json)
     self.new(
       name: json["name"],

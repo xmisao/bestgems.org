@@ -1,0 +1,21 @@
+<div class ="container">
+  <div id="title-pane">
+    <h1>Categories</h1>
+    <div class="description">All <%= @categories.count %> categories.</div>
+    <div class="description">If you have any requests for categories, please send <a href="https://github.com/xmisao/bestgems.org/issues">issues.</a></div>
+  </div>
+</div>
+
+<div class="container">
+  <table class="u-full-width">
+    <tbody>
+      <% @categories.each_slice(4) do |categories| %>
+        <tr>
+          <% categories.each do |category| %>
+            <td><a href="<%= category.category_page_path %>"><%= category.name %></a></td>
+          <% end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
