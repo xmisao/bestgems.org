@@ -270,6 +270,7 @@ get "/gems/:gems" do
   @daily_rank = latest[:daily_ranking]
   @depends_on = gem.depends_on_gems
   @depended_by = gem.depended_by_gems
+  @categories = gem.categories
 
   from_date = @downloads_trends.first[:date]
   to_date = @downloads_trends.last[:date]

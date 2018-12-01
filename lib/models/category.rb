@@ -9,6 +9,12 @@ class Category < Sequel::Model
     self.where(name: name).first
   end
 
+  def self.fetch_by_ids(category_ids)
+    return [] if category_ids.empty?
+
+    self.where(id: category_ids).to_a
+  end
+
   def gems
     GemCategory.categorized_gems(self)
   end

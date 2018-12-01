@@ -4,4 +4,10 @@ class GemCategory < Sequel::Model
 
     Gems.fetch_by_ids(gem_ids).sort_by(&:latest_total_ranking)
   end
+
+  def self.gem_categories(gem)
+    category_ids = self.where(gem_id: gem.id).select_map(:category_id)
+
+    Category.fetch_by_ids(category_ids)
+  end
 end

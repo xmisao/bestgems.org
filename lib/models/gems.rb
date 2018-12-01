@@ -240,4 +240,8 @@ class Gems < Sequel::Model
       histgram
     end
   end
+
+  def categories
+    GemCategory.gem_categories(self)
+  end
 end
