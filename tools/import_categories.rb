@@ -1,10 +1,10 @@
-require_relative '../lib/database.rb'
-require 'csv'
+require_relative "../lib/database.rb"
+require "csv"
 
 log = Logger.new(STDOUT)
 
-categories = CSV.foreach(ARGV[0], headers: true).map{|row|
-  category = row['category']
+categories = CSV.foreach(ARGV[0], headers: true).map { |row|
+  category = row["category"]
 }.uniq
 
 categories.each do |name|
@@ -18,8 +18,8 @@ categories.each do |name|
 end
 
 CSV.foreach(ARGV[0], headers: true) do |row|
-  category = row['category']
-  gem_name = row['gem_name']
+  category = row["category"]
+  gem_name = row["gem_name"]
 
   c = Category.where(name: category).first
 

@@ -1,5 +1,5 @@
 class Category < Sequel::Model
-  CATEGORY_BASE_PATH = '/categories/'
+  CATEGORY_BASE_PATH = "/categories/"
 
   def category_page_path
     CATEGORY_BASE_PATH + Category.escape(self.name)
@@ -20,10 +20,10 @@ class Category < Sequel::Model
   end
 
   def self.escape(name)
-    CGI.escape(name.gsub('/', '_'))
+    CGI.escape(name.gsub("/", "_"))
   end
 
   def self.unescape(name)
-    CGI.unescape(name).gsub('_', '/')
+    CGI.unescape(name).gsub("_", "/")
   end
 end

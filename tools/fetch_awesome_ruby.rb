@@ -1,16 +1,16 @@
 require_relative "../lib/database"
-require 'rake'
-require 'pp'
-require 'csv'
-require 'open-uri'
+require "rake"
+require "pp"
+require "csv"
+require "open-uri"
 
-AWESOME_RUBY_DIR = '/tmp/awesome-ruby'
+AWESOME_RUBY_DIR = "/tmp/awesome-ruby"
 
 unless FileTest.exist?(AWESOME_RUBY_DIR)
   sh "git clone 'https://github.com/markets/awesome-ruby.git' #{AWESOME_RUBY_DIR}"
 end
 
-README_PATH = AWESOME_RUBY_DIR + '/README.md'
+README_PATH = AWESOME_RUBY_DIR + "/README.md"
 
 # CategoryEntry = Struct.new(:category, :name, :url, :description, keyword_init: true)
 
@@ -46,10 +46,10 @@ class CategoryEntry
       gems_by_project_uri,
       gems_by_gem_uri,
       gems_by_homepage_uri,
-      gems_by_source_code_uri
+      gems_by_source_code_uri,
     ].flatten
 
-    max_gems = gems.group_by(&:gem_id).sort_by{|(id, gds)| gds.count}
+    max_gems = gems.group_by(&:gem_id).sort_by { |(id, gds)| gds.count }
 
     return nil if max_gems.nil?
     return nil if max_gems.empty?
@@ -69,21 +69,21 @@ class CategoryEntry
     return g if g
 
     if @name.match(/\s+/)
-      cand_name = @name.gsub(/\s+/, '-').downcase
+      cand_name = @name.gsub(/\s+/, "-").downcase
       g = Gems.where(name: cand_name).first
       return g if g
 
-      cand_name = @name.gsub(/\s+/, '_').downcase
+      cand_name = @name.gsub(/\s+/, "_").downcase
       g = Gems.where(name: cand_name).first
       return g if g
     end
 
     if @name.match(/:+/)
-      cand_name = @name.gsub(/:+/, '-').downcase
+      cand_name = @name.gsub(/:+/, "-").downcase
       g = Gems.where(name: cand_name).first
       return g if g
 
-      cand_name = @name.gsub(/:+/, '_').downcase
+      cand_name = @name.gsub(/:+/, "_").downcase
       g = Gems.where(name: cand_name).first
       return g if g
     end
@@ -91,11 +91,11 @@ class CategoryEntry
     splited = @name.split(/(?<=[a-z])(?=[A-Z])/).map(&:downcase)
 
     if splited.count >= 2
-      cand_name = splited.join('-')
+      cand_name = splited.join("-")
       g = Gems.where(name: cand_name).first
       return g if g
 
-      cand_name = splited.join('_')
+      cand_name = splited.join("_")
       g = Gems.where(name: cand_name).first
       return g if g
     end
@@ -111,7 +111,7 @@ class CategoryEntry
     return nil unless url
 
     if url.match(/github.com/)
-      return open(url){|f| f.read.match(/([\w-]+)\.gemspec/).to_a[1] }
+      return open(url) { |f| f.read.match(/([\w-]+)\.gemspec/).to_a[1] }
     end
 
     nil
@@ -144,7 +144,7 @@ category_entries = open(README_PATH) do |f|
         category: category,
         name: name,
         url: url,
-        description: description
+        description: description,
       )
 
       category_entries[category] << entry
@@ -172,7 +172,7 @@ category_entries.each do |category_entry|
     category_entry.url,
     category_entry.gem_by_name_best&.name,
     category_entry.gem_by_uri_best&.name,
-    category_entry.gem_by_github_gemspec
+    category_entry.gem_by_github_gemspec,
   ].to_csv
 
   STDOUT.flush
