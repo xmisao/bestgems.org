@@ -25,14 +25,14 @@
   </url>
   <url>
     <loc><%= @site_url%>/categories</loc>
-    <changefreq>wheekly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <lastmod><%= @lastmod %></lastmod>
   </url>
 <% @categories.each{|category| %>
   <url>
     <loc><%= @site_url %><%= category.category_page_path %></loc>
-    <changefreq>wheekly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <lastmod><%= @lastmod %></lastmod>
   </url>
