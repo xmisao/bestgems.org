@@ -1,0 +1,40 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc><%= @site_url%>/total</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+  <url>
+    <loc><%= @site_url%>/daily</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+  <url>
+    <loc><%= @site_url%>/featured</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+  <url>
+    <loc><%= @site_url%>/about</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+  <url>
+    <loc><%= @site_url%>/categories</loc>
+    <changefreq>wheekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+<% @categories.each{|category| %>
+  <url>
+    <loc><%= @site_url %><%= category.category_page_path %></loc>
+    <changefreq>wheekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
+<% } %>
+</urlset> 

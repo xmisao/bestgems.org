@@ -1,8 +1,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<% @gems.each{|gem| %><url>
-  <loc><%= @site_url %>/gems/<%= gem[:name] %></loc>
+<% @gems.each{|gem| %>
+  <url>
+    <loc><%= @site_url %>/gems/<%= gem[:name] %></loc>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>0.9</priority>
     <lastmod><%= gem[:latest_update_date] ? gem[:latest_update_date].to_time.iso8601 : Date.new(2013, 6, 1).to_time.iso8601 %></lastmod>
-</url><% } %>
+  </url>
+<% } %>
 </urlset> 

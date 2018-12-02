@@ -1,0 +1,18 @@
+<div class ="container">
+  <div id="title-pane">
+    <h1><%= @category.name %> Gems</h1>
+  </div>
+</div>
+
+<div class="container">
+  <table class="u-full-width">
+    <thead>
+      <tr><th>#</th><th>Total Rank</th><th>Daily Rank</th><th>Name</th><th class="wide-column">Summary</th></tr>
+    </thead>
+    <tbody>
+      <% @gems.each.with_index(1){|gem, i| %>
+        <tr><td class="right"><%= i %></td><td class="right"><%= comma(gem.latest_total_ranking) %></td><td class="right"><%= comma(gem.latest_daily_ranking) %></td><td><a href="/gems/<%= gem.name%>"><%= gem.name %></a></td><td><%= gem.summary %></td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

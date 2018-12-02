@@ -1,5 +1,12 @@
 <div class ="container">
   <div id="title-pane">
+    <div class="align-right">
+    <% if @categories.empty? %>
+      <div>Categories: None</div>
+    <% else %>
+      <div>Categories: <% @categories.each{|category| %><a href="<%= category.category_page_path %>"><%= category.name %></a><% } %></div>
+    <% end %>
+    </div>
     <h1><%= @gem_name %></h1>
     <div id="gem-summary">
       <div><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></div>

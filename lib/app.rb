@@ -270,6 +270,7 @@ get "/gems/:gems" do
   @daily_rank = latest[:daily_ranking]
   @depends_on = gem.depends_on_gems
   @depended_by = gem.depended_by_gems
+  @categories = gem.categories
 
   from_date = @downloads_trends.first[:date]
   to_date = @downloads_trends.last[:date]
@@ -314,6 +315,28 @@ get "/about" do
   @title = "About This Site -- BestGems"
   @type = :about
   erb :about
+end
+
+get "/categories" do
+  @categories = Category.to_a
+
+  @title = "Categories -- BestGems.org"
+
+  erb :categories
+end
+
+get "/categories/:name" do
+  name = Category.unescape(params[:name])
+
+  @category = Category.fetch_by_name(name)
+
+  break 404 unless @category
+
+  @gems = @category.gems
+
+  @title = "#{@category.name} Gems -- BestGems.org"
+
+  erb :category
 end
 
 get "/api/v1/gems/:name/total_downloads.json" do
@@ -375,6 +398,15 @@ get "/sitemaps/gems*.xml" do
   @gems = Gems.order(:id).limit(SITEMAP_SLICE, index * SITEMAP_SLICE)
 
   erb :sitemap_gems, layout: false
+end
+
+get "/sitemap_general.xml" do
+  @site_url = SITE_URL
+  @gems_count = Gems.count
+  @lastmod = Master.first.date.to_time.iso8601
+  @categories = Category.all
+
+  erb :sitemap_general, layout: false
 end
 
 # NOTE BestGems API v2 is under designing!

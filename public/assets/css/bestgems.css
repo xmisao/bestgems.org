@@ -866,6 +866,10 @@ body {
   margin-bottom: 4rem;
 }
 
+.align-right {
+  text-align: right;
+}
+
 /* icomoon fonts */
 
 @font-face {
