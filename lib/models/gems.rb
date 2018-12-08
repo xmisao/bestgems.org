@@ -24,6 +24,12 @@ class Gems < Sequel::Model
     Gems.where(id: gem_ids).to_a
   end
 
+  def self.fetch_by_ids_ordered_by_total_downloads(gem_ids)
+    return [] if gem_ids.empty?
+
+    Gems.where(id: gem_ids).order(:latest_total_downloads).to_a.reverse
+  end
+
   def self.from_json(json)
     self.new(
       name: json["name"],
@@ -243,5 +249,9 @@ class Gems < Sequel::Model
 
   def categories
     GemCategory.gem_categories(self)
+  end
+
+  def owners
+    GemOwner.gem_owners(self)
   end
 end

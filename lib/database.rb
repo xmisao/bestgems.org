@@ -14,6 +14,7 @@ require "drb/drb"
 require "open-uri"
 require "nokogiri"
 require "date"
+require "digest/md5"
 
 SLICE_SIZE = 1000
 
@@ -54,3 +55,4 @@ require_relative "models/depended_by_gem"
 require_relative "models/gem_version"
 require_relative "models/category"
 require_relative "models/gem_category"
+require_relative "models/gem_owner"

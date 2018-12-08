@@ -17,6 +17,14 @@ class RubyGemsApi
     nil
   end
 
+  def owners(gem_name)
+    open(rubygems_endpoint("/gems/?/owners.json", gem_name)) { |f|
+      JSON.parse(f.read)
+    }
+  rescue OpenURI::HTTPError => e
+    nil
+  end
+
   def rubygems_endpoint(path, param)
     RUBYGEMS_URL + path.sub("?", param)
   end

@@ -271,6 +271,7 @@ get "/gems/:gems" do
   @depends_on = gem.depends_on_gems
   @depended_by = gem.depended_by_gems
   @categories = gem.categories
+  @owners = gem.owners
 
   from_date = @downloads_trends.first[:date]
   to_date = @downloads_trends.last[:date]
@@ -337,6 +338,24 @@ get "/categories/:name" do
   @title = "#{@category.name} Gems -- BestGems.org"
 
   erb :category
+end
+
+get "/owners/:owner_id" do
+  break 400 unless params[:owner_id].match(/\A\d{1,16}\Z/)
+
+  owner_id = params[:owner_id].to_i
+
+  break 404 unless owner_id > 0
+
+  @owner = GemOwner.fetch_latest_by_owner_id(owner_id)
+
+  break 404 unless @owner
+
+  @gems = GemOwner.owned_gems(owner_id)
+
+  @title = "#{@owner.handle_for_display.capitalize}'s Gems -- BestGems.org"
+
+  erb :owner
 end
 
 get "/api/v1/gems/:name/total_downloads.json" do
@@ -480,6 +499,16 @@ put "/api/v2/gems/:name/versions.json" do
     gem = expect(Gems.fetch_gem_by_name(params[:name]))
 
     GemVersion.replace_by_json(gem, json)
+
+    ""
+  end
+end
+
+put "/api/v2/gems/:name/owners.json" do
+  api_handler(require_authentication: true, succeed: 201) do
+    gem = expect(Gems.fetch_gem_by_name(params[:name]))
+
+    GemOwner.replace_by_json(gem, json)
 
     ""
   end
