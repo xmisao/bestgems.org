@@ -271,6 +271,7 @@ get "/gems/:gems" do
   @depends_on = gem.depends_on_gems
   @depended_by = gem.depended_by_gems
   @categories = gem.categories
+  @owners = gem.owners
 
   from_date = @downloads_trends.first[:date]
   to_date = @downloads_trends.last[:date]

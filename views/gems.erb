@@ -103,6 +103,27 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="one-half column">
+    <div id="gem-owners">
+      <h4>Owners</h4>
+      <table class="u-full-width">
+        <thead>
+          <tr><th>#</th><th>Gravatar</th><th class="wide-column">Handle</th></tr>
+        </thead>
+        <tbody>
+          <% @owners.each.with_index(1) do |owner, i| %>
+            <tr><td><%= i %></td><td><img alt="icon" src="<%= owner.gravatar_image_url %>"></td><td><%= owner.handle_for_display %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="one-half column">
+    <!-- Padding -->
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 <script>
 'use strict';

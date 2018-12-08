@@ -14,6 +14,7 @@ require "drb/drb"
 require "open-uri"
 require "nokogiri"
 require "date"
+require "digest/md5"
 
 SLICE_SIZE = 1000
 

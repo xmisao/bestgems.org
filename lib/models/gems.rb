@@ -244,4 +244,8 @@ class Gems < Sequel::Model
   def categories
     GemCategory.gem_categories(self)
   end
+
+  def owners
+    GemOwner.gem_owners(self)
+  end
 end
