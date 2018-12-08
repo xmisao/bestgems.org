@@ -28,6 +28,9 @@ class PutGemDetail
 
     versions = rubygems_api.versions(@gem_name)
     bestgems_api.put_versions(@gem_name, versions)
+
+    owners = rubygems_api.owners(@gem_name)
+    bestgems_api.put_owners(@gem_name, owners)
   end
 
   def bestgems_api

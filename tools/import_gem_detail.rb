@@ -50,6 +50,16 @@ class PutGemDetail
     end
 
     retry_with { bestgems_api.put_versions(gem_name, versions) }
+
+    owners = retry_with { rubygems_api.owners(gem_name) }
+
+    unless owners
+      logger.error(type: :fetch_owners_failed, gem_name: gem_name)
+
+      return
+    end
+
+    retry_with { bestgems_api.put_owners(gem_name, owners) }
   end
 
   def import_gem_detail
