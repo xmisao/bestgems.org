@@ -24,21 +24,47 @@ class GemOwner < Sequel::Model
     self.where(gem_id: gem.id).to_a
   end
 
+  def self.fetch_latest_by_owner_id(owner_id)
+    where(owner_id: owner_id).order(:updated_at).last
+  end
+
+  def self.owned_gems(owner_id)
+    gem_ids = where(owner_id: owner_id).select_map(:gem_id)
+
+    Gems.fetch_by_ids_ordered_by_total_downloads(gem_ids)
+  end
+
   def handle_for_display
-    return "(Unknown)" if handle.nil? || handle.empty?
+    return "##{owner_id}" if handle.nil? || handle.empty?
 
     handle
   end
 
-  def gravatar_image_url
-    "https://www.gravatar.com/avatar/#{gravatar_image_hash}?s=48"
+  def gravatar_image_url(s = 48)
+    "https://www.gravatar.com/avatar/#{gravatar_hash}?s=#{s}"
   end
 
-  def gravatar_image_hash
-    if email.nil? || email.empty? || email.strip.empty?
-      "HASH"
+  def gravatar_profile_url
+    if valid_email?
+      "https://www.gravatar.com/#{gravatar_hash}"
     else
-      Digest::MD5.hexdigest(email.strip.downcase)
+      nil
     end
+  end
+
+  def gravatar_hash
+    if valid_email?
+      Digest::MD5.hexdigest(email.strip.downcase)
+    else
+      "HASH"
+    end
+  end
+
+  def valid_email?
+    !(email.nil? || email.empty? || email.strip.empty?)
+  end
+
+  def owner_page_path
+    "/owners/#{owner_id}"
   end
 end

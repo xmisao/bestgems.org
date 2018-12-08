@@ -340,6 +340,24 @@ get "/categories/:name" do
   erb :category
 end
 
+get "/owners/:owner_id" do
+  break 400 unless params[:owner_id].match(/\A\d{1,16}\Z/)
+
+  owner_id = params[:owner_id].to_i
+
+  break 404 unless owner_id > 0
+
+  @owner = GemOwner.fetch_latest_by_owner_id(owner_id)
+
+  break 404 unless @owner
+
+  @gems = GemOwner.owned_gems(owner_id)
+
+  @title = "#{@owner.handle_for_display.capitalize}'s Gems -- BestGems.org"
+
+  erb :owner
+end
+
 get "/api/v1/gems/:name/total_downloads.json" do
   content_type :json
 

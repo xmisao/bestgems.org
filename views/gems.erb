@@ -113,7 +113,7 @@
         </thead>
         <tbody>
           <% @owners.each.with_index(1) do |owner, i| %>
-            <tr><td><%= i %></td><td><img alt="icon" src="<%= owner.gravatar_image_url %>"></td><td><%= owner.handle_for_display %></td></tr>
+            <tr><td><%= i %></td><td><img alt="icon" src="<%= owner.gravatar_image_url %>"></td><td><a href="<%= owner.owner_page_path %>"><%= owner.handle_for_display %></a></td></tr>
           <% end %>
         </tbody>
       </table>
