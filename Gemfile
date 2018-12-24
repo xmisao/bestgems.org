@@ -16,6 +16,7 @@ gem "msgpack"
 gem "nokogiri"
 gem "parallel"
 gem "retriable"
+gem "ruby-kafka"
 
 group :development do
   gem "pry"
