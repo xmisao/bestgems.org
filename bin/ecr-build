@@ -1,0 +1,5 @@
+#!/bin/sh
+$(aws ecr get-login --no-include-email --region ap-northeast-1)
+docker build -t bestgems -f docker/bestgems-app/Dockerfile .
+docker tag bestgems:latest $REGISTRY_ID.dkr.ecr.ap-northeast-1.amazonaws.com/bestgems:latest
+docker push $REGISTRY_ID.dkr.ecr.ap-northeast-1.amazonaws.com/bestgems:latest
