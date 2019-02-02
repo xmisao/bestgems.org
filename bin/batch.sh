@@ -14,4 +14,5 @@ ruby lib/batch/update_statistics_daily_downloads.rb "$@" && \
 ruby lib/batch/update_trends.rb "$@" && \
 ruby lib/batch/update_gems_latest_columns.rb "$@" && \
 ruby lib/batch/update_daily_summary.rb "$@" && \
-ruby lib/batch/update_master.rb "$@"
+ruby lib/batch/update_master.rb "$@" && \
+ruby lib/batch/delete_old_data.rb "$@"
