@@ -7,6 +7,8 @@ require 'app'
 
 Rack::Utils.key_space_limit = 1024 * 1024 * 2 # FIXME
 
+use Raven::Rack
+
 run Sinatra::Application
 
 map '/assets' do
