@@ -17,6 +17,7 @@ gem "nokogiri"
 gem "parallel"
 gem "retriable"
 gem "ruby-kafka"
+gem "sentry-raven"
 
 group :development do
   gem "pry"

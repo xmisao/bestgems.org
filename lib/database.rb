@@ -16,6 +16,13 @@ require "nokogiri"
 require "date"
 require "digest/md5"
 
+require "raven"
+require "sentry-raven"
+
+Raven.configure do |config|
+  config.server_name = Socket.gethostname
+end
+
 SLICE_SIZE = 1000
 
 Sequel.split_symbols = true
