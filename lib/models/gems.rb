@@ -225,7 +225,7 @@ class Gems < Sequel::Model
     histgram = version_count.map { |(k, v)| {version: k, downloads: v} }.sort_by { |e| -1 * e[:downloads] }
 
     if histgram.count > 9
-      histgram[0..8] + histgram[9..-1].each_with_object({version: "Others", downloads: 0}) { |e, m| m[:downloads] += e[:downloads] }
+      histgram[0..8] + [histgram[9..-1].each_with_object({version: "Others", downloads: 0}) { |e, m| m[:downloads] += e[:downloads] }]
     else
       histgram
     end
