@@ -200,6 +200,8 @@ class Gems < Sequel::Model
   def num_of_versions_trends(from_date, to_date)
     # NOTE: This method is order sensitive
 
+    return [] unless from_date && to_date
+
     version_count = Hash.new { |h, k| h[k] = 0 }
 
     versions.group_by { |v| v.built_at.to_date }.each { |k, v|

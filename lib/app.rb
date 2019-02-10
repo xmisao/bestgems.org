@@ -273,8 +273,9 @@ get "/gems/:gems" do
   @categories = gem.categories
   @owners = gem.owners
 
-  from_date = @downloads_trends.first[:date]
-  to_date = @downloads_trends.last[:date]
+  from_date = @downloads_trends.first&.fetch(:date)
+  to_date = @downloads_trends.last&.fetch(:date)
+
   @num_of_versions_trends = gem.num_of_versions_trends(from_date, to_date)
 
   @popular_versions_by_major_version = padding_versions(gem.popular_versions_by_major_version, 10)
