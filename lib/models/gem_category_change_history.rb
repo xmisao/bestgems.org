@@ -10,7 +10,7 @@ class GemCategoryChangeHistory < Sequel::Model
       change: change.to_s,
       gem_id: gem.id,
       category_id: category.id,
-      timestamp: timestamp
+      timestamp: timestamp,
     )
   end
 end

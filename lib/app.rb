@@ -315,11 +315,11 @@ post "/gems/:gems/categories" do
 
   next 404 unless gem
 
-  category_ids = params['categories'] ? params['categories'].map(&:to_i) : []
+  category_ids = params["categories"] ? params["categories"].map(&:to_i) : []
   categories = Category.where(id: category_ids).to_a
 
-  believe = params['believe']
-  token = Token.new(params['token'])
+  believe = params["believe"]
+  token = Token.new(params["token"])
 
   CategoryChange.new(gem, categories, token, believe).execute
 

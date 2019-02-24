@@ -1,7 +1,7 @@
 class CategoryChange
   class ValidationError < StandardError; end
 
-  BELIEVE_STRING = 'believe'
+  BELIEVE_STRING = "believe"
 
   def initialize(gem, categories, token, believe)
     @gem, @categories, @token, @believe = gem, categories, token, believe
