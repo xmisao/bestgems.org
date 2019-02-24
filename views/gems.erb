@@ -2,9 +2,9 @@
   <div id="title-pane">
     <div class="align-right">
     <% if @categories.empty? %>
-      <div>Categories: None</div>
+      <div>Categories: None <a href="/gems/<%= @gem_name %>/categories" rel="nofollow">[Edit]</a></div>
     <% else %>
-      <div>Categories: <% @categories.each{|category| %><a href="<%= category.category_page_path %>"><%= category.name %></a><% } %></div>
+      <div>Categories: <% @categories.each_with_index{|category, i| %><% if i > 0 %>, <% end %><a href="<%= category.category_page_path %>"><%= category.name %></a><% } %> <a href="/gems/<%= @gem_name %>/categories" rel="nofollow">[Edit]</a></div>
     <% end %>
     </div>
     <h1><%= @gem_name %></h1>

@@ -1,4 +1,8 @@
 class GemCategory < Sequel::Model
+  class CategoriesCountExceeded < StandardError; end
+
+  MAX_CATEGORIES_COUNT = 3
+
   def self.categorized_gems(category)
     gem_ids = self.where(category_id: category.id).select_map(:gem_id)
 
@@ -9,5 +13,21 @@ class GemCategory < Sequel::Model
     category_ids = self.where(gem_id: gem.id).select_map(:category_id)
 
     Category.fetch_by_ids(category_ids)
+  end
+
+  def self.update_relations(gem, categories)
+    raise CategoriesCountExceeded if categories.count > MAX_CATEGORIES_COUNT
+
+    gem_categories(gem).each do |category|
+      unless categories.include?(category)
+        where(gem_id: gem.id, category_id: category.id).delete
+      end
+    end
+
+    categories.each do |category|
+      unless where(gem_id: gem.id, category_id: category.id).first
+        insert(gem_id: gem.id, category_id: category.id)
+      end
+    end
   end
 end

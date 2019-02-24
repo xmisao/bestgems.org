@@ -284,6 +284,48 @@ get "/gems/:gems" do
   erb :gems
 end
 
+get "/gems/:gems/categories" do
+  gem_name = params[:gems]
+
+  redirect "/" unless gem_name
+
+  @gem = Gems.fetch_gem_by_name(gem_name)
+
+  redirect "/" unless @gem
+
+  @gem_categories = @gem.categories.to_a
+
+  @token = Token.create.string
+
+  @action = "/gems/#{@gem.name}/categories"
+
+  @categories = Category.to_a
+
+  @title = "Edit #{@gem.name}'s Categories -- BestGems.org"
+
+  erb :gem_categories
+end
+
+post "/gems/:gems/categories" do
+  gem_name = params[:gems]
+
+  redirect "/" unless gem_name
+
+  gem = Gems.fetch_gem_by_name(gem_name)
+
+  next 404 unless gem
+
+  category_ids = params['categories'] ? params['categories'].map(&:to_i) : []
+  categories = Category.where(id: category_ids).to_a
+
+  believe = params['believe']
+  token = Token.new(params['token'])
+
+  CategoryChange.new(gem, categories, token, believe).execute
+
+  redirect "/gems/#{gem.name}"
+end
+
 get "/search" do
   redirect "/" unless is_int?(params[:page])
   redirect "/" unless params[:q]
