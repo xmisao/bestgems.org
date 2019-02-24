@@ -934,3 +934,40 @@ body {
   url('../fonts/saira-semi-condensed-v3-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
   url('../fonts/saira-semi-condensed-v3-latin-regular.svg#SairaSemiCondensed') format('svg'); /* Legacy iOS */
 }
+
+span.category_no_change{
+  color: #111;
+  background: #ddd;
+  border-radius: 3px;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  margin-right: 0.25em;
+}
+
+span.category_created{
+  color: #181;
+  background: #dfd;
+  border-radius: 3px;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  margin-right: 0.25em;
+}
+
+span.category_deleted{
+  color: #811;
+  background: #fdd;
+  border-radius: 3px;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  margin-right: 0.25em;
+}
+
+#submit-button{
+  color: #fff;
+  background: #338;
+}
+
+#submit-button:disabled{
+  color: #888;
+  background: #ddd;
+}

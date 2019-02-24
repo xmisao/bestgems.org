@@ -1,0 +1,170 @@
+<div class ="container">
+  <div id="title-pane">
+    <h1>Editing Categories of <a href="/gems/<%= @gem.name %>"><%= @gem.name %></a></h1>
+  </div>
+</div>
+
+<div class="container">
+  <div>
+    <ul>
+      <li>Everyone will be able to edit gem categories.</li>
+      <li>A gem can belong to up to 3 categories.</li>
+      <li>Change history will be recorded to inside BestGems.</li>
+    </ul>
+  </div>
+  <h4>Select categories</h4>
+  <form id="category-form" action="<%= @action %>" method="post">
+  <table class="u-full-width">
+    <tbody>
+      <% @categories.each_slice(4) do |categories| %>
+        <tr>
+          <% categories.each do |category| %>
+            <td><label id="category_<%= category.id %>"><input class="categories" type="checkbox" name="categories[]" value="<%= category.id %>"<% if @gem_categories.include?(category) %> checked="checked"<% end %> /><%= category.name %></label></td>
+          <% end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Changes</h4>
+  <div id="changes"></div>
+
+  <h4>Submit changes</h4>
+  <p>Do you believe that these changes make better for all Rubyists?</p>
+  <p>If you believe it, please type <code>believe</code> into the following textbox and click a submit button.</p>
+  <div>
+      <input name="token" type="hidden" value="<%= @token %>"></input>
+      <input id="believe" name="believe" placeholder="believe" value=""></input>
+      <input id="submit-button" name="submit-button" type="button" value="submit" disabled="disabled"></input>
+  </div>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  initial_categories = selected_categories();
+
+  function believe_changed() {
+    update_submit_button();
+  }
+
+  function is_believed(){
+    return $("#believe").val() == "believe";
+  }
+
+  function selected_categories(){
+    var categories = [];
+
+    $('.categories:checked').each(function(){
+      categories.push($(this).val());
+    });
+
+    return categories;
+  }
+
+  function categories_changed() {
+    update_changes();
+    update_submit_button();
+  }
+
+  function update_changes() {
+    var categories = selected_categories();
+
+    change_object = changes(initial_categories, categories);
+
+    console.log(change_object);
+
+    $("#changes").html(change_object_to_html(change_object));
+  }
+
+  function category_name(id){
+    return $("#category_" + id).text();
+  }
+
+  function change_object_to_html(change_object){
+    var html = "<div>"
+
+    for(var i = 0; i < change_object.no_change.length; ++i){
+      html += "<span class=\"category_no_change\">" + category_name(change_object.no_change[i]) + "</span>";
+    }
+
+    for(var i = 0; i < change_object.deleted.length; ++i){
+      html += "<span class=\"category_deleted\">- " + category_name(change_object.deleted[i]) + "</span>";
+    }
+
+    for(var i = 0; i < change_object.created.length; ++i){
+      html += "<span class=\"category_created\">+ " + category_name(change_object.created[i]) + "</span>";
+    }
+
+    html += "</div>"
+
+    if(change_object.changed == true){
+      if(change_object.applicable){
+        html += "<p>Changes are applicable.</p>";
+      }else{
+        html += "<p>Changes are not applicable. Too many categories.</p>";
+      }
+    }else{
+      html += "<p>No changes.</p>";
+    }
+
+    return html;
+  }
+
+  function changes(a1, a2){
+    var change_object = new Object();
+    change_object.deleted = [];
+    change_object.created = [];
+    change_object.no_change = [];
+
+    for(var i = 0; i < a1.length; ++i){
+      if(a2.includes(a1[i])){
+        change_object.no_change.push(a1[i])
+      } else {
+        change_object.deleted.push(a1[i])
+      }
+    }
+
+    for(var i = 0; i < a2.length; ++i){
+      if(!a1.includes(a2[i])){
+        change_object.created.push(a2[i]);
+      }
+    }
+
+    if(change_object.deleted.length == 0 && change_object.created.length == 0){
+      change_object.changed = false;
+    }else{
+      change_object.changed = true;
+    }
+
+    if(change_object.changed && (a2.length <= 3)){
+      change_object.applicable = true;
+    }else{
+      change_object.applicable = false;
+    }
+
+    return change_object;
+  }
+
+  function update_submit_button(){
+    var categories = selected_categories();
+
+    if((is_believed()) && (categories.length <= 3) && changes(initial_categories, categories).changed){
+      $("#submit-button").prop("disabled", false);
+    }else{
+      $("#submit-button").prop("disabled", true);
+    }
+  }
+
+  function submit_form(){
+    console.log('submit');
+    $("#submit-button").prop("disabled", true);
+    $("#category-form").submit();
+    return true;
+  }
+
+  update_changes();
+  $('#believe').keyup(believe_changed);
+  $('.categories').change(categories_changed);
+  $('#submit-button').click(submit_form);
+</script>
