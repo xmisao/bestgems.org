@@ -5,7 +5,7 @@ class Gems < Sequel::Model
       like_clause ? like_clause & cond : cond
     }
 
-    Gems.where(latest_update_date: date).where(like_clause).order(:latest_total_ranking)
+    Gems.where(latest_update_date: date, enable: true).where(like_clause).order(:latest_total_ranking)
   end
 
   def self.fetch_gems_on_page(page, per_page = 1000)
@@ -21,13 +21,13 @@ class Gems < Sequel::Model
   def self.fetch_by_ids(gem_ids)
     return [] if gem_ids.empty?
 
-    Gems.where(id: gem_ids).to_a
+    Gems.where(id: gem_ids, enable: true).to_a
   end
 
   def self.fetch_by_ids_ordered_by_total_downloads(gem_ids)
     return [] if gem_ids.empty?
 
-    Gems.where(id: gem_ids).order(:latest_total_downloads).to_a.reverse
+    Gems.where(id: gem_ids, enable: true).order(:latest_total_downloads).to_a.reverse
   end
 
   def self.from_json(json)
