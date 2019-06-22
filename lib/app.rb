@@ -250,6 +250,11 @@ get "/gems/:gems" do
   gem = Gems.fetch_gem_by_name(gem_name)
   redirect "/" unless gem
 
+  unless gem.enable
+    response.status = 403
+    break erb :disabled
+  end
+
   date = Master.first[:date]
   latest = gem.latest_trend(date)
 
@@ -457,7 +462,7 @@ get "/sitemaps/gems*.xml" do
   index = params["splat"][0].to_i
 
   @site_url = SITE_URL
-  @gems = Gems.order(:id).limit(SITEMAP_SLICE, index * SITEMAP_SLICE)
+  @gems = Gems.where(enable: true).order(:id).limit(SITEMAP_SLICE, index * SITEMAP_SLICE)
 
   erb :sitemap_gems, layout: false
 end
