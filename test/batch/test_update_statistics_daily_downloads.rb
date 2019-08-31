@@ -4,7 +4,7 @@ require "batch/update_statistics_daily_downloads"
 require_relative "../run_migration"
 require_relative "../test_helper"
 
-class TestUpdateStatisticsDailyDonwloads < Minitest::Test
+class TestUpdateStatisticsDailyDownloads < Minitest::Test
   def setup
     TestHelper.delete_all
   end
@@ -32,7 +32,7 @@ class TestUpdateStatisticsDailyDonwloads < Minitest::Test
                  :date => Date.new(2014, 6, 1),
                  :value => 30)
 
-    StatisticsDailyDonwloadsUpdater.execute(Date.new(2014, 6, 1))
+    StatisticsDailyDownloadsUpdater.execute(Date.new(2014, 6, 1))
 
     stat = Statistics.where(:type => Statistics::Type::DAILY_DOWNLOADS,
                             :date => Date.new(2014, 6, 1)).first
