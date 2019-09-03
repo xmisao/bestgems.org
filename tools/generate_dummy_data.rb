@@ -98,7 +98,7 @@ gems = num_of_gem.times.map {
     end
 
     execute_batch("../lib/batch/update_statistics_daily_downloads.rb") do
-      StatisticsDailyDonwloadsUpdater.execute(date)
+      StatisticsDailyDownloadsUpdater.execute(date)
     end
 
     execute_batch("../lib/batch/update_trends.rb") do

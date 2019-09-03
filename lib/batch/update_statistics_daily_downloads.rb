@@ -1,9 +1,9 @@
 require "date"
 require_relative "../database"
 
-class StatisticsDailyDonwloadsUpdater
+class StatisticsDailyDownloadsUpdater
   def self.execute(date)
-    batch_trace("StatisticsDailyDonwloadsUpdater", "execute", [date]) {
+    batch_trace("StatisticsDailyDownloadsUpdater", "execute", [date]) {
       daily_downloads = Value.where(:type => Value::Type::DAILY_DOWNLOADS,
                                     :date => date).sum(:value)
 
@@ -18,5 +18,5 @@ end
 
 if $0 == __FILE__
   date = ARGV[0] || Date.today - 1
-  StatisticsDailyDonwloadsUpdater.execute(date)
+  StatisticsDailyDownloadsUpdater.execute(date)
 end
