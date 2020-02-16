@@ -1,0 +1,770 @@
+category,gem_name
+Abstraction,active_interaction
+Abstraction,apotomo
+Abstraction,cells
+Abstraction,decent_exposure
+Abstraction,docile
+Abstraction,dry-validation
+Abstraction,dry-types
+Abstraction,dry-system
+Abstraction,dry-auto_inject
+Abstraction,dry-monads
+Abstraction,dry-matcher
+Abstraction,interactor
+Abstraction,light-service
+Abstraction,mutations
+Abstraction,rails_event_store
+Abstraction,responders
+Abstraction,surrounded
+Abstraction,trailblazer
+Abstraction,waterfall
+Abstraction,wisper
+Admin Interface,activeadmin
+Admin Interface,active_scaffold
+Admin Interface,administrate
+Admin Interface,bhf
+Admin Interface,faalis
+Admin Interface,rails_admin
+Admin Interface,trestle
+Admin Interface,typus
+Analytics,ahoy_matey
+Analytics,analytical
+Analytics,gabba
+Analytics,impressionist
+Analytics,legato
+Analytics,rack-tracker
+Analytics,staccato
+API Builder and Discovery,active_model_serializers
+API Builder and Discovery,blanket
+API Builder and Discovery,crepe
+API Builder and Discovery,fast_jsonapi
+API Builder and Discovery,grape
+API Builder and Discovery,her
+API Builder and Discovery,jbuilder
+API Builder and Discovery,jsonapi-rb
+API Builder and Discovery,jsonapi-resources
+API Builder and Discovery,jsonapi-utils
+API Builder and Discovery,jsonite
+API Builder and Discovery,pliny
+API Builder and Discovery,rabl
+API Builder and Discovery,rails-api
+API Builder and Discovery,roar
+API Builder and Discovery,spyke
+API Builder and Discovery,versioncake
+API Builder and Discovery,versionist
+Assets,asset_sync
+Assets,autoprefixer-rails
+Assets,bourbon
+Assets,bower-rails
+Assets,emoji
+Assets,less-rails
+Assets,less
+Assets,sass
+Assets,sprockets
+Assets,torba
+Assets,webpacker
+Authentication and OAuth,authlogic
+Authentication and OAuth,clearance
+Authentication and OAuth,devise
+Authentication and OAuth,ruby-jwt
+Authentication and OAuth,knock
+Authentication and OAuth,oath
+Authentication and OAuth,omniauth
+Authentication and OAuth,rodauth
+Authentication and OAuth,shield
+Authentication and OAuth,sorcery
+Authentication and OAuth,warden
+Authentication and OAuth,doorkeeper
+Authentication and OAuth,oauth2
+Authorization,acl9
+Authorization,access-granted
+Authorization,authority
+Authorization,cancancan
+Authorization,declarative_authorization
+Authorization,petergate
+Authorization,pundit
+Automation,danger
+Caching,actionpack-action_caching
+Caching,dalli
+Caching,garner
+Caching,identity_cache
+Caching,kashmir
+Caching,readthis
+Caching,record-cache
+Caching,redis-store
+Caching,second_level_cache
+Captchas and anti-spam,invisible_captcha
+Captchas and anti-spam,rakismet
+Captchas and anti-spam,recaptcha
+Captchas and anti-spam,voight_kampff
+CLI Builder,clamp
+CLI Builder,commander
+CLI Builder,gli
+CLI Builder,hanami-cli
+CLI Builder,main
+CLI Builder,optimist
+CLI Builder,rake
+CLI Builder,slop
+CLI Builder,terrapin
+CLI Builder,thor
+CLI Builder,tty
+CLI Utilities,awesome_print
+CLI Utilities,colorize
+CLI Utilities,colorls
+CLI Utilities,formatador
+CLI Utilities,paint-shortcuts
+CLI Utilities,pastel
+CLI Utilities,ru
+CLI Utilities,progressbar
+CLI Utilities,table_print
+CLI Utilities,terminal-table
+CLI Utilities,tmuxinator
+Cloud,aws-sdk
+Cloud,browse-everything
+Cloud,fog
+CMS,alchemy_cms
+CMS,camaleon_cms
+CMS,comfortable_mexican_sofa
+CMS,fae
+CMS,locomotivecms_wagon
+CMS,push_type
+CMS,radiant
+CMS,refinerycms
+CMS,spina
+CMS,storytime
+Code Analysis and Metrics,brakeman-lib
+Code Analysis and Metrics,cane
+Code Analysis and Metrics,coverband
+Code Analysis and Metrics,fasterer
+Code Analysis and Metrics,fukuzatsu
+Code Analysis and Metrics,metric_fu
+Code Analysis and Metrics,pippi
+Code Analysis and Metrics,pronto
+Code Analysis and Metrics,rails_best_practices
+Code Analysis and Metrics,reek
+Code Analysis and Metrics,newgem
+Code Analysis and Metrics,rubycritic
+Code Analysis and Metrics,scientist
+Code Analysis and Metrics,simplecov
+Code Analysis and Metrics,traceroute
+Code Highlighting,coderay
+Code Highlighting,pygments.rb
+Code Highlighting,rouge
+Concurrency and Parallelism,celluloid
+Concurrency and Parallelism,concurrent-ruby-edge
+Concurrency and Parallelism,eventmachine
+Concurrency and Parallelism,forkoff
+Concurrency and Parallelism,parallel
+Configuration,chamber
+Configuration,configatron
+Configuration,configus
+Configuration,dotenv-rails
+Configuration,econfig
+Configuration,envied
+Configuration,envyable
+Configuration,figaro
+Configuration,global
+Configuration,config
+Core Extensions,activesupport
+Core Extensions,addressable
+Core Extensions,finishing_moves
+Core Extensions,hamster
+Core Extensions,hanami-utils
+Core Extensions,facets
+Core Extensions,active_attr
+Core Extensions,fast_attributes
+Core Extensions,virtus
+Core Extensions,hashie
+Country Data,carmen
+Country Data,countries
+Country Data,i18n_data
+Country Data,normalize_country
+Country Data,phonelib
+Country Data,phony
+CRM,fat_free_crm
+Cryptocurrencies and Blockchains,blockchain-lite
+Dashboards,blazer
+Dashboards,smashing
+Dashboards,dashing
+Data Processing and ETL,kiba
+Data Visualization,chartkick
+Data Visualization,geo_pattern
+Data Visualization,lazy_high_charts
+Data Visualization,railroady
+Data Visualization,rails-erd
+Data Visualization,ruby-graphviz
+Database Drivers,cassandra-driver
+Database Drivers,data_objects
+Database Drivers,mongo
+Database Drivers,mysql2
+Database Drivers,neography
+Database Drivers,redic
+Database Drivers,redis
+Database Drivers,pg
+Database Drivers,sqlite3
+Database Drivers,activerecord-sqlserver-adapter
+Database Drivers,tiny_tds
+Database Tools,connection_pool
+Database Tools,database_cleaner
+Database Tools,foreigner
+Database Tools,lhm
+Database Tools,lol_dba
+Database Tools,polo
+Database Tools,pghero
+Database Tools,rails_db
+Database Tools,scenic
+Database Tools,schema_plus
+Database Tools,seedbank
+Database Tools,seed_dump
+Database Tools,seed-fu
+Database Tools,upsert
+Database Tools,secondbase
+Date and Time Processing,biz
+Date and Time Processing,business_time
+Date and Time Processing,by_star
+Date and Time Processing,chronic
+Date and Time Processing,groupdate
+Date and Time Processing,ice_cube
+Date and Time Processing,local_time
+Date and Time Processing,montrose
+Date and Time Processing,time-lord
+Date and Time Processing,time_diff
+Date and Time Processing,tzinfo
+Date and Time Processing,validates_timeliness
+Date and Time Processing,yymmdd
+Debugging Tools,byebug
+Debugging Tools,did_you_mean
+Debugging Tools,pry-byebug
+Debugging Tools,rails-footnotes
+Debugging Tools,seeing_is_believing
+Debugging Tools,xray-rails
+Decorators,draper
+Decorators,show_for
+DevOps Tools,backup
+DevOps Tools,blender
+DevOps Tools,capistrano
+DevOps Tools,centurion
+DevOps Tools,chef-universal-mingw32
+DevOps Tools,deployinator
+DevOps Tools,einhorn
+DevOps Tools,itamae
+DevOps Tools,lita
+DevOps Tools,mina
+DevOps Tools,puppet
+DevOps Tools,request-log-analyzer
+DevOps Tools,rubber
+DevOps Tools,sshkey
+DevOps Tools,ruby-lxc
+DevOps Tools,vagrant
+Diff,diffy
+Diff,gemdiff
+Diff,json-compare
+Documentation,annotate
+Documentation,apipie-rails
+Documentation,asciidoctor
+Documentation,documentation
+Documentation,github_changelog_generator
+Documentation,gollum
+Documentation,grape-swagger
+Documentation,hanna-nouveau
+Documentation,hologram
+Documentation,inch
+Documentation,rdoc
+Documentation,rspec_api_documentation
+Documentation,yard
+E-Commerce and Payments,activemerchant
+E-Commerce and Payments,braintree
+E-Commerce and Payments,conekta
+E-Commerce and Payments,credit_card_validations
+E-Commerce and Payments,koudoku
+E-Commerce and Payments,payola
+E-Commerce and Payments,paypal-sdk-merchant
+E-Commerce and Payments,piggybak
+E-Commerce and Payments,solidus
+E-Commerce and Payments,spree
+E-Commerce and Payments,stripe
+Ebook,bookshop
+Ebook,eeepub
+Ebook,gepub
+Ebook,git-scribe
+Ebook,mobi
+Ebook,review
+Email,gibbon
+Email,griddler
+Email,incoming
+Email,letter_opener
+Email,mail
+Email,mailcatcher
+Email,mail_form
+Email,mailman
+Email,maily
+Email,markerb
+Email,midi-smtp-server
+Email,pony
+Email,premailer-rails
+Email,roadie
+Email,sup
+Encryption,bcrypt
+Encryption,rbnacl
+Encryption,sym
+Encryption,symmetric-encryption
+Encryption,rubythemis
+Environment Management,rvm
+Error Handling,airbrake
+Error Handling,better_errors
+Error Handling,bugsnag
+Error Handling,exception_handler
+Error Handling,exception_notification
+Error Handling,honeybadger
+Error Handling,nesty
+Error Handling,sentry-raven
+Feature Flippers and A/B Testing,motorhead
+Feature Flippers and A/B Testing,flipper-active_record
+Feature Flippers and A/B Testing,rollout
+Feature Flippers and A/B Testing,split
+Feature Flippers and A/B Testing,vanity
+File Upload,attache
+File Upload,carrierwave
+File Upload,dragonfly
+File Upload,paperclip
+File Upload,rack-secure-upload
+File Upload,refile
+File Upload,shrine
+File System,guard
+File System,listen
+Form Builder,abracadabra
+Form Builder,cocoon
+Form Builder,formtastic
+Form Builder,bootstrap_form
+Form Builder,reform
+Form Builder,simple_form
+Game Development,gosu
+Game Development,yeah
+Gem Generators,gemsmith
+Gem Generators,hoe
+Geolocation,geocoder
+Geolocation,geoip
+Geolocation,geokit
+Geolocation,gmaps4rails
+Geolocation,rgeo
+Git Tools,ginatra
+Git Tools,git-autobisect
+Git Tools,git_reflow
+Git Tools,git_spelunk
+Git Tools,git-up
+Git Tools,git-whence
+Git Tools,git-cop
+Git Tools,overcommit
+Git Tools,rugged
+GraphQL,graphql-batch
+GraphQL,graphql-client
+GraphQL,graphql-guard
+GraphQL,graphql
+GUI,qtbindings
+GUI,gtk3
+GUI,shoes
+HTML/XML Parsing,nokogiri-happymapper
+HTML/XML Parsing,html-pipeline
+HTML/XML Parsing,nokogiri
+HTML/XML Parsing,oga
+HTML/XML Parsing,ox
+HTML/XML Parsing,roxml
+HTTP Clients and tools,excon
+HTTP Clients and tools,faraday
+HTTP Clients and tools,device_detector
+HTTP Clients and tools,httpclient
+HTTP Clients and tools,http
+HTTP Clients and tools,httparty
+HTTP Clients and tools,http-2
+HTTP Clients and tools,patron
+HTTP Clients and tools,rest-client
+HTTP Clients and tools,savon
+HTTP Clients and tools,sawyer
+HTTP Clients and tools,typhoeus
+Image Processing,mini_magick
+Image Processing,phashion
+Image Processing,psd
+Image Processing,rmagick
+Image Processing,ruby-vips
+Image Processing,skeptick
+Implementations/Compilers,mruby-source
+Implementations/Compilers,opal
+Implementations/Compilers,rubinius
+Internationalization,fast_gettext
+Internationalization,globalize
+Internationalization,i18n-tasks
+Internationalization,i18n
+Internationalization,rails-i18n
+Internationalization,r18n-core
+Internationalization,r18n-desktop
+Internationalization,r18n-rails-api
+Internationalization,r18n-rails
+Internationalization,sinatra-r18n
+Internationalization,termit
+Internationalization,tolk
+Internationalization,twitter_cldr
+IRB,clipboard
+IRB,hirb
+IRB,every_day_irb
+IRB,looksee
+IRB,pry
+IRB,rib
+Logging,cabin
+Logging,fluentd
+Logging,httplog
+Logging,log4r
+Logging,logging
+Logging,lograge
+Logging,mongodb_logger
+Logging,scrolls
+Logging,semantic_logger
+Logging,syslogger
+Logging,yell
+Machine Learning,predictionio
+Machine Learning,rb-libsvm
+Machine Learning,weka
+Markdown Processors,kramdown
+Markdown Processors,maruku
+Markdown Processors,redcarpet
+Markdown Processors,word-to-markdown
+Measurements,measured
+Measurements,ruby-units
+Mobile Development,dryrun
+Mobile Development,fastlane
+Mobile Development,ruboto
+Mobile Development,ruby-push-notifications
+Mobile Development,rpush
+Money,eu_central_bank
+Money,monetize
+Money,money
+Music and Sound,coltrane
+Natural Language Processing,parslet
+Natural Language Processing,pocketsphinx-ruby
+Natural Language Processing,pragmatic_segmenter
+Natural Language Processing,text
+Natural Language Processing,treat
+Natural Language Processing,treetop
+Natural Language Processing,words_counted
+Navigation,active_link_to
+Navigation,breadcrumbs_on_rails
+Navigation,gretel
+Navigation,loaf
+Navigation,simple-navigation
+Networking,rubydns
+Optimizations,bootsnap
+Optimizations,fast_blank
+Optimizations,yajl-ruby
+ORM/ODM,activerecord
+ORM/ODM,dm-core
+ORM/ODM,hanami-model
+ORM/ODM,mongoid
+ORM/ODM,mongo_mapper
+ORM/ODM,mongomodel
+ORM/ODM,neo4j
+ORM/ODM,neo4j-core
+ORM/ODM,neo4j-rake_tasks
+ORM/ODM,nobrainer
+ORM/ODM,ohm
+ORM/ODM,perpetuity
+ORM/ODM,redis-objects
+ORM/ODM,rom
+ORM/ODM,sequel
+ORM/ODM Extensions,acts_as_paranoid
+ORM/ODM Extensions,audited
+ORM/ODM Extensions,destroyed_at
+ORM/ODM Extensions,espinita
+ORM/ODM Extensions,marginalia
+ORM/ODM Extensions,mongoid-history
+ORM/ODM Extensions,paper_trail
+ORM/ODM Extensions,paranoia
+ORM/ODM Extensions,permanent_records
+ORM/ODM Extensions,active_importer
+ORM/ODM Extensions,activerecord-import
+ORM/ODM Extensions,bulk_insert
+ORM/ODM Extensions,data_miner
+ORM/ODM Extensions,ferry
+ORM/ODM Extensions,activerecord-turntable
+ORM/ODM Extensions,activevalidators
+ORM/ODM Extensions,deep_pluck
+ORM/ODM Extensions,enumerize
+ORM/ODM Extensions,goldiloader
+ORM/ODM Extensions,mini_record
+ORM/ODM Extensions,acts_as_tenant
+ORM/ODM Extensions,apartment
+ORM/ODM Extensions,milia
+ORM/ODM Extensions,acts_as_commentable
+ORM/ODM Extensions,acts_as_commentable_with_threading
+ORM/ODM Extensions,acts_as_follower
+ORM/ODM Extensions,activerecord-reputation-system
+ORM/ODM Extensions,acts-as-taggable-on
+ORM/ODM Extensions,acts_as_votable
+ORM/ODM Extensions,merit
+ORM/ODM Extensions,public_activity
+ORM/ODM Extensions,simple-feed
+ORM/ODM Extensions,unread
+ORM/ODM Extensions,acts_as_list
+ORM/ODM Extensions,ranked-model
+ORM/ODM Extensions,acts_as_tree
+ORM/ODM Extensions,ancestry
+ORM/ODM Extensions,awesome_nested_set
+ORM/ODM Extensions,closure_tree
+ORM/ODM Extensions,mongoid-tree
+Package Management,bundler
+Package Management,berkshelf
+Package Management,cocoapods
+Package Management,foreman
+Package Management,fpm
+Pagination,kaminari
+Pagination,order_query
+Pagination,pagy
+Pagination,will_paginate
+PDF,combine_pdf
+PDF,gimli
+PDF,hexapdf
+PDF,kitabu
+PDF,pdfkit
+PDF,prawn
+PDF,rghost
+PDF,shrimp
+PDF,squid
+PDF,wicked_pdf
+PDF,wisepdf
+Performance Monitoring,instrumental_agent
+Performance Monitoring,newrelic_rpm
+Performance Monitoring,scout_apm
+Performance Monitoring,skylight
+Performance Monitoring,traceview
+Presentation Programs,slideshow
+Process Monitoring,bluepill
+Process Monitoring,eye
+Process Monitoring,god
+Processes,childprocess
+Processes,posix-spawn
+Profiler and Optimization,batch-loader
+Profiler and Optimization,benchmark-ips
+Profiler and Optimization,bullet
+Profiler and Optimization,derailed_benchmarks
+Profiler and Optimization,peek
+Profiler and Optimization,rb
+Profiler and Optimization,rack-mini-profiler
+Profiler and Optimization,rbkit
+Profiler and Optimization,ruby-prof
+QR,rqrcode
+Queues and Messaging,backburner
+Queues and Messaging,bunny
+Queues and Messaging,delayed_job
+Queues and Messaging,gush
+Queues and Messaging,karafka
+Queues and Messaging,march_hare
+Queues and Messaging,resque
+Queues and Messaging,que
+Queues and Messaging,rocketjob
+Queues and Messaging,shoryuken
+Queues and Messaging,sidekiq
+Queues and Messaging,sneakers
+Queues and Messaging,sucker_punch
+Rails Application Generators,bootstrapers
+Rails Application Generators,hobo
+Rails Application Generators,orats
+Rails Application Generators,raygun
+Rails Application Generators,suspenders
+Robotics,artoo
+RSS,feed-normalizer
+RSS,feedjira
+RSS,feedparser
+RSS,ratom
+RSS,simple-rss
+Scheduling,minicron
+Scheduling,resque-scheduler
+Scheduling,rufus-scheduler
+Scheduling,whenever
+Scientific,ai4r
+Scientific,ruby-fann
+Scientific,ruby-opencv
+Scientific,classifier-reborn-jruby
+Scientific,stuff-classifier
+Scientific,daru
+Scientific,rgl
+Scientific,nmatrix-atlas
+Scientific,narray
+Scientific,mdarray
+Scientific,sciruby-full
+Scientific,statsample
+Scientific,statsample-timeseries
+Scientific,statsample-glm
+Scientific,distribution
+Scientific,integration
+Scientific,minimization
+Scientific,publisci
+Scientific,plotrb
+Scientific,gsl
+Scientific,bioruby
+Scientific,bloomfilter-rb
+Scientific,decisiontree
+Scientific,smarter_csv
+Scientific,algorithms
+Scientific,jaro_winkler
+Search,chewy
+Search,elasticsearch
+Search,elastics
+Search,has_scope
+Search,mongoid_search
+Search,pg_search
+Search,ransack
+Search,rroonga
+Search,scoped_search
+Search,search_cop
+Search,searchkick
+Search,searchlogic
+Search,sunspot
+Search,textacular
+Search,thinking-sphinx
+Security,bundler-audit
+Security,metasploit-framework
+Security,rack-attack
+Security,secure_headers
+SEO,friendly_id
+SEO,meta-tags
+SEO,prerender_rails
+SEO,sitemap_generator
+Social Networking,mailboxer
+Social Networking,social_shares
+Social Networking,thredded
+Spreadsheets and Documents,axlsx
+Spreadsheets and Documents,docsplit
+Spreadsheets and Documents,roo
+Spreadsheets and Documents,spreadsheet_architect
+Spreadsheets and Documents,yomu
+State Machines,aasm
+State Machines,finite_machine
+State Machines,micromachine
+State Machines,simple_states
+State Machines,statesman
+State Machines,state_machines
+State Machines,transitions
+State Machines,workflow
+Static Site Generation,high_voltage
+Static Site Generation,jekyll
+Static Site Generation,middleman
+Static Site Generation,nanoc
+Static Site Generation,octopress
+Static Site Generation,photish
+Static Site Generation,webgen
+Template Engine,curly-templates
+Template Engine,haml
+Template Engine,liquid
+Template Engine,mustache
+Template Engine,slim
+Template Engine,tilt
+Testing,rspec
+Testing,emoji-rspec
+Testing,fuubar
+Testing,nyan-cat-formatter
+Testing,aruba
+Testing,bacon
+Testing,capybara
+Testing,cucumber
+Testing,cutest
+Testing,howitzer
+Testing,konacha
+Testing,minitest
+Testing,mocha
+Testing,rr
+Testing,shoulda-matchers
+Testing,spinach
+Testing,spork
+Testing,test-unit
+Testing,fabrication
+Testing,factory_bot
+Testing,fake_person
+Testing,faker
+Testing,ffaker
+Testing,forgery
+Testing,machinist
+Testing,active_mocker
+Testing,test_xml
+Testing,webmock
+Testing,selenium-webdriver
+Testing,api_taster
+Testing,poltergeist
+Testing,watir
+Testing,appraisal
+Testing,gitarro
+Testing,knapsack
+Testing,mutant-minitest
+Testing,parallel_tests
+Testing,power_assert
+Testing,ruby-jmeter
+Testing,spring
+Testing,timecop
+Testing,vcr
+Testing,zapata
+Third-party APIs,dropbox_api
+Third-party APIs,facy
+Third-party APIs,fb_graph2
+Third-party APIs,flickr
+Third-party APIs,gitlab
+Third-party APIs,google-adwords-api
+Third-party APIs,google-dfp-api
+Third-party APIs,gmail
+Third-party APIs,hipchat
+Third-party APIs,instagram
+Third-party APIs,itunes_store_transporter
+Third-party APIs,linkedin
+Third-party APIs,octokit
+Third-party APIs,pusher
+Third-party APIs,restforce
+Third-party APIs,ruby-gmail
+Third-party APIs,ruby-trello
+Third-party APIs,simple-slack-bot
+Third-party APIs,slack-notifier
+Third-party APIs,slack
+Third-party APIs,soundcloud
+Third-party APIs,t
+Third-party APIs,terjira
+Third-party APIs,tweetstream
+Third-party APIs,twilio-ruby
+Third-party APIs,twitter
+Third-party APIs,wikipedia-client
+Third-party APIs,yt
+Video,streamio-ffmpeg
+Video,video_transcoding
+View helpers,auto_html
+View helpers,bh
+View helpers,gon
+View helpers,pluggable_js
+Web Crawling,anemone
+Web Crawling,link_thumbnailer
+Web Crawling,mechanize
+Web Crawling,meta_inspector
+Web Crawling,upton
+Web Crawling,wombat
+Web Frameworks,camping-omnibus
+Web Frameworks,cuba
+Web Frameworks,hobbit
+Web Frameworks,hanami
+Web Frameworks,hyperloop
+Web Frameworks,padrino
+Web Frameworks,pakyow
+Web Frameworks,rack-app
+Web Frameworks,ramaze
+Web Frameworks,roda
+Web Frameworks,rails
+Web Frameworks,scorched
+Web Frameworks,sinatra
+Web Frameworks,syro
+Web Frameworks,volt
+Web Servers,goliath
+Web Servers,iodine
+Web Servers,puma
+Web Servers,rack
+Web Servers,reel
+Web Servers,thin
+Web Servers,torquebox
+Web Servers,unicorn
+WebSocket,anycable
+WebSocket,faye
+WebSocket,firehose
+WebSocket,slanger
+WebSocket,render_sync
+WebSocket,websocket-rails
