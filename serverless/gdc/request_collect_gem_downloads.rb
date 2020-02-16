@@ -1,9 +1,9 @@
-require 'aws-sdk-sqs'
-require 'logger'
-require 'open-uri'
-require 'thread'
+require "aws-sdk-sqs"
+require "logger"
+require "open-uri"
+require "thread"
 
-THREAD_COUNT = ENV['THREAD_COUNT'].to_i
+THREAD_COUNT = ENV["THREAD_COUNT"].to_i
 MAX_RETRY_COUNT = 3
 $log = Logger.new(STDOUT)
 
@@ -49,12 +49,12 @@ end
 
 def request(gems)
   request = {
-    entries: gems.map{|gem|
+    entries: gems.map { |gem|
       {
         id: gem["gem_id"].to_s,
         message_body: {"name" => gem["name"]}.to_json,
       }
-    }
+    },
   }
 
   result = sqs.send_messages(request)
@@ -89,13 +89,13 @@ def sqs
 end
 
 def queue_url
-  ENV['QUEUE_URL']
+  ENV["QUEUE_URL"]
 end
 
 def fetch_gems(page)
-    open(gems_api_endpoint(page)) { |f|
-      JSON.parse(f.read)
-    }
+  open(gems_api_endpoint(page)) { |f|
+    JSON.parse(f.read)
+  }
 end
 
 def gems_api_endpoint(page)
@@ -103,5 +103,5 @@ def gems_api_endpoint(page)
 end
 
 def bestgems_api_base_url
-  ENV['BESTGEMS_API_BASE']
+  ENV["BESTGEMS_API_BASE"]
 end
