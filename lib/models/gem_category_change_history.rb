@@ -1,8 +1,8 @@
 class GemCategoryChangeHistory < Sequel::Model
   class InvalidChange < StandardError; end
 
-  one_to_one :gem, class: :Gems, key: :id
-  one_to_one :category, class: :Category, key: :id
+  many_to_one :gem, class: :Gems
+  many_to_one :category, class: :Category
 
   VALID_CHANGES = [:create, :delete]
 
@@ -31,6 +31,6 @@ class GemCategoryChangeHistory < Sequel::Model
   end
 
   def self.list(limit = 100)
-    association_join(:gem, :category).order(:timestamp).limit(limit).reverse.to_a
+    eager(:gem, :category).order(:timestamp).limit(limit).reverse.all
   end
 end
