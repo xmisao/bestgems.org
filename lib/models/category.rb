@@ -26,4 +26,8 @@ class Category < Sequel::Model
   def self.unescape(name)
     CGI.unescape(name).gsub("_", "/")
   end
+
+  def link
+    "/categories/#{name}"
+  end
 end

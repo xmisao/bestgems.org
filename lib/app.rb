@@ -388,6 +388,12 @@ get "/categories/:name" do
   erb :category
 end
 
+get "/category_change_histories" do
+  @histories = GemCategoryChangeHistory.list
+
+  erb :category_change_histories
+end
+
 get "/owners/:owner_id" do
   break 400 unless params[:owner_id].match(/\A\d{1,16}\Z/)
 
