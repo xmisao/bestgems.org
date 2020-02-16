@@ -256,4 +256,8 @@ class Gems < Sequel::Model
   def owners
     GemOwner.gem_owners(self)
   end
+
+  def link
+    "/gems/#{name}"
+  end
 end

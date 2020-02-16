@@ -1,0 +1,32 @@
+<div class ="container">
+  <div id="title-pane">
+    <h1>Recent category change histories</h1>
+  </div>
+</div>
+
+<div class="container">
+  <% if @histories.empty? %>
+    <p>Nothing changes.</p>
+  <% else %>
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>Gem</th>
+          <th>Change</th>
+          <th>Category</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @histories.each do |history| %>
+          <tr>
+            <td><a href="<%= history.gem.link %>"><%= history.gem.name %></a></td>
+            <td><span class="<%= history.operation_class_name %>"><%= history.operation %></span></td>
+            <td><a href="<%= history.category.link %>"><%= history.category.name %></a></td>
+            <td><%= history.timestamp %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
