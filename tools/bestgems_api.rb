@@ -69,7 +69,7 @@ class BestGemsApi
     Net::HTTP.start(host, port) do |http|
       name = gem["name"]
 
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = gem.to_json
 
@@ -81,7 +81,7 @@ class BestGemsApi
     Net::HTTP.start(host, port) do |http|
       name = detail["name"]
 
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/detail.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/detail.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = detail.to_json
 
@@ -93,7 +93,7 @@ class BestGemsApi
     Net::HTTP.start(host, port) do |http|
       name = dependencies["name"]
 
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/dependencies.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/dependencies.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = dependencies.to_json
 
@@ -103,7 +103,7 @@ class BestGemsApi
 
   def put_versions(name, versions)
     Net::HTTP.start(host, port) do |http|
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/versions.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/versions.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = versions.to_json
 
@@ -113,7 +113,7 @@ class BestGemsApi
 
   def put_owners(name, owners)
     Net::HTTP.start(host, port) do |http|
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/owners.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/owners.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = owners.to_json
 
@@ -125,7 +125,7 @@ class BestGemsApi
     Net::HTTP.start(host, port) do |http|
       name = gem["name"]
 
-      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/trends.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/gems/#{name}/trends.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = trends.to_json
 
@@ -135,7 +135,7 @@ class BestGemsApi
 
   def put_gems_count(data)
     Net::HTTP.start(host, port) do |http|
-      req = Net::HTTP::Put.new("/api/v2/statistics/gems/count.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/statistics/gems/count.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = data.to_json
 
@@ -145,7 +145,7 @@ class BestGemsApi
 
   def put_downloads_total(data)
     Net::HTTP.start(host, port) do |http|
-      req = Net::HTTP::Put.new("/api/v2/statistics/downloads/total.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/statistics/downloads/total.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = data.to_json
 
@@ -155,7 +155,7 @@ class BestGemsApi
 
   def put_downloads_daily(data)
     Net::HTTP.start(host, port) do |http|
-      req = Net::HTTP::Put.new("/api/v2/statistics/downloads/daily.json?api_key=#{api_key}")
+      req = Net::HTTP::Put.new("/api/v2/statistics/downloads/daily.json?api_key=#{api_key}", {'Content-type' => 'application/json'})
 
       req.body = data.to_json
 
