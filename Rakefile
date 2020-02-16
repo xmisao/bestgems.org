@@ -40,6 +40,23 @@ namespace 'db' do
   end
 end
 
+namespace 'dev' do
+  desc 'Import sample data'
+
+  task :import_sample do
+    require "faker"
+    require_relative "lib/database"
+    require_relative "lib/dev/sample_gems"
+    require_relative "lib/dev/import_sample"
+
+    ImportSample.new.execute
+  end
+
+  task :erase do
+    raise 'Not implemented'
+  end
+end
+
 require 'rake/testtask'
 Rake::TestTask.new do |test|
   ENV['APP_ENV'] = 'test' unless ENV['APP_ENV']
