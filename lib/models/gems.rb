@@ -175,9 +175,13 @@ class Gems < Sequel::Model
     }
   end
 
-  def description
-    detail = Detail.fetch_by_gem_id(id)
+  def detail
+    return @detail if defined? @detail
 
+    @detail = Detail.fetch_by_gem_id(id)
+  end
+
+  def description
     if detail && latest_update_date && (latest_update_date - 7).to_time < detail.updated_at
       detail.info
     else
@@ -259,5 +263,9 @@ class Gems < Sequel::Model
 
   def link
     "/gems/#{name}"
+  end
+
+  def github_url
+    detail&.github_url
   end
 end

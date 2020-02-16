@@ -10,6 +10,9 @@
     <h1><%= @gem_name %></h1>
     <div id="gem-summary">
       <div><a href="https://rubygems.org/gems/<%= @gem_name%>">https://rubygems.org/gems/<%= @gem_name%></a></div>
+      <% if @github_url %>
+        <div><i class="fa fa-github" aria-hidden="true"></i> <a href="<%= @github_url %>"><%= @github_url %></a></div>
+      <% end %>
       <div><%= abbr(@gem_summary) %></div>
     </div>
     <div class="row info">
