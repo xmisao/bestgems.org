@@ -60,6 +60,10 @@ class PutGemDetail
     end
 
     retry_with { bestgems_api.put_owners(gem_name, owners) }
+  rescue => e
+    @logger.error(type: :process_gem, gem_name: gem_name, error_class: e.class.name, error_message: e.message)
+
+    return
   end
 
   def import_gem_detail
