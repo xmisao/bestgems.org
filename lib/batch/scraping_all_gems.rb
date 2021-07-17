@@ -2,15 +2,16 @@ require_relative "../database"
 
 class Scraper
   RUBYGEMS_BASE_URL = "https://rubygems.org"
+  MAX_FETCH_PAGES = 10_000
 
   def self.execute(date, letters)
     batch_trace("Scraper", "execute", [date, letters]) {
       cleaning_gems_data(date)
 
       letters.each { |letter|
-        num = scraping_num_of_gems(letter)
-        (1..(num / 30 + 1)).each { |i|
+        (1..MAX_FETCH_PAGES).each { |i|
           gems = scraping_gems_data(letter, i)
+          break if gems.empty?
           save_gems_data(gems, date)
         }
       }
@@ -30,14 +31,6 @@ class Scraper
 
   def self.cleaning_process_date_scraped_data(process_date)
     ScrapedData.where(date: process_date).delete
-  end
-
-  def self.scraping_num_of_gems(letter)
-    batch_trace("Scraper", "scraping_num_of_gems", [letter]) {
-      try(3, 60) do
-        RubyGemsPage.new(letter).num_of_gems
-      end
-    }
   end
 
   def self.scraping_gems_data(letter, i)

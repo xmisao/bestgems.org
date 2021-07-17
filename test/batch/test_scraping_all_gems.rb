@@ -21,11 +21,6 @@ class TestScraper < Minitest::Test
     assert_equal 1, ScrapedData.count
   end
 
-  def test_scraping_num_of_gems()
-    num = Scraper.scraping_num_of_gems("A")
-    assert num
-  end
-
   def test_scraping_gems_data()
     gem = Scraper.scraping_gems_data("A", 1).first
     assert gem[:name]
