@@ -9,12 +9,13 @@ Hosted on [http://bestgems.org/](http://bestgems.org/).
 ## System requirements
 
 * UNIX like operating system. (Debian or Ubuntu are recommended)
-* Ruby 2.4+
+* Ruby 3.3
 * Middleware
-  * PostgreSQL 9.6
+  * PostgreSQL 14
 * Libraries
   * libleveldb-dev
 * Docker (Recommended)
+* rbenv (Recommended)
 
 ### Examples
 
@@ -33,7 +34,7 @@ docker run \
   -p 5432:5432 \
   -e POSTGRES_USER=bestgems \
   -e POSTGRES_PASSWORD=bestgems \
-  postgres:9.6-alpine
+  postgres:14
 ```
 
 ## Get the source
@@ -50,7 +51,7 @@ cd bestgems.org
 Execute bundle install.
 
 ```bash
-bundle install --path vendor/bundle
+bundle install
 ```
 
 ## Configure environment variable
@@ -160,7 +161,3 @@ Format the source by [rufo](https://github.com/ruby-formatter/rufo).
 ```bash
 bundle exec rake format
 ```
-
-# Build status
-
-[![Build Status](https://travis-ci.org/xmisao/bestgems.org.svg?branch=master)](https://travis-ci.org/xmisao/bestgems.org)
