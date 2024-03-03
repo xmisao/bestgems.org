@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:3.3
 
 ADD . /srv/bestgems.org
 ADD docker/bin/wait-for-it.sh /bin
