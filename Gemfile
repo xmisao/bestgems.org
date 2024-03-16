@@ -13,11 +13,12 @@ gem "minitest"
 gem "rufo", '~> 0.3.0'
 gem "leveldb-ruby"
 gem "msgpack"
-gem "nokogiri"
+gem "nokogiri", '~> 1.16.0'
 gem "parallel"
 gem "retriable"
 gem "ruby-kafka"
 gem "sentry-raven"
+gem "net-ftp"
 
 group :development do
   gem "pry"

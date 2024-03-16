@@ -93,7 +93,7 @@ def queue_url
 end
 
 def fetch_gems(page)
-  open(gems_api_endpoint(page)) { |f|
+  URI.open(gems_api_endpoint(page)) { |f|
     JSON.parse(f.read)
   }
 end

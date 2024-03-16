@@ -6,7 +6,7 @@ class RubyGemsPage
   end
 
   def html
-    @html ||= open(url) { |f| f.read }
+    @html ||= URI.open(url) { |f| f.read }
   end
 
   def doc

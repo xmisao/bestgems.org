@@ -4,7 +4,7 @@ class BestGemsApi
   end
 
   def gems(page)
-    open(gems_api_endpoint(page)) { |f|
+    URI.open(gems_api_endpoint(page)) { |f|
       JSON.parse(f.read)
     }
   end
@@ -14,7 +14,7 @@ class BestGemsApi
   end
 
   def trends(name)
-    open(trends_api_endpoint(name)) { |f|
+    URI.open(trends_api_endpoint(name)) { |f|
       JSON.parse(f.read)
     }
   end
@@ -24,7 +24,7 @@ class BestGemsApi
   end
 
   def gems_count
-    open(gems_count_api_endpoint) { |f|
+    URI.open(gems_count_api_endpoint) { |f|
       JSON.parse(f.read)
     }
   end
@@ -34,7 +34,7 @@ class BestGemsApi
   end
 
   def downloads_total
-    open(downloads_total_api_endpoint) { |f|
+    URI.open(downloads_total_api_endpoint) { |f|
       JSON.parse(f.read)
     }
   end
@@ -44,7 +44,7 @@ class BestGemsApi
   end
 
   def downloads_daily
-    open(downloads_daily_api_endpoint) { |f|
+    URI.open(downloads_daily_api_endpoint) { |f|
       JSON.parse(f.read)
     }
   end

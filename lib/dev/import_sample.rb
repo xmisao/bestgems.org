@@ -14,7 +14,7 @@ class ImportSample
       {
         name: name,
         version: Faker::App.version,
-        summary: Faker::Matz.quote,
+        summary: Faker::Quote.matz,
         last_downloads: rand_int,
       }
     end
