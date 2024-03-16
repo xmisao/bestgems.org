@@ -1,9 +1,10 @@
-require "logger"
+require_relative "config"
 
+require "logger"
 require "sinatra"
 require "sinatra/config_file"
 config_file File.expand_path("../../config/database.yml.erb", __FILE__)
-Settings = settings
+Settings = settings # TODO: Get all settings from the Config module
 
 require "sequel"
 require "cgi"

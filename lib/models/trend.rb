@@ -1,6 +1,4 @@
-TREND_DRB_URI = "druby://localhost:16330"
-
-if ENV["BESTGEMS_TREND_SERVER"] == "true"
+if Config.trend_server
   class Trend
     include DRb::DRbUndumped
 
@@ -90,7 +88,7 @@ if ENV["BESTGEMS_TREND_SERVER"] == "true"
     end
   end
 
-  DRb.start_service(TREND_DRB_URI, Trend, safe_level: 1)
+  DRb.start_service(Config.trend_drb_bind_uri, Trend, safe_level: 1)
 else
-  Trend = DRbObject.new_with_uri(TREND_DRB_URI)
+  Trend = DRbObject.new_with_uri(Config.trend_drb_uri)
 end
