@@ -1,4 +1,4 @@
-FROM ruby:3.3
+FROM public.ecr.aws/docker/library/ruby:3.3.0
 
 ADD . /srv/bestgems.org
 ADD docker/bin/wait-for-it.sh /bin
