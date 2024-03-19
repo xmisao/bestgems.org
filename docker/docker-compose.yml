@@ -1,7 +1,10 @@
-version: '2'
+version: '3'
 services:
   bestgems-app:
-    image: bestgems-app
+    image: bestgems
+    build:
+      context: ../
+      dockerfile: docker/bestgems/Dockerfile
     ports:
       - 9292:9292
     environment:
@@ -14,7 +17,7 @@ services:
       - BESTGEMS_LEVELDB_DIR=db/trends
     command: /bin/bash -c 'wait-for-it.sh bestgems-db:5432 && bundle exec rake db:migration && bin/start'
   bestgems-db:
-    image: postgres:9.2-alpine
+    image: postgres:14
     environment:
       - POSTGRES_USER=bestgems
       - POSTGRES_PASSWORD=bestgems

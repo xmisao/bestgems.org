@@ -111,7 +111,7 @@ class CategoryEntry
     return nil unless url
 
     if url.match(/github.com/)
-      return open(url) { |f| f.read.match(/([\w-]+)\.gemspec/).to_a[1] }
+      return URI.open(url) { |f| f.read.match(/([\w-]+)\.gemspec/).to_a[1] }
     end
 
     nil
@@ -122,7 +122,7 @@ end
 
 puts Detail.count
 
-category_entries = open(README_PATH) do |f|
+category_entries = URI.open(README_PATH) do |f|
   category = nil
   category_entries = {}
 

@@ -2,7 +2,7 @@ require "minitest/autorun"
 require "database"
 require_relative "run_migration"
 
-MiniTest.autorun
+Minitest.autorun
 
 class TestAccessTables < Minitest::Test
   def test_access_tables

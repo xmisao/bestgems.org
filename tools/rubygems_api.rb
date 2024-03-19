@@ -2,7 +2,7 @@ class RubyGemsApi
   RUBYGEMS_URL = "https://rubygems.org/api/v1"
 
   def info(gem_name)
-    open(rubygems_endpoint("/gems/?.json", gem_name)) { |f|
+    URI.open(rubygems_endpoint("/gems/?.json", gem_name)) { |f|
       JSON.parse(f.read)
     }
   rescue OpenURI::HTTPError => e
@@ -10,7 +10,7 @@ class RubyGemsApi
   end
 
   def versions(gem_name)
-    open(rubygems_endpoint("/versions/?.json", gem_name)) { |f|
+    URI.open(rubygems_endpoint("/versions/?.json", gem_name)) { |f|
       JSON.parse(f.read)
     }
   rescue OpenURI::HTTPError => e
@@ -18,7 +18,7 @@ class RubyGemsApi
   end
 
   def owners(gem_name)
-    open(rubygems_endpoint("/gems/?/owners.json", gem_name)) { |f|
+    URI.open(rubygems_endpoint("/gems/?/owners.json", gem_name)) { |f|
       JSON.parse(f.read)
     }
   rescue OpenURI::HTTPError => e
