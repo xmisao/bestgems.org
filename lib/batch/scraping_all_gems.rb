@@ -11,6 +11,7 @@ class Scraper
       letters.each { |letter|
         (1..MAX_FETCH_PAGES).each { |i|
           gems = scraping_gems_data(letter, i)
+          next if gems.nil?
           break if gems.empty?
           save_gems_data(gems, date)
         }
@@ -39,6 +40,8 @@ class Scraper
         RubyGemsPage.new(letter, i).gems_data
       end
     }
+  rescue OpenURI::HTTPError
+    return nil # NOTE: Skip error page
   end
 
   def self.try(times, sleep_time)
