@@ -73,6 +73,10 @@ class Statistics < Sequel::Model
     end
   end
 
+  def self.day_as_json(date)
+    self.where(:date => date).order(:name).map(&:as_json)
+  end
+
   def as_json
     {
       value: value,
