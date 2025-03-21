@@ -21,7 +21,7 @@ GEM
       concurrent-ruby (~> 1.0)
     leveldb-ruby (0.15)
     method_source (1.0.0)
-    mini_portile2 (2.8.6)
+    mini_portile2 (2.8.8)
     minitest (5.22.2)
     msgpack (1.7.2)
     multi_json (1.15.0)
@@ -34,7 +34,7 @@ GEM
       uri
     net-protocol (0.2.2)
       timeout
-    nokogiri (1.16.5)
+    nokogiri (1.18.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     parallel (1.24.0)
@@ -42,7 +42,7 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    racc (1.7.3)
+    racc (1.8.1)
     rack (2.2.8.1)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
@@ -91,7 +91,7 @@ DEPENDENCIES
   minitest
   msgpack
   net-ftp
-  nokogiri (~> 1.16.5)
+  nokogiri (~> 1.18.4)
   parallel
   pg
   pry
