@@ -7,8 +7,10 @@
 
 <div class="container">
   <form class="trends-form" action="/trends" method="get">
-    <input type="text" name="gems" placeholder="Enter gem names separated by commas (e.g., rails, sinatra)" value="">
-    <button type="submit">Compare Gems</button>
+    <div class="autocomplete-container">
+      <input type="text" name="gems" id="gem-search" placeholder="Enter gem name (e.g., rails, sinatra)" value="">
+      <div id="autocomplete-results" class="autocomplete-results"></div>
+    </div>
   </form>
 </div>
 
@@ -22,5 +24,15 @@
     <% end %>
   </ul>
 </div>
+
+<script src="/assets/js/autocomplete.js"></script>
+<script>
+'use strict';
+
+window.onload = function() {
+  initGemAutocomplete();
+}
+
+</script>
 
 <%= erb :_banner %>

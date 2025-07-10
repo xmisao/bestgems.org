@@ -469,6 +469,26 @@ get "/trends/:gems" do
   erb :trend
 end
 
+get "/api/v1/gems/autocomplete.json" do
+  content_type :json
+
+  query = params[:q]
+
+  return JSON.dump([]) if query.nil? || query.strip.empty?
+
+  date = Master.first[:date]
+  results = Gems.search(date, query).limit(10)
+
+  gems = results.map do |gem|
+    {
+      name: gem[:name],
+      summary: gem[:summary]
+    }
+  end
+
+  JSON.dump(gems)
+end
+
 get "/api/v1/gems/:name/total_downloads.json" do
   content_type :json
 

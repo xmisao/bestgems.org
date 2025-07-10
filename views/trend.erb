@@ -23,8 +23,10 @@
 <div class="container">
   <form class="trends-form" action="/trends" method="get">
     <input type="hidden" name="current_gems" value="<%= @gems_data.map { |g| g[:name] }.join(', ') %>">
-    <input type="text" name="gems" placeholder="Add gem to comparison" value="">
-    <button type="submit">Add Gem</button>
+    <div class="autocomplete-container">
+      <input type="text" name="gems" id="gem-search" placeholder="Add gem to comparison" value="" autocomplete="off">
+      <div id="autocomplete-results" class="autocomplete-results"></div>
+    </div>
   </form>
 
   <div class="gems-list">
@@ -114,6 +116,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script src="/assets/js/autocomplete.js"></script>
 <script>
 'use strict';
 
@@ -277,6 +280,7 @@ window.onload = function() {
   draw_total_ranking_chart();
   draw_daily_ranking_chart();
   draw_num_of_versions_chart();
+  initGemAutocomplete();
 }
 
 </script>
