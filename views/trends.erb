@@ -1,0 +1,26 @@
+<div class ="container">
+  <div id="title-pane">
+    <h1>Trends</h1>
+    <div class="description">Compare gems download counts over time</div>
+  </div>
+</div>
+
+<div class="container">
+  <form class="trends-form" action="/trends" method="get">
+    <input type="text" name="gems" placeholder="Enter gem names separated by commas (e.g., rails, sinatra)" value="">
+    <button type="submit">Compare Gems</button>
+  </form>
+</div>
+
+<div class="container">
+  <h2>Comparison examples</h2>
+  <ul>
+    <% @popular_comparisons.each do |comparison| %>
+      <li>
+        <a href="/trends/<%= comparison[:gems].join('-vs-') %>"><%= comparison[:title] %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= erb :_banner %>

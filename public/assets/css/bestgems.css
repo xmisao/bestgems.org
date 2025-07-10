@@ -905,6 +905,20 @@ body {
   content: "\f09b";
 }
 
+.icon {
+  width: 1.2em;
+  height: 1.2em;
+  fill: #8d8c92;
+}
+
+.icon-rubygems:hover {
+  fill: #e9573f;
+}
+
+.icon-github:hover {
+  fill: #000;
+}
+
 /* Google fonts */
 
 /* teko-regular - latin */
@@ -970,4 +984,74 @@ span.category_deleted{
 #submit-button:disabled{
   color: #888;
   background: #ddd;
+}
+
+.trends-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.trends-form input[type="text"] {
+  width: 100%;
+}
+
+.trends-form button {
+  margin-bottom: 0;
+}
+
+.gems-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.gem-tag {
+  background-color: #fff;
+  padding: 0 1rem;
+  border-radius: 2rem;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remove-gem {
+  color: #dc3545;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.remove-gem:hover {
+  color: #a02834;
+}
+
+.gem-color-header {
+  width: 1rem;
+  padding-left: 4px !important;
+}
+
+.gem-color-cell {
+  padding-left: 4px !important;
+}
+
+.gem-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+
+.gem-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.gem-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
