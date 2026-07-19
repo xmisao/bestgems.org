@@ -29,6 +29,10 @@ class TestScraper < Minitest::Test
     assert gem[:downloads]
   end
 
+  def test_scraping_gems_data_out_of_range_is_empty()
+    assert_empty Scraper.scraping_gems_data("A", 99999)
+  end
+
   def test_save_gems_data()
     gem = {:name => "foo",
            :version => "1.0",
