@@ -1,35 +1,53 @@
 class RubyGemsPage
   RUBYGEMS_BASE_URL = "https://rubygems.org"
 
+  GEM_NAME_SELECTOR = "h2[@data-testid='rubygem-name']"
+
+  Response = Data.define(:body, :final_url)
+
   def initialize(letter, page = 1)
     @letter, @page = letter, page
-  end
-
-  def html
-    @html ||= URI.open(url) { |f| f.read }
-  end
-
-  def doc
-    @doc ||= Nokogiri::HTML.parse(html, nil, "utf8")
   end
 
   def url
     "#{RUBYGEMS_BASE_URL}/gems?letter=#{@letter}&page=#{@page}"
   end
 
-  def num_of_gems
-    doc.at("p[@class='gems__meter']").content.match(/of (\d+)/).to_a[1].to_i
+  def html
+    response.body
+  end
+
+  def doc
+    @doc ||= Nokogiri::HTML.parse(html, nil, "utf8")
   end
 
   def gems_data
-    doc.search("a[@class='gems__gem']").each_with_object([]) { |gem, gems|
-      name_version = gem.at("h2[@class='gems__gem__name']").content.match(/\s*(.+)\s*(.+)/).to_a
-      name = name_version[1]
-      version = name_version[2]
-      summary = gem.at("p[@class='gems__gem__desc t-text']").content.strip
-      downloads = gem.at("p[@class='gems__gem__downloads__count']").content.gsub(/[^\d]/, "").to_i
+    return [] if redirected? # Out-of-range page; report no data so the scraper stops paging.
+
+    doc.search(GEM_NAME_SELECTOR).each_with_object([]) { |name_node, gems|
+      card = name_node.ancestors("a").first
+
+      name = name_node.content.strip
+      version = card.at("code")&.content&.strip
+      summary = card.at("p")&.content.to_s.strip
+      downloads_node = card.at_xpath(".//span[starts-with(@title, 'Total downloads')]")
+      downloads = downloads_node ? downloads_node["title"].gsub(/[^\d]/, "").to_i : 0
 
       gems << {:name => name, :version => version, :summary => summary, :downloads => downloads}
     }
+  end
+
+  private
+
+  def response
+    @response ||= URI.open(url) { |f|
+      Response.new(body: f.read, final_url: f.base_uri.to_s)
+    }
+  end
+
+  # NOTE: RubyGems.org redirects out-of-range pages back to page 1 (open-uri
+  #       follows it), so the final URL ends up different from the requested one.
+  def redirected?
+    response.final_url != url
   end
 end
