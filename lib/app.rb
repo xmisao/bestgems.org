@@ -3,6 +3,7 @@ require_relative "pager"
 require_relative "stat"
 
 helpers WebUtils
+helpers TrendUtils
 
 total = DB[:total]
 daily = DB[:daily]
@@ -411,6 +412,81 @@ get "/owners/:owner_id" do
   @title = "#{@owner.handle_for_display.capitalize}'s Gems -- BestGems.org"
 
   erb :owner
+end
+
+get "/trends" do
+  @title = "Trends -- BestGems.org"
+  @type = :trends
+  @popular_comparisons = TrendUtils::POPULAR_GEM_COMPARISONS
+
+  redirect_url = build_trends_redirect_url(params)
+  redirect redirect_url if redirect_url
+
+  erb :trends
+end
+
+get "/trends/:gems" do
+  gems_param = params[:gems].split("-vs-")
+
+  redirect "/trends" unless gems_param
+
+  if gems_param.length > TrendUtils::MAX_GEMS_PER_COMPARISON
+    limited_gems = gems_param.first(TrendUtils::MAX_GEMS_PER_COMPARISON)
+    redirect "/trends/#{limited_gems.join('-vs-')}"
+  end
+
+  gems = fetch_valid_gems(gems_param)
+
+  redirect "/trends" unless gems.any?
+
+  gem_names = gems.map(&:name)
+
+  @title = "#{gem_names.join(" vs ")} -- BestGems"
+  @type = :trends
+
+  date = Master.first[:date]
+  @total_count = Ranking.total_count(date)
+  @daily_count = Ranking.daily_count(date)
+
+  @gems_data = build_gems_data(gems, date)
+
+  trend_data_sets = gems.map { |gem| TrendDataSet.new(gem.get_trend_data) }
+  @downloads_trends = trend_data_sets.map(&:downloads_trends)
+  @ranking_trends = trend_data_sets.map(&:ranking_trends)
+
+  @merged_downloads = merge_downloads_trends_data(@downloads_trends)
+  @merged_rankings = merge_ranking_trends_data(@ranking_trends)
+
+  from_date = @downloads_trends.first&.first&.fetch(:date)
+  to_date = @downloads_trends.first&.last&.fetch(:date)
+
+  num_of_versions_trends = gems.map do |gem|
+    gem.num_of_versions_trends(from_date, to_date)
+  end
+
+  @merged_num_of_versions = merge_num_of_versions_trends_data(num_of_versions_trends)
+
+  erb :trend
+end
+
+get "/api/v1/gems/autocomplete.json" do
+  content_type :json
+
+  query = params[:q]
+
+  return JSON.dump([]) if query.nil? || query.strip.empty?
+
+  date = Master.first[:date]
+  results = Gems.search(date, query).limit(10)
+
+  gems = results.map do |gem|
+    {
+      name: gem[:name],
+      summary: gem[:summary]
+    }
+  end
+
+  JSON.dump(gems)
 end
 
 get "/api/v1/gems/:name/total_downloads.json" do
