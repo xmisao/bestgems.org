@@ -569,6 +569,12 @@ put "/api/v2/gems/:name/owners.json" do
   end
 end
 
+get "/api/v2/days/:date/downloads.json" do
+  api_handler do
+    Statistics.day_as_json(params[:date]).to_json
+  end
+end
+
 get "/api/v2/statistics/gems/count.json" do
   api_handler do
     Statistics.gems_count_as_json.to_json
