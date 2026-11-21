@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/ruby:3.3.0 as leveldb-builder
+FROM public.ecr.aws/docker/library/ruby:3.3.14 as leveldb-builder
 RUN apt-get update && apt-get install -y libsnappy-dev && apt-get clean
 WORKDIR /build
 RUN wget https://github.com/google/leveldb/archive/refs/tags/v1.18.tar.gz && \
@@ -6,7 +6,7 @@ RUN wget https://github.com/google/leveldb/archive/refs/tags/v1.18.tar.gz && \
     cd leveldb-1.18 && \
     make
 
-FROM public.ecr.aws/docker/library/ruby:3.3.0
+FROM public.ecr.aws/docker/library/ruby:3.3.14
 RUN apt-get update && apt-get install -y libsnappy-dev && apt-get clean
 ADD docker/bin/wait-for-it.sh /bin
 COPY --from=leveldb-builder /build/leveldb-1.18/include/leveldb /usr/local/include/leveldb
