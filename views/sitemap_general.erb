@@ -29,6 +29,12 @@
     <priority>1.0</priority>
     <lastmod><%= @lastmod %></lastmod>
   </url>
+  <url>
+    <loc><%= @site_url%>/trends</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod><%= @lastmod %></lastmod>
+  </url>
 <% @categories.each{|category| %>
   <url>
     <loc><%= @site_url %><%= category.category_page_path %></loc>
