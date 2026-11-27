@@ -52,6 +52,11 @@ API Builder and Discovery,roar
 API Builder and Discovery,spyke
 API Builder and Discovery,versioncake
 API Builder and Discovery,versionist
+Artificial Intelligence,anthropic
+Artificial Intelligence,gemini-ai
+Artificial Intelligence,ruby-openai
+Artificial Intelligence,ollama-ai
+Artificial Intelligence,ruby_llm
 Assets,asset_sync
 Assets,autoprefixer-rails
 Assets,bourbon
